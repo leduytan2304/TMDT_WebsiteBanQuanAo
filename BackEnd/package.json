@@ -1,11 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "proxy":"http://localhost:8000",
   "description": "",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
