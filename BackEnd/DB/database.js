@@ -18,6 +18,7 @@ connection.connect(function(err) {
     console.log('connected as id ' + connection.threadId);
   });
 
+
 connection.query('SELECT * FROM clothingstore.color',(error,results, fields)=>{
     if(error)
         throw error;
@@ -26,4 +27,5 @@ connection.query('SELECT * FROM clothingstore.color',(error,results, fields)=>{
         results.forEach( result => {
             console.log(result);
         })
+        connection.end();
 })
