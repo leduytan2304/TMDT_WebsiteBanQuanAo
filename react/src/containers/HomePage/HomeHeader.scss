@@ -1,0 +1,103 @@
+.home-header-container {
+    position: sticky;
+    top: 0;
+    height: 70px;
+    width: 100%;
+    padding: 0 40px;
+    z-index: 100;
+    background: white;
+
+    .home-header-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        .left-content {
+            width: 20%;
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 25px;
+                color: grey;
+                cursor: pointer;
+            }
+
+            .header-logo {
+                // background: url('../../assets/logo4.png');
+                // background-repeat: no-repeat;
+                // background-size: contain;
+                // background-position: center;
+                height: 100%;
+                width: 100%;
+                transform: scale(0.6, 0.6);
+                margin-left: -40px;
+                cursor: pointer;
+            }
+        }
+
+        .center-content {
+            width: 45%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            .child-content {
+                cursor: pointer;
+                color: #599f09;
+            }
+        }
+
+        .right-content {
+            width: 35%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+            i {
+                font-size: 25px;
+                cursor: pointer;
+            }
+
+            .search {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 30px;
+                width: fit-content;
+                border-radius: 20px;
+                background: #efecec;
+
+                i {
+                    margin: 0 5px;
+                    font-size: 15px;
+                    padding: 0 10px;
+                }
+
+                input {
+                    height: 30px;
+                    width: 170px;
+                    padding: 15px;
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+}
+
+.home-header-banner {
+    display: block;
+    height: 500px;
+    width: 100%;
+    .home-banner-content {
+        // background: url('../../assets/background-event1.jpg');
+        // background-repeat: no-repeat;
+        // background-size: cover;
+        // background-position: center;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+    }
+}
