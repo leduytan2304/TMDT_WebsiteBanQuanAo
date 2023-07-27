@@ -3,7 +3,12 @@ export const path = {
     HOMEPAGE: '/home',
     LOGIN: '/login',
     LOG_OUT: '/logout',
-    SYSTEM: '/system'
+    SYSTEM: '/system',
+    SIEUSALE: '/sieu-sale',
+    SANPHAMMOI: '/san-pham-moi',
+    AO: '/ao',
+    QUAN: '/quan',
+    PHUKIEN: '/phu-kien'
 };
 
 export const languages = {

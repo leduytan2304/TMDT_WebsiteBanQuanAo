@@ -4,10 +4,53 @@ import './HomeHeader.scss';
 import { FormattedMessage } from 'react-intl';
 import logo from '../../assets/logo4.png'
 import event from '../../assets/background-event.jpg'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink } from 'react-router-dom';
 
 class HomeHeader extends Component {
 
+    // state = {
+    //     links: [
+    //         {
+    //             id: 1,
+    //             name: "SIÊU SALE",
+    //             to: "/sieu-sale",
+    //             className: "child-content"
+    //         }, 
+    //         {
+    //             id: 2,
+    //             name: "SẢN PHẨM MỚI",
+    //             to: "/sieu-sale",
+    //             className: "child-content"
+    //         }, 
+    //         {
+    //             id: 3,
+    //             name: "ÁO",
+    //             to: "/sieu-sale",
+    //             className: "child-content"
+    //         }, 
+    //         {
+    //             id: 4,
+    //             name: "QUẦN",
+    //             to: "/sieu-sale",
+    //             className: "child-content"
+    //         }, 
+    //         {
+    //             id: 5,
+    //             name: "PHỤ KIỆN",
+    //             to: "/sieu-sale",
+    //             className: "child-content"
+    //         }
+    //     ],
+    //     activeLink: null
+    // };
+
+    // handleClick = id => {
+    //     this.setState({ activeLink: id });
+    // };
+
     render() {
+        // const { links, activeLink } = this.state;
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -19,35 +62,62 @@ class HomeHeader extends Component {
                         </div>
 
                         <div className='center-content'>
-                            <div className='child-content'>
-                                <div>
-                                    <b>SẢN PHẨM MỚI</b>
+                            {/* {links.map(link => {
+                                return (
+                                    <div>
+                                        <div key={link.id} onClick={() => this.handleClick(link.id)}
+                                            className={
+                                            link.className +
+                                            (link.id === activeLink ? " active_item" : "")
+                                        }>
+  
+                                            <b>
+                                                {link.name}
+                                            </b>
+                                        </div>
+                                        <Link to = {link.to}></Link>
+                                    </div>
+                                );
+                            })} */}
+                            <NavLink to ='/sieu-sale'>
+                                <div className='child-content'>
+                                    <div>
+                                        SIÊU SALE
+                                    </div>
                                 </div>
-                            </div>
+                            </NavLink>
+                            
+                            <NavLink to ='/san-pham-moi'>
+                                <div className='child-content'>
+                                    <div>
+                                        SẢN PHẨM MỚI
+                                    </div>
+                                </div>
+                            </NavLink>
 
-                            <div className='child-content'>
-                                <div>
-                                    <b>SIÊU SALE</b>
+                            <NavLink to ='/ao'>
+                                <div className='child-content'>
+                                    <div>
+                                        ÁO
+                                    </div>
                                 </div>
-                            </div>
+                            </NavLink>
 
-                            <div className='child-content'>
-                                <div>
-                                    <b>ÁO</b>
+                            <NavLink to ='/quan'>
+                                <div className='child-content'>
+                                    <div>
+                                        QUẦN
+                                    </div>
                                 </div>
-                            </div>
+                            </NavLink>
 
-                            <div className='child-content'>
-                                <div>
-                                    <b>QUẦN</b>
+                            <NavLink to ='/phu-kien'>
+                                <div className='child-content'>
+                                    <div>
+                                        PHỤ KIỆN
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className='child-content'>
-                                <div>
-                                    <b>PHỤ KIỆN</b>
-                                </div>
-                            </div>
+                            </NavLink>
                         </div>
 
                         <div className='right-content'>
@@ -67,11 +137,11 @@ class HomeHeader extends Component {
                     </div>
                 </div>
 
-                <div className='home-header-banner'>
+                {/* <div className='home-header-banner'>
                     <a href = 'https://highclub.vn/collections/sale'>
                         <img className='home-banner-content' src = {event} />
                     </a>
-                </div>
+                </div> */}
             </React.Fragment>
         );
     }

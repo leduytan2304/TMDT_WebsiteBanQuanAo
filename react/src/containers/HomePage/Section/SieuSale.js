@@ -6,6 +6,8 @@ import Slider from 'react-slick';
 // Import css files:
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import SieuSalePage from '../../Customer/SieuSale/SieuSalePage';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 class SieuSale extends Component {
@@ -24,7 +26,11 @@ class SieuSale extends Component {
                 <div className='sieusale-container'>
                     <div className='section-header'>
                         <span className='title-section title-sieusale'>Siêu Sale</span>
-                        <button className='btn-section'>XEM THÊM</button>
+                        <Link to ='/sieu-sale'>
+                            <button className='btn-section'>
+                                XEM THÊM
+                            </button>
+                        </Link>
                     </div>
                     <div className='sieusale-body'>
                         <Slider {...settings}>

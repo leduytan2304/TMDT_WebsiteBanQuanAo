@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HomeHeader from './HomeHeader';
+import HomeBanner from './HomeBanner';
 import SieuSale from './Section/SieuSale';
 import SPMoi from './Section/SPMoi';
 import HomeFooter from './HomeFooter';
@@ -15,6 +16,7 @@ class HomePage extends Component {
         return (
             <div>
                 <HomeHeader />
+                <HomeBanner />
                 <SieuSale />
                 <SPMoi />
                 <HomeFooter />

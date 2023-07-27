@@ -1,25 +1,25 @@
-.section-spmoi {
+.section {
     // border       : 1px solid red;
-    margin-top   : 20px;
+    margin-top   : 50px;
     margin-bottom: 50px;
 
-    .spmoi-container {
+    .section-container {
         // border: 1px solid green;
         margin: 0 30px;
 
-        .spmoi-content {
+        .section-content {
             // border: 1px solid blue;
 
             .section-header {
                 text-align: center;
             }
 
-            .spmoi-body {
+            .section-body {
                 display  : flex;
                 flex-wrap: wrap;
-                padding  : 0 10px;
+                padding  : 10px;
 
-                .spmoi-product {
+                .product {
                     height       : 100%;
                     padding      : 0 10px;
                     margin-bottom: 20px;
@@ -45,7 +45,7 @@
                 }
             }
 
-            .spmoi-footer {
+            .spmoi-home-footer {
                 display        : flex;
                 justify-content: center;
                 margin-bottom  : 30px;

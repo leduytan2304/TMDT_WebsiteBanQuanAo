@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link} from 'react-router-dom';
 import { ConnectedRouter as Router } from 'connected-react-router';
 import { history } from '../redux'
 import { ToastContainer } from 'react-toastify';
@@ -13,6 +13,11 @@ import { CustomToastCloseButton } from '../components/CustomToast';
 // import ConfirmModal from '../components/ConfirmModal';
 import HomePage from './HomePage/HomePage.js';
 import CustomScrollbars from '../components/CustomScrollbars';
+import SieuSalePage from './Customer/SieuSale/SieuSalePage';
+import SanPhamMoiPage from './Customer/SanPhamMoi/SanPhamMoiPage';
+import AoPage from './Customer/Ao/AoPage';
+import QuanPage from './Customer/Quan/QuanPage';
+import PhuKienPage from './Customer/PhuKien/PhuKienPage';
 
 class App extends Component {
 
@@ -47,6 +52,12 @@ class App extends Component {
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
+                                    <Route path={path.SIEUSALE} component={SieuSalePage} />
+                                    <Route path={path.SANPHAMMOI} component={SanPhamMoiPage} />
+                                    <Route path={path.AO} component={AoPage} />
+                                    <Route path={path.QUAN} component={QuanPage} />
+                                    <Route path={path.PHUKIEN} component={PhuKienPage} />
+                                    {/* <Route path="/users/:id" component={SieuSalePage} /> */}
                                 </Switch>
                             </CustomScrollbars>
                         </div>
