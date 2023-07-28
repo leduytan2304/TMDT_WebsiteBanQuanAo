@@ -57,7 +57,9 @@ class HomeHeader extends Component {
                     <div className='home-header-content'>
                         <div className='left-content'>
                             <i class="fas fa-bars"></i>
-                            <img className='header-logo' src={logo} />
+                            <Link to ='/home'>
+                                <img className='header-logo' src={logo} />
+                            </Link>
                             {/* <div className='header-logo'></div> */}
                         </div>
 
@@ -125,10 +127,12 @@ class HomeHeader extends Component {
                                 <input type='text' placeholder='Tìm kiếm sản phẩm' />
                                 <i class="fas fa-search"></i>
                             </div>
-                            
-                            <div className='login-icon'>
-                                <i class="fas fa-user-circle"></i>
-                            </div>
+
+                            <NavLink to ='/user-info'>
+                                <div className='login-icon'>
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                            </NavLink>
                             
                             <div className='cart-icon'>
                                 <i class="fas fa-shopping-cart"></i>
