@@ -1,6 +1,6 @@
 import { logger } from "redux-logger";
 import thunkMiddleware from "redux-thunk";
-import { routerMiddleware } from 'connected-react-router';
+// import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -27,7 +27,7 @@ const reduxStateSyncConfig = {
 
 const rootReducer = createRootReducer(history);
 const middleware = [
-    routerMiddleware(history),
+    // routerMiddleware(history),
     thunkMiddleware,
     createStateSyncMiddleware(reduxStateSyncConfig),
 ]

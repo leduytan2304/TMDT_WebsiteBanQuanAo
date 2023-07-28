@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from "connected-react-router";
+// import { push } from "connected-react-router";
+import { withRouter } from "react-router-dom";
 import * as actions from "../../store/actions";
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
@@ -98,8 +99,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        navigate: (path) => dispatch(push(path)),
-        // userLoginFail: () => dispatch(actions.adminLoginFail()),
+        // navigate: (path) => dispatch(push(path)),
+        // // userLoginFail: () => dispatch(actions.adminLoginFail()),
+        navigate: (path) => this.props.history.push(path),
         userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
     };
 };
