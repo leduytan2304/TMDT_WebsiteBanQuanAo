@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './HomeHeader.scss';
 import { FormattedMessage } from 'react-intl';
-import logo from '../../assets/logo4.png'
+import logo from '../../assets/logo10.png'
 import event from '../../assets/background-event.jpg'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NavLink } from 'react-router-dom';

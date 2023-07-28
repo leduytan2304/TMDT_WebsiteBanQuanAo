@@ -24,6 +24,11 @@
                 cursor: pointer;
             }
 
+            a {
+                height: 100%;
+                width: 100%;
+            }
+
             .header-logo {
                 // background: url('../../assets/logo4.png');
                 // background-repeat: no-repeat;
@@ -31,7 +36,7 @@
                 // background-position: center;
                 height: 100%;
                 width: 100%;
-                transform: scale(1, 0.6);
+                transform: scale(1.2, 1.3);
                 // margin-left: -40px;
                 cursor: pointer;
             }
