@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 // import { Route, Switch, Link} from 'react-router-dom';
 // import { ConnectedRouter as Router } from 'connected-react-router';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { history } from '../redux'
 import { ToastContainer } from 'react-toastify';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
@@ -19,6 +20,7 @@ import SanPhamMoiPage from './Customer/SanPhamMoi/SanPhamMoiPage';
 import AoPage from './Customer/Ao/AoPage';
 import QuanPage from './Customer/Quan/QuanPage';
 import PhuKienPage from './Customer/PhuKien/PhuKienPage';
+import DetailProduct from './Customer/Product/DetailProduct';
 
 class App extends Component {
 
@@ -58,7 +60,7 @@ class App extends Component {
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.PHUKIEN} component={PhuKienPage} />
-                                    {/* <Route path="/users/:id" component={SieuSalePage} /> */}
+                                    <Route path={path.DETAIL_PRODUCT} component={DetailProduct} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>
