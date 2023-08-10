@@ -17,7 +17,7 @@
     "socket.io": "^4.5.2"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon src/router/index.js",
     "dev": "nodemon index.js"
   },
   "devDependencies": {
