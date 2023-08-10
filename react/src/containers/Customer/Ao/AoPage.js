@@ -7,12 +7,25 @@ import HomeFooter from '../../HomePage/HomeFooter';
 
 import '../../HomePage/HomePage.scss';
 import '../Page.scss';
+import axios from 'axios';
+
+
 
 class AoPage extends Component {
+    componentDidMount(){
+        axios.get(`http://localhost:8000/api/v1/products`)
+          .then(res => {
+            const persons = res.data;
+            this.setState({ persons });
+          })
+          .catch(error => console.log(error));
+    };
+
+    state = {
+        persons: []
+      }
 
     render() {
-
-
         return (
             <div>
                 <HomeHeader />
@@ -34,154 +47,21 @@ class AoPage extends Component {
                                         <option value="best-selling" data-filter = "sortby = (sold_quantity:product=desc)">Bán chạy nhất</option>
                                     </select>
                                 </span> 
-                            </div>
-                            </div>
-                            <div className='section-body'>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
+
+                            <div>
+                            {this.state.persons.map(person => (
+                                <img 
+                                    key={person.id}
+                                    src={person.img1} 
+                                    alt={`Image ${person.id}`} 
+                                    style={{ width: '300px', height: 'auto', margin: '10px' }}
+                                />
+                            ))}
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
