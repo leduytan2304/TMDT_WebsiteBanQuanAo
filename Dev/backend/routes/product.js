@@ -1,9 +1,10 @@
 import express from "express";
-import { getImage } from "../controllers/product.js";
+import { getImagePant, getImageTShirt } from "../controllers/product.js";
 
 const router = express.Router()
 
-router.get("/", getImage)
+router.get("/ao", getImageTShirt)
+router.get("/quan", getImagePant)
 
 
 export default router

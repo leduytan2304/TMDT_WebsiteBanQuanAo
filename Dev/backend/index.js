@@ -19,7 +19,7 @@ app.use(
 );
 
 app.use(cookieParser());
-app.use("/api/image", productRoutes);
+app.use("/api/image/", productRoutes);
 
 app.listen(8000, () => {
   console.log("API working!");

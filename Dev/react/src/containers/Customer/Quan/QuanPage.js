@@ -4,11 +4,23 @@ import HomeHeader from '../../HomePage/HomeHeader';
 // import SieuSale from './Section/SieuSale';
 // import SPMoi from './Section/SPMoi';
 import HomeFooter from '../../HomePage/HomeFooter';
-
+import axios from 'axios';
 import '../../HomePage/HomePage.scss';
 import '../Page.scss';
 
 class QuanPage extends Component {
+    componentDidMount(){
+        axios.get(`http://localhost:8000/api/image`)
+          .then(res => {
+            const images = res.data;
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+    };
+
+    state = {
+        images: []
+      }
 
     render() {
 
@@ -53,150 +65,7 @@ class QuanPage extends Component {
                                         </div>
                                     </a>
                                 </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
+                            
                             </div>
                         </div>
                     </div>
