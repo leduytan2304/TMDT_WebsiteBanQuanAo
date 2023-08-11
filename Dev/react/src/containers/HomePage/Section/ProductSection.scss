@@ -1,0 +1,76 @@
+.section {
+    // border       : 1px solid red;
+    margin-top   : 50px;
+    margin-bottom: 50px;
+
+    .section-container {
+        // border: 1px solid green;
+        margin: 0 30px;
+
+        .section-content {
+            // border: 1px solid blue;
+
+            .section-header {
+                text-align: center;
+            }
+
+            .section-body {
+                display  : flex;
+                flex-wrap: wrap;
+                padding  : 10px;
+
+                .product {
+                    height       : 100%;
+                    padding      : 0 10px;
+                    margin-bottom: 20px;
+
+                    a {
+                        text-decoration: none;
+                        color          : black;
+                    }
+
+                    .product-img {
+                        height             : 325px;
+                        width              : 100%;
+                        background         : url('../../../assets/SieuSale/ao-1.svg');
+                        background-position: center center;
+                        background-repeat  : no-repeat;
+                        background-size    : inherit;
+                        background-color   : #f9f7f7;
+                    }
+
+                    .product-detail {
+                        background-color: #f9f7f7;
+                    }
+                }
+            }
+
+            .spmoi-home-footer {
+                display        : flex;
+                justify-content: center;
+                margin-bottom  : 30px;
+                margin-top     : 20px;
+                padding-top    : 20px;
+
+                a {
+                    text-decoration: none;
+                }
+
+                .btn-section {
+                    padding   : 10px 15px;
+                    border    : none;
+                    outline   : none;
+                    display   : block;
+                    background: #ebebeb;
+                    color     : black;
+                    cursor    : pointer;
+
+                    &:hover {
+                        color: #fff;
+                        background: #f7d800;
+                    }
+                }
+            }
+        }
+    }
+}

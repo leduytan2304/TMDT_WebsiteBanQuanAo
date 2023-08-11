@@ -1,0 +1,15 @@
+{
+    "menu": {
+        "admin": {
+            "catalog-product": "Danh mục và sản phẩm",
+            "catalog-manage": "Quản lý danh mục",
+            "product-manage": "Quản lý sản phẩm",
+            "customer": "Khách hàng",
+            "customer-manage": "Quản lý khách hàng",
+            "order": "Đơn hàng",
+            "order-manage": "Quản lý đơn hàng",
+            "sales": "Bán hàng",
+            "sales-statistics": "Thống kê doanh số bán hàng"
+        }
+    }
+}
