@@ -65,10 +65,7 @@ class AoPage extends Component {
                                         {this.state.images.map(image => (
                                        <a href=''>
                                         <div className='ao-product img-setting'>
-                                            <img key={image.ImageID}
-                                            src={image.ImageLink} 
-                                            alt={`Image ${image.ImageID}`} 
-                                            style={{ width: '300px', height: 'auto', margin: '10px' }} />
+                                            <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '300px', height: 'auto', margin: '10px' }} />
                                             <div className='product-discount'>
                                                 <span>-6%</span>
                                             </div>

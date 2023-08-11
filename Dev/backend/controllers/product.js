@@ -12,7 +12,7 @@ export const getImageTShirt = (req,res)=>{
 }
 
 export const getImagePant = (req,res)=>{
-  const q = "SELECT * FROM Product PD, Images IM where PD.ProductID = IM.ProductID and PD.CategoryID = 'CAT001';";
+  const q = "SELECT * FROM Product PD, Images IM where PD.ProductID = IM.ProductID and PD.CategoryID = 'CAT002';";
 
   db.query(q, (err, data) => {
     if (err) return res.status(500).json(err);
