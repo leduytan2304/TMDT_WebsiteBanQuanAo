@@ -9,12 +9,13 @@ import { FormattedMessage } from 'react-intl';
 
 
 
-class Login extends Component {
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             password: '',
+            repassword: '',
             isShowPassword: false,
             errMessage: ''
         }
@@ -28,23 +29,24 @@ class Login extends Component {
 
     handleOnChangePassword = (event) => {
         this.setState({
-            password: event.target.value
+            password: event.target.value,
+            repassword: event.target.value
         })
     }
 
+
     //Xử lý đăng nhập trong này. Video 35 36
     handleLogin = async () => {
-        console.log('username: ', this.state.username, 'password: ', this.state.password)
         console.log('all state: ', this.state)
 
         //mấy dòng dưới test chơi thôi, xem thêm video 35 36 để lấy ra lỗi :V
-        if (!this.state.username || !this.state.password) {
+        if (!this.state.username || !this.state.password || !this.state.repassword) {
             this.setState({
                 errMessage: 'Tên đăng nhập hoặc mật khẩu không đúng' 
             })
         }
         else {
-            this.props.userLoginSuccess(this.state.username)
+            this.props.userRegisterSuccess(this.state.username)
         }
     }
 
@@ -58,9 +60,9 @@ class Login extends Component {
         //JSX
         return (
             <div className='login-background'>
-                <div className='login-container'>
+                <div className='register-container'>
                     <div className='login-content row'>
-                        <div className= 'col-12 login-text'>Đăng nhập</div>
+                        <div className= 'col-12 login-text'>Đăng ký</div>
                         <div className= 'col-12 form-group login-input'>
                             <label>Email:</label>
                             <input type='text' 
@@ -83,23 +85,35 @@ class Login extends Component {
                                 </span>
                             </div>
                         </div>
+                        <div className= 'col-12 form-group login-input'>
+                            <label>Xác nhận mật khẩu:</label>
+                            <div className='hide-show-password'>
+                                <input type= {this.state.isShowPassword ? 'text' : 'password'}
+                                className='form-control' 
+                                placeholder='Xác nhận mật khẩu'
+                                onChange={(event) => this.handleOnChangePassword(event)}
+                                />
+                                <span onClick = {() => {this.handleShowHidePassword()}}>
+                                    <i class= {this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}></i>
+                                </span>
+                            </div>
+                        </div>
                         <div className='col-12' style={{ color: 'red' }}>
                             {this.state.errMessage}
                         </div>
                         <div className='col-12'>
-                            <button className='login-btn' onClick={() => {this.handleLogin()}}>Đăng nhập</button>
+                            <button className='login-btn' onClick={() => {this.handleLogin()}}>Đăng ký</button>
                         </div>
                         <div className='col-12'>
-                            <Link to ='/forgot-password' className='forgot-password'>Quên mật khẩu?</Link>
-                            <Link to ='/register' className = 'signin-link'>Đăng ký ngay</Link>
+                            <Link to ='/login' className='return-login'>Quay lại đăng nhập</Link>
                         </div>
-                        <div className='col-12 text-center mt-3'>
+                        {/* <div className='col-12 text-center mt-3'>
                             <span className='text-other-login'>Đăng nhập với:</span>
                         </div>
                         <div className='col-12 login-social'>
                             <i className="fab fa-google-plus-g google"></i>
                             <i className="fab fa-facebook-f facebook"></i>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -118,8 +132,8 @@ const mapDispatchToProps = dispatch => {
         // navigate: (path) => dispatch(push(path)),
         // // userLoginFail: () => dispatch(actions.adminLoginFail()),
         navigate: (path) => this.props.history.push(path),
-        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
+        userRegisterSuccess: (userInfor) => dispatch(actions.userRegisterSuccess(userInfor))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

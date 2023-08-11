@@ -17,6 +17,8 @@ class SPMoi extends Component {
         this.props.history.push(`/products/:1`);
     }
 
+    
+
     render() {
         return (
             <div>
