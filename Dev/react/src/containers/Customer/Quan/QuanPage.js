@@ -52,15 +52,17 @@ class QuanPage extends Component {
                             {this.state.images.map(image => (
                                 <div className='col-3 product'>
                                 <a href=''>
+                                    
                                     <div className='quan-product img-setting'>
+                                        <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '300px', height: 'auto' }} />
                                         <div className='product-discount'>
                                             <span>-6%</span>
                                         </div>
                                     </div>
                                     <div className='product-detail text-center'>
-                                        <div className='product-name'>Basic Tee - Brown/White </div>
+                                        <div className='product-name'>{image.ProductName} </div>
                                         <div className='product-price'>
-                                            <span>179,000₫</span>
+                                            <span>{image.ProductPrice}</span>
                                             <del>190,000₫</del>
                                         </div>
                                     </div>
