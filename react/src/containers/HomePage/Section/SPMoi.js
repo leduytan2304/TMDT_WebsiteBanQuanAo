@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { withRouter } from 'react-router';
 import './ProductSection.scss';
+import { getListProduct } from "../../../services/productApi";
+import axios from "axios";
 
 
 class SPMoi extends Component {
@@ -15,7 +17,34 @@ class SPMoi extends Component {
     handleViewDetailProduct = () => {
         console.log("ID sản phẩm");
         this.props.history.push(`/products/:1`);
-    }
+    };
+
+    // listProduct = useSelector(
+    //     (state) => state.product.products?.allProduct
+    //   );
+    
+    // const dispatch = useDispatch();
+    
+    //   useEffect(() => {
+    //     getListProduct(dispatch);
+    //   }, []);
+
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         arrProducts: []
+    //     };
+    // }
+
+    // async componentDidMount() {
+    //     let response = await axios.get(`http://localhost:8000/api/v1/products`);
+    //     if (response && response.errCode === 0){
+    //         this.setState({
+    //             arrProducts: response.data
+    //         });
+    //     }
+    //     console.log(response)
+    // }
 
     render() {
         return (
@@ -160,6 +189,7 @@ class SPMoi extends Component {
                                     <button className='btn-section'>XEM THÊM</button>
                                 </Link>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -171,7 +201,7 @@ class SPMoi extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+       
     };
 };
 
@@ -180,4 +210,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SPMoi));
+export default SPMoi;
