@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router-dom";
 import './ProductSection.scss';
-import { getListProduct } from "../../../services/productApi";
-import axios from "axios";
+// import { getListProduct } from "../../../services/productApi";
+// import axios from "axios";
 
 
 class SPMoi extends Component {
@@ -201,7 +201,7 @@ class SPMoi extends Component {
 
 const mapStateToProps = state => {
     return {
-       
+        isLoggedIn: state.user.isLoggedIn
     };
 };
 
@@ -210,4 +210,5 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default SPMoi;
+//không sửa dòng này, làm ơn :V
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SPMoi));
