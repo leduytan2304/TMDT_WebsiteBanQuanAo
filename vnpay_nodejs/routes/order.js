@@ -8,11 +8,12 @@ const request = require('request');
 const moment = require('moment');
 
 
-router.get('/id', function(req, res, next){
+router.get('/', function(req, res, next){
     res.render('orderlist', { title: 'Danh sách đơn hàng' })
 });
 
 router.get('/create_payment_url', function (req, res, next) {
+    
     res.render('order', {title: 'Tạo mới đơn hàng', amount: 10000})
 });
 
