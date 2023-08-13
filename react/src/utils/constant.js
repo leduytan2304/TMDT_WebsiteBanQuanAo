@@ -13,7 +13,7 @@ export const path = {
     INFO: '/user/info',
     ADDRESS: '/user/address',
     CART: '/user/cart',
-    DETAIL_PRODUCT: '/products/:id'
+    DETAIL_PRODUCT: '/products/:id',
 
     AO_DETAIL: '/chi-tiet-ao/:id',
     QUAN_DETAIL: '/chi-tiet-quan/:id'

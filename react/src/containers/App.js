@@ -70,7 +70,7 @@ class App extends Component {
                                     <Route path={path.ADDRESS} component={AddressPage} />
                                     <Route path={path.CART} component={CartPage} />
                                     {/* <Route path="/users/:id" component={SieuSalePage} /> */}
-                                    <Route path={path.DETAIL_PRODUCT} component={DetailProduct} />
+                                    {/* <Route path={path.DETAIL_PRODUCT} component={DetailProduct} /> */}
 
                                     <Route path={path.AO_DETAIL} component={AoDetail} />
                                     <Route path={path.QUAN_DETAIL} component={QuanDetail} />
