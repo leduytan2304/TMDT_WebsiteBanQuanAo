@@ -6,59 +6,47 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import * as actions from "../../store/actions";
 import './Signin.scss';
 import { FormattedMessage } from 'react-intl';
-import { handleLoginApi } from '../../services/userService';
 
-class Login extends Component {
+
+
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            username: '',
             password: '',
+            repassword: '',
             isShowPassword: false,
             errMessage: ''
         }
     }
 
-    handleOnChangeEmail = (event) => {
+    handleOnChangeUsername = (event) => {
         this.setState({
-            email: event.target.value
+            username: event.target.value
         })
     }
 
     handleOnChangePassword = (event) => {
         this.setState({
-            password: event.target.value
+            password: event.target.value,
+            repassword: event.target.value
         })
     }
 
+
     //Xử lý đăng nhập trong này. Video 35 36
     handleLogin = async () => {
-        this.setState({
-            errMessage: ''
-        })
-    
-        try {
-            let dataApi = await handleLoginApi(this.state.email, this.state.password);
-            if (dataApi == 0){
-                this.setState({
-                    errMessage: "Test"
-                })
-                console.log("Err code", dataApi)
-            }
-            if (dataApi !== 0) {
-                this.props.userLoginSuccess(dataApi.data)
-                console.log("Login success!")
-            }
+        console.log('all state: ', this.state)
+
+        //mấy dòng dưới test chơi thôi, xem thêm video 35 36 để lấy ra lỗi :V
+        if (!this.state.username || !this.state.password || !this.state.repassword) {
+            this.setState({
+                errMessage: 'Tên đăng nhập hoặc mật khẩu không đúng' 
+            })
         }
-        catch(e){
-            if(e.response){
-                if(e.response.data){
-                    this.setState({
-                        errMessage: e.response.data
-                    })
-                }
-            }
-            console.log("Lỗi", e.response)
+        else {
+            this.props.userRegisterSuccess(this.state.username)
         }
     }
 
@@ -69,18 +57,19 @@ class Login extends Component {
     }
 
     render() {
+        //JSX
         return (
             <div className='login-background'>
-                <div className='login-container'>
+                <div className='register-container'>
                     <div className='login-content row'>
-                        <div className= 'col-12 login-text'>Đăng nhập</div>
+                        <div className= 'col-12 login-text'>Đăng ký</div>
                         <div className= 'col-12 form-group login-input'>
                             <label>Email:</label>
                             <input type='text' 
                             className='form-control' 
                             placeholder='Nhập email'
-                            value={this.state.email}
-                            onChange={(event) => this.handleOnChangeEmail(event)}
+                            value={this.state.username}
+                            onChange={(event) => this.handleOnChangeUsername(event)}
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
@@ -96,23 +85,35 @@ class Login extends Component {
                                 </span>
                             </div>
                         </div>
+                        <div className= 'col-12 form-group login-input'>
+                            <label>Xác nhận mật khẩu:</label>
+                            <div className='hide-show-password'>
+                                <input type= {this.state.isShowPassword ? 'text' : 'password'}
+                                className='form-control' 
+                                placeholder='Xác nhận mật khẩu'
+                                onChange={(event) => this.handleOnChangePassword(event)}
+                                />
+                                <span onClick = {() => {this.handleShowHidePassword()}}>
+                                    <i class= {this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}></i>
+                                </span>
+                            </div>
+                        </div>
                         <div className='col-12' style={{ color: 'red' }}>
                             {this.state.errMessage}
                         </div>
                         <div className='col-12'>
-                            <button className='login-btn' onClick={() => {this.handleLogin()}}>Đăng nhập</button>
+                            <button className='login-btn' onClick={() => {this.handleLogin()}}>Đăng ký</button>
                         </div>
                         <div className='col-12'>
-                            <Link to ='/forgot-password' className='forgot-password'>Quên mật khẩu?</Link>
-                            <Link to ='/register' className = 'signin-link'>Đăng ký ngay</Link>
+                            <Link to ='/login' className='return-login'>Quay lại đăng nhập</Link>
                         </div>
-                        <div className='col-12 text-center mt-3'>
+                        {/* <div className='col-12 text-center mt-3'>
                             <span className='text-other-login'>Đăng nhập với:</span>
                         </div>
                         <div className='col-12 login-social'>
                             <i className="fab fa-google-plus-g google"></i>
                             <i className="fab fa-facebook-f facebook"></i>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -129,11 +130,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         // navigate: (path) => dispatch(push(path)),
-
         // // userLoginFail: () => dispatch(actions.adminLoginFail()),
         navigate: (path) => this.props.history.push(path),
-        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
+        userRegisterSuccess: (userInfor) => dispatch(actions.userRegisterSuccess(userInfor))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

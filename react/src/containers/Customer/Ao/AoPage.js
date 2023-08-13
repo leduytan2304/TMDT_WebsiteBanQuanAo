@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import HomeHeader from '../../HomePage/HomeHeader';
 // import SieuSale from './Section/SieuSale';
 // import SPMoi from './Section/SPMoi';
+import { withRouter } from "react-router-dom";
 import HomeFooter from '../../HomePage/HomeFooter';
 import '../../HomePage/HomePage.scss';
 import '../Page.scss';
@@ -23,6 +24,11 @@ class AoPage extends Component {
     state = {
         images: []
       }
+
+    handleViewDetailAo = () => {
+        console.log("ID sản phẩm");
+        this.props.history.push(`/chi-tiet-ao/:1`);
+    };
 
     render() {
         return (
@@ -62,7 +68,7 @@ class AoPage extends Component {
                                     ))} */}
 
                                     {this.state.images.map(image => (
-                                        <div className='col-3 product'>
+                                        <div className='col-3 product' onClick={() => this.handleViewDetailAo()}>
                                             <a href=''>
                                                 <div className='ao-product img-setting'>
                                                     <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />

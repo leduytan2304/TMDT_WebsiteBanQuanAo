@@ -2,6 +2,7 @@ export const path = {
     HOME: '/',
     HOMEPAGE: '/home',
     LOGIN: '/login',
+    REGISTER: '/register',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
     SIEUSALE: '/sieu-sale',
@@ -14,6 +15,8 @@ export const path = {
     CART: '/user/cart',
     DETAIL_PRODUCT: '/products/:id'
 
+    AO_DETAIL: '/chi-tiet-ao/:id',
+    QUAN_DETAIL: '/chi-tiet-quan/:id'
 };
 
 export const languages = {
