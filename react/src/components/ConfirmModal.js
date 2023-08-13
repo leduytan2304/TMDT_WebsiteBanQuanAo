@@ -100,7 +100,7 @@ class ConfirmModal extends Component {
 
 const mapStateToProps = state => {
     return {
-        lang: state.app.language,
+        // lang: state.app.language,
         contentOfConfirmModal: state.app.contentOfConfirmModal
     };
 };

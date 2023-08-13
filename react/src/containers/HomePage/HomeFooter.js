@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { NavLink } from 'react-router-dom';
 
 class HomeFooter extends Component {
     render() {
@@ -11,7 +12,7 @@ class HomeFooter extends Component {
                     <div className='footer-content'>
                         <div className='col-4 footer-content-child left-content'>
                             <div className='child-content-title'>
-                                <span>G3</span>
+                                <span>FashAll - Fashion for All</span>
                             </div>
                             <div className='store-info'>
                                 <h5>227 Nguyễn Văn Cừ, Phường 4, Quận 5, Tp Hồ Chí Minh</h5>
@@ -23,23 +24,23 @@ class HomeFooter extends Component {
 
                         <div className='col-4 footer-content-child center-content'>
                             <div className='child-content-title'>
-                                <span>Trợ giúp</span>
+                                <span>Danh mục sản phẩm</span>
                             </div>
-                            <a className='center-content-link' href=''>
-                                <div className='center-content-text'>Chính sách mua sắm</div>
-                            </a>
-                            <a className='center-content-link' href=''>
-                                <div className='center-content-text'>Chính sách trả hàng</div>
-                            </a>
-                            <a className='center-content-link' href=''>
-                                <div className='center-content-text'>Chính sách giao hàng</div>
-                            </a>
-                            <a className='center-content-link' href=''>
-                                <div className='center-content-text'>Chính sách bảo mật</div>
-                            </a>
-                            <a className='center-content-link' href=''>
-                                <div className='center-content-text'>Tuyển dụng</div>
-                            </a>
+                            <NavLink to ='/sieu-sale' className='center-content-link' href=''>
+                                <div className='center-content-text'>Siêu Sale</div>
+                            </NavLink>
+                            <NavLink to ='/san-pham-moi' className='center-content-link' href=''>
+                                <div className='center-content-text'>Sản phẩm mới</div>
+                            </NavLink>
+                            <NavLink to ='/ao' className='center-content-link' href=''>
+                                <div className='center-content-text'>Áo</div>
+                            </NavLink>
+                            <NavLink to ='/quan' className='center-content-link' href=''>
+                                <div className='center-content-text'>Quần</div>
+                            </NavLink>
+                            <NavLink to ='/phu-kien' className='center-content-link' href=''>
+                                <div className='center-content-text'>Phụ kiện</div>
+                            </NavLink>
                         </div>
 
                         <div className='col-4 footer-content-child right-content'>

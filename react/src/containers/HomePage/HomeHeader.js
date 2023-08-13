@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './HomeHeader.scss';
 import { FormattedMessage } from 'react-intl';
-import logo from '../../assets/logo4.png'
+import logo from '../../assets/logo10.png'
 import event from '../../assets/background-event.jpg'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NavLink } from 'react-router-dom';
 
 class HomeHeader extends Component {
 
+    
     // state = {
     //     links: [
     //         {
@@ -57,7 +58,9 @@ class HomeHeader extends Component {
                     <div className='home-header-content'>
                         <div className='left-content'>
                             <i class="fas fa-bars"></i>
-                            <img className='header-logo' src={logo} />
+                            <Link to ='/home'>
+                                <img className='header-logo' src={logo} />
+                            </Link>
                             {/* <div className='header-logo'></div> */}
                         </div>
 
@@ -124,14 +127,12 @@ class HomeHeader extends Component {
                             <div className='search'>
                                 <input type='text' placeholder='Tìm kiếm sản phẩm' />
                                 <i class="fas fa-search"></i>
-                            </div>
-                            
+                            </div>                    
                             <NavLink to='/user/info'>
                             <div className='login-icon'>
                                 <i class="fas fa-user-circle"></i>
                             </div>
                             </NavLink>
-
                             <div className='cart-icon'>
                                 <i class="fas fa-shopping-cart"></i>
                             </div>

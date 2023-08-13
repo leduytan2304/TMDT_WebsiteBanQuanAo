@@ -11,7 +11,9 @@ export const path = {
     PHUKIEN: '/phu-kien',
     INFO: '/user/info',
     ADDRESS: '/user/address',
-    CART: '/user/cart'
+    CART: '/user/cart',
+    DETAIL_PRODUCT: '/products/:id'
+
 };
 
 export const languages = {

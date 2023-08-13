@@ -23,6 +23,7 @@ import UserPage from './User/Info/Info';
 import AddressPage from './User/Address/Address';
 import CartPage from './User/Cart/Cart';
 
+
 class App extends Component {
 
     handlePersistorState = () => {
@@ -63,8 +64,9 @@ class App extends Component {
                                     <Route path={path.INFO} component={UserPage} />
                                     <Route path={path.ADDRESS} component={AddressPage} />
                                     <Route path={path.CART} component={CartPage} />
-
                                     {/* <Route path="/users/:id" component={SieuSalePage} /> */}
+                                    <Route path={path.DETAIL_PRODUCT} component={DetailProduct} />
+
                                 </Switch>
                             </CustomScrollbars>            
                         </div>
