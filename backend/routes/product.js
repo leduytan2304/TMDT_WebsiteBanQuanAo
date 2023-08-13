@@ -8,4 +8,5 @@ router.get("/quan", getImagePant)
 router.get("/do",getImage)
 
 
+
 export default router
