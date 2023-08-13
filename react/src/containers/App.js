@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 // import { Route, Switch, Link} from 'react-router-dom';
 // import { ConnectedRouter as Router } from 'connected-react-router';
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Router, Route, Switch } from 'react-router-dom';
 import { history } from '../redux'
 import { ToastContainer } from 'react-toastify';
@@ -23,6 +22,9 @@ import QuanPage from './Customer/Quan/QuanPage';
 import PhuKienPage from './Customer/PhuKien/PhuKienPage';
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
+import UserPage from './User/Info/Info';
+import AddressPage from './User/Address/Address';
+import CartPage from './User/Cart/Cart';
 
 class App extends Component {
 
@@ -49,7 +51,6 @@ class App extends Component {
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
-
                         <div className="content-container">
                             <CustomScrollbars style = {{height: '100vh', width: '100%'}}>
                                 <Switch>
@@ -62,18 +63,20 @@ class App extends Component {
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.PHUKIEN} component={PhuKienPage} />
-                                    <Route path={path.AO_DETAIL} component={AoDetail} />
-                                    <Route path={path.QUAN_DETAIL} component={QuanDetail} />
-                                </Switch>
-                            </CustomScrollbars>
-                        </div>
+                                    <Route path={path.INFO} component={UserPage} />
+                                    <Route path={path.ADDRESS} component={AddressPage} />
+                                    <Route path={path.CART} component={CartPage} />
 
+                                    {/* <Route path="/users/:id" component={SieuSalePage} /> */}
+                                </Switch>
+                            </CustomScrollbars>            
+                        </div>
                         <ToastContainer
                             className="toast-container" toastClassName="toast-item" bodyClassName="toast-item-body"
                             autoClose={false} hideProgressBar={true} pauseOnHover={false}
                             pauseOnFocusLoss={true} closeOnClick={false} draggable={false}
                             closeButton={<CustomToastCloseButton />}
-                        />
+                        />  
                     </div>
                 </Router>
             </Fragment>
