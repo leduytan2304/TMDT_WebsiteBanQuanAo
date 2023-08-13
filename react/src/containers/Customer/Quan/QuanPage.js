@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import HomeHeader from '../../HomePage/HomeHeader';
 // import SieuSale from './Section/SieuSale';
 // import SPMoi from './Section/SPMoi';
+import { withRouter } from "react-router-dom";
 import HomeFooter from '../../HomePage/HomeFooter';
 import axios from 'axios';
 import '../../HomePage/HomePage.scss';
@@ -21,6 +22,11 @@ class QuanPage extends Component {
     state = {
         images: []
       }
+
+    handleViewDetailQuan = () => {
+        console.log("ID sản phẩm");
+        this.props.history.push(`/chi-tiet-quan/:1`);
+    };
 
     render() {
 
@@ -50,7 +56,7 @@ class QuanPage extends Component {
                             </div>
                             <div className='section-body'>
                             {this.state.images.map(image => (
-                                <div className='col-3 product'>
+                                <div className='col-3 product' onClick={() => this.handleViewDetailQuan()}>
                                     <a href=''>
                                         <div className='quan-product img-setting'>
                                             <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '300px', height: 'auto' }} />

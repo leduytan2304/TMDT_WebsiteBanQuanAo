@@ -3,7 +3,7 @@
     height: 100vh;
     background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
 
-    .login-container {
+    .login-container, .register-container {
         width: 380px;
         border-radius: 10px;
         background-color: white;
@@ -13,7 +13,6 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 450px;
 
         .login-content {
             padding: 10px;
@@ -23,10 +22,11 @@
                 font-weight: 600;
                 font-size: 24px;
                 padding-top: 10px;
+                padding-bottom: 10px;
             }
 
             .login-input {
-                margin: 7px 0;
+                margin: 10px 0;
 
                 .hide-show-password {
                     position: relative;
@@ -53,7 +53,19 @@
             }
 
             .forgot-password {
-                font-size: 12px;
+                font-size: 13px;
+                text-decoration: none;
+            }
+
+            .signin-link {
+                float: right;
+                font-size: 13px;
+                text-decoration: none;
+            }
+            
+            .return-login {
+                font-size: 13px;
+                text-decoration: none;
             }
 
             .login-social {
@@ -88,6 +100,12 @@
                     }
             }
         }
+    }
+    .login-container {
+        height: 450px;
+    }
+    .register-container {
+        height: 450px;
     }
     @media screen and (max-width: 380px) {
         .login-container {
