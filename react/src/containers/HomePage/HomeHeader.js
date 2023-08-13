@@ -6,6 +6,7 @@ import logo from '../../assets/logo10.png'
 import event from '../../assets/background-event.jpg'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NavLink } from 'react-router-dom';
+import * as actions from "../../store/actions";
 
 class HomeHeader extends Component {
 
@@ -51,6 +52,7 @@ class HomeHeader extends Component {
 
     render() {
         // const { links, activeLink } = this.state;
+        const { processLogout } = this.props;
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -137,6 +139,11 @@ class HomeHeader extends Component {
                             <div className='cart-icon'>
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
+
+                            <div className="btn btn-logout" onClick={processLogout} title='Log out'>
+                                <i className="fas fa-sign-out-alt"></i>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -160,6 +167,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        processLogout: () => dispatch(actions.processLogout()),
     };
 };
 

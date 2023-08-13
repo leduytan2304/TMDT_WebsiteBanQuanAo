@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { push } from "connected-react-router";
 import { withRouter } from "react-router-dom";
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import * as actions from "../../store/actions";
-import './Login.scss';
+import './Signin.scss';
 import { FormattedMessage } from 'react-intl';
 
 
@@ -14,7 +15,8 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            isShowPassword: false
+            isShowPassword: false,
+            errMessage: ''
         }
     }
 
@@ -30,10 +32,20 @@ class Login extends Component {
         })
     }
 
+    //Xử lý đăng nhập trong này. Video 35 36
     handleLogin = async () => {
         console.log('username: ', this.state.username, 'password: ', this.state.password)
         console.log('all state: ', this.state)
-        this.props.userLoginSuccess(this.state.username)
+
+        //mấy dòng dưới test chơi thôi, xem thêm video 35 36 để lấy ra lỗi :V
+        if (!this.state.username || !this.state.password) {
+            this.setState({
+                errMessage: 'Tên đăng nhập hoặc mật khẩu không đúng' 
+            })
+        }
+        else {
+            this.props.userLoginSuccess(this.state.username)
+        }
     }
 
     handleShowHidePassword = () => {
@@ -48,22 +60,22 @@ class Login extends Component {
             <div className='login-background'>
                 <div className='login-container'>
                     <div className='login-content row'>
-                        <div className= 'col-12 login-text'>Login</div>
+                        <div className= 'col-12 login-text'>Đăng nhập</div>
                         <div className= 'col-12 form-group login-input'>
-                            <label>Username:</label>
+                            <label>Email:</label>
                             <input type='text' 
                             className='form-control' 
-                            placeholder='Enter your username'
+                            placeholder='Nhập email'
                             value={this.state.username}
                             onChange={(event) => this.handleOnChangeUsername(event)}
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
-                            <label>Password:</label>
+                            <label>Mật khẩu:</label>
                             <div className='hide-show-password'>
                                 <input type= {this.state.isShowPassword ? 'text' : 'password'}
                                 className='form-control' 
-                                placeholder='Enter your password'
+                                placeholder='Nhập mật khẩu'
                                 onChange={(event) => this.handleOnChangePassword(event)}
                                 />
                                 <span onClick = {() => {this.handleShowHidePassword()}}>
@@ -71,14 +83,18 @@ class Login extends Component {
                                 </span>
                             </div>
                         </div>
-                        <div className='col-12'>
-                            <button className='login-btn' onClick={() => {this.handleLogin()}}>Login</button>
+                        <div className='col-12' style={{ color: 'red' }}>
+                            {this.state.errMessage}
                         </div>
                         <div className='col-12'>
-                            <span className='forgot-password'>Forgot your password?</span>
+                            <button className='login-btn' onClick={() => {this.handleLogin()}}>Đăng nhập</button>
+                        </div>
+                        <div className='col-12'>
+                            <Link to ='/forgot-password' className='forgot-password'>Quên mật khẩu?</Link>
+                            <Link to ='/register' className = 'signin-link'>Đăng ký ngay</Link>
                         </div>
                         <div className='col-12 text-center mt-3'>
-                            <span className='text-other-login'>Or Login with:</span>
+                            <span className='text-other-login'>Đăng nhập với:</span>
                         </div>
                         <div className='col-12 login-social'>
                             <i className="fab fa-google-plus-g google"></i>

@@ -10,6 +10,7 @@ import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authenticati
 import { path } from '../utils'
 import Home from '../routes/Home';
 import Login from './Auth/Login';
+import Register from './Auth/Register';
 import System from '../routes/System';
 import { CustomToastCloseButton } from '../components/CustomToast';
 // import ConfirmModal from '../components/ConfirmModal';
@@ -20,7 +21,8 @@ import SanPhamMoiPage from './Customer/SanPhamMoi/SanPhamMoiPage';
 import AoPage from './Customer/Ao/AoPage';
 import QuanPage from './Customer/Quan/QuanPage';
 import PhuKienPage from './Customer/PhuKien/PhuKienPage';
-import DetailProduct from './Customer/Product/DetailProduct';
+import AoDetail from './Customer/Ao/AoDetail';
+import QuanDetail from './Customer/Quan/QuanDetail';
 
 class App extends Component {
 
@@ -53,14 +55,15 @@ class App extends Component {
                                 <Switch>
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
-                                    <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
-                                    <Route path={path.HOMEPAGE} component={HomePage} />
+                                    <Route path={path.REGISTER} component={userIsNotAuthenticated(Register)} />
+                                    <Route path={path.HOMEPAGE} component={userIsAuthenticated(HomePage)} />
                                     <Route path={path.SIEUSALE} component={SieuSalePage} />
                                     <Route path={path.SANPHAMMOI} component={SanPhamMoiPage} />
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.PHUKIEN} component={PhuKienPage} />
-                                    <Route path={path.DETAIL_PRODUCT} component={DetailProduct} />
+                                    <Route path={path.AO_DETAIL} component={AoDetail} />
+                                    <Route path={path.QUAN_DETAIL} component={QuanDetail} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

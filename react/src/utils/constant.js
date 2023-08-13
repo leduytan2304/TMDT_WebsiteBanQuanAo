@@ -2,6 +2,7 @@ export const path = {
     HOME: '/',
     HOMEPAGE: '/home',
     LOGIN: '/login',
+    REGISTER: '/register',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
     SIEUSALE: '/sieu-sale',
@@ -9,7 +10,8 @@ export const path = {
     AO: '/ao',
     QUAN: '/quan',
     PHUKIEN: '/phu-kien',
-    DETAIL_PRODUCT: '/products/:id'
+    AO_DETAIL: '/chi-tiet-ao/:id',
+    QUAN_DETAIL: '/chi-tiet-quan/:id'
 };
 
 export const languages = {

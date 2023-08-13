@@ -11,8 +11,6 @@ import './HomePage.scss';
 class HomePage extends Component {
 
     render() {
-
-
         return (
             <div>
                 <HomeHeader />

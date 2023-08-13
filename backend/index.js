@@ -1,15 +1,28 @@
-const express = require('express')
-const app = express()
-//const db = require('./DB/database') 
-const route = require('./src/router/index') 
+import express from "express";
+import productRoutes from "./routes/product.js";
+import payment from "./routes/payment.js"
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
-// route(app);
-app.get('/api',(req,res)=>{
-    res.json({"user":["user1","user2","user3"]})
-})
-app.get('/home',(req,res)=>{
-    res.json('a')
-})
-app.listen(8000, ()=>{
-    console.log("server is online");
-})
+const app = express();
+
+//middlewares
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+
+app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
+
+app.use(cookieParser());
+app.use("/api/image/", productRoutes);
+app.use("api/payment",payment);
+
+app.listen(8000, () => {
+  console.log("API working!");
+});
