@@ -129,15 +129,19 @@ class HomeHeader extends Component {
                                 <input type='text' placeholder='Tìm kiếm sản phẩm' />
                                 <i class="fas fa-search"></i>
                             </div>
-                            
-                            <NavLink to='/user/info'>
-                            <div className='login-icon'>
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            </NavLink>
 
+                            <NavLink to ='/user-info'>
+                                <div className='login-icon'>
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                            </NavLink>
+                            
                             <div className='cart-icon'>
                                 <i class="fas fa-shopping-cart"></i>
+                            </div>
+
+                            <div className="btn btn-logout" onClick={processLogout} title='Log out'>
+                                <i className="fas fa-sign-out-alt"></i>
                             </div>
                             
                         </div>
