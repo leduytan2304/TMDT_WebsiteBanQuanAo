@@ -49,7 +49,6 @@ class AoPage extends Component {
                                 </div>
                             </div>
                             <div className='section-body'>
-                                <div className='col-3 product'>
                                
                                     {/* {this.state.images.map(image => (
                                         <img 
@@ -62,23 +61,24 @@ class AoPage extends Component {
                                         
                                     ))} */}
 
-                                        {this.state.images.map(image => (
-                                       <a href=''>
-                                        <div className='ao-product img-setting'>
-                                            <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '300px', height: 'auto', margin: '10px' }} />
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
+                                    {this.state.images.map(image => (
+                                        <div className='col-3 product'>
+                                            <a href=''>
+                                                <div className='ao-product img-setting'>
+                                                    <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
+                                                    <div className='product-discount'>
+                                                        <span>-6%</span>
+                                                    </div>
+                                                </div>
+                                                <div className='product-detail text-center'>
+                                                    <div className='product-name'>{image.ProductName} </div>
+                                                    <div className='product-price'>
+                                                        <span>{image.ProductPrice}</span>
+                                                        <del>190,000₫</del>
+                                                    </div>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>{image.ProductName} </div>
-                                            <div className='product-price'>
-                                                <span>{image.ProductPrice}</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                       
                                         
                                     ))}
                                 
@@ -96,7 +96,6 @@ class AoPage extends Component {
                                             </div>
                                         </div>
                                     </a> */}
-                                </div>
                             </div>
                             {/* <div>
                             {this.state.images.map(image => (
