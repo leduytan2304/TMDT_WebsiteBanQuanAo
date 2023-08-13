@@ -45,7 +45,7 @@
             a {
                 text-decoration: none;
             }
-
+ 
             .child-content {
                 cursor: pointer;
                 color: #249b16;
@@ -98,6 +98,12 @@
                     border: none;
                     outline: none;
                 }
+            }
+        }
+        .login-icon{
+            color:#000;
+            &:hover{
+                color: #3d3d3d
             }
         }
     }

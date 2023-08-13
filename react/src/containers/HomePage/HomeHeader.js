@@ -126,13 +126,16 @@ class HomeHeader extends Component {
                                 <i class="fas fa-search"></i>
                             </div>
                             
+                            <NavLink to='/user/info'>
                             <div className='login-icon'>
                                 <i class="fas fa-user-circle"></i>
                             </div>
-                            
+                            </NavLink>
+
                             <div className='cart-icon'>
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

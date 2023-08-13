@@ -7,7 +7,7 @@ import event from '../../assets/background-event.jpg'
 
 class HomeBanner extends Component {
     render() {
-
+ 
         return (
             <div className='home-banner'>
                 <a href = 'https://highclub.vn/collections/sale'>

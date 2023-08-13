@@ -8,7 +8,10 @@ export const path = {
     SANPHAMMOI: '/san-pham-moi',
     AO: '/ao',
     QUAN: '/quan',
-    PHUKIEN: '/phu-kien'
+    PHUKIEN: '/phu-kien',
+    INFO: '/user/info',
+    ADDRESS: '/user/address',
+    CART: '/user/cart'
 };
 
 export const languages = {

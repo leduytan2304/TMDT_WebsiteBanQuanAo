@@ -11,8 +11,6 @@ import './HomePage.scss';
 class HomePage extends Component {
 
     render() {
-
-
         return (
             <div>
                 <HomeHeader />
@@ -23,7 +21,7 @@ class HomePage extends Component {
             </div>
         );
     }
-
+ 
 }
 
 const mapStateToProps = state => {
