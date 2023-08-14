@@ -1,6 +1,7 @@
 import express from "express";
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/product.js";
+import detailProduct from "./routes/detailProduct.js"
 // import payment from "./routes/payment.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -21,8 +22,10 @@ app.use(
 );
 
 app.use(cookieParser());
+app.use("/api/image", productRoutes);
+app.use("/api/chi-tiet-do",detailProduct)
 app.use("/api", authRoutes); // API để login/register
-app.use("/api/image/", productRoutes);
+
 // app.use("api/payment",payment);
 
 app.listen(8000, () => {

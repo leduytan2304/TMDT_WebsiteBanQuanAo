@@ -32,4 +32,17 @@ export const getImage = (req,res)=>{
   });
 }
 
+export const getDetail = (req,res)=>{
+  
+  const q = 'SELECT * FROM Product PD, Images IM where PD.ProductID = IM.ProductID and PD.ProductID = "' + req.params.productID  +'" ';
+  console.log(req.params);
+  db.query(q, (err, data) => {
+    if (err) return res.status(500).json(err);
+    
+    return res.status(200).json(data);
+    
+  });
+}
+
+
 

@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
 
 import '../DetailProduct.scss';
-
+import axios from 'axios';
 
 
 
@@ -20,10 +19,24 @@ class AoDetail extends Component {
           quantityNum: '1',
         };
     }
+
+
+    componentDidMount(){
+        axios.get(`http://localhost:8000/api/chi-tiet-do/:productID`)
+          .then(res => {
+            const images = res.data;
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+    };
+
+    state = {
+        images: []
+      }
     handleSizeChange = (event) => {
         this.setState({ selectedSize: event.target.value });
     };
-
+    
     handleQuantityChange = (change) => {
         const quantityInput = document.getElementsByName('quantity')[0];
         let currentValue = parseInt(quantityInput.value);
@@ -42,7 +55,7 @@ class AoDetail extends Component {
     handleBuyProduct = () => {
         alert('Mua hàng')
     }
-
+    
     render() {
         const { selectedSize } = this.state;
         // const { quantityNum } = this.state;
@@ -57,11 +70,13 @@ class AoDetail extends Component {
         return (
            <Fragment>
             <HomeHeader />
+            
             <div className='product-detail-header'>
                 <div className='header-title'>
                     Thông tin sản phẩm
                 </div>
             </div>
+            {this.state.images.map(image => (
             <div className='container'>
                 <div className='row product-detail-content'>
                     <div className='col-md-6 product-detail-img'>
@@ -88,8 +103,8 @@ class AoDetail extends Component {
                     </div>
                     <div className='col-md-6 product-detail-desc'>
                         <div className='product-name'>
-                            <h1>Merry Tee - Black</h1>
-                            <span>MSP: ABC123</span>
+                            <h1>{image.ProductName}</h1>
+                            <span>MSP: {image.ProductID}</span>
                         </div>
                         <div className='product-price'>
                             <span className='pro-discount'>-24%</span>
@@ -140,6 +155,7 @@ class AoDetail extends Component {
                     </div>
                 </div>
             </div>
+            ))}
             <HomeFooter />
            </Fragment>
         );

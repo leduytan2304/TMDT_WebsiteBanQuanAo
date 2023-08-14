@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "sql6637195",
+    "password": "EZUmHNNy3R",
+    "host": "sql6.freesqldatabase.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "sql6637195",
+    "password": "EZUmHNNy3R",
+    "host": "sql6.freesqldatabase.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sql6637195",
+    "password": "EZUmHNNy3R",
+    "host": "sql6.freesqldatabase.com",
+    "dialect": "mysql"
+  }
+}
