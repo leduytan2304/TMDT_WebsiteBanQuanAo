@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
 
 import './Cart.scss';
 import sp from '../../../assets/Ao/ao-2.png';
+import NumberInput from './number-i'; 
 
 class Cart extends Component {
+    
     render() {
 
         return (
@@ -61,7 +64,8 @@ class Cart extends Component {
                                 <div class="col-7" align="left">
                                     <b>Áo thun Highclub Signature - 5 Colors</b>
                                     <p>Nâu / M</p>
-                                    <input type="number" />
+                                    <NumberInput />
+                                    
                                 </div>
 
                                 <div class="col close-but" align="right"> 
@@ -81,6 +85,7 @@ class Cart extends Component {
                                 <div class="col-7" align="left">
                                     <b>Áo thun Highclub Signature - 5 Colors</b>
                                     <p>Nâu / M</p>
+                                    <NumberInput />
                                 </div>
 
                                 <div class="col close-but" align="right"> 
@@ -100,6 +105,7 @@ class Cart extends Component {
                                 <div class="col-7" align="left">
                                     <b>Áo thun Highclub Signature - 5 Colors</b>
                                     <p>Nâu / M</p>
+                                    <NumberInput />
                                 </div>
 
                                 <div class="col close-but" align="right"> 

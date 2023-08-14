@@ -138,3 +138,19 @@
         }
     }
 }
+
+.numinp{
+    padding: 0;
+    padding-left: 10.5px;
+    .btnin{
+        padding: 0;
+        cursor: pointer;
+    }
+    .val{
+        padding: 0;
+        
+    }
+    i{
+        font-size: 20px;
+    }
+}

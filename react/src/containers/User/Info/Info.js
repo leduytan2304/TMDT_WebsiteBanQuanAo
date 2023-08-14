@@ -67,6 +67,10 @@ class Info extends Component {
                                 nguyenvana@gmail.com <br />
                                 0123456789 <br />
                                 227 Nguyễn Văn Cừ, Q.5, TP HCM <br />
+
+                                <button type="button" class="btn btn-secondary edit">
+                                    Chỉnh sửa
+                                </button>  
                             </div>
                         </div>
 
