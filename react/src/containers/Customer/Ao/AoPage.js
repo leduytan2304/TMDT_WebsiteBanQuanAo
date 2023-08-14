@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import HomeFooter from '../../HomePage/HomeFooter';
 import '../../HomePage/HomePage.scss';
 import '../Page.scss';
-import axios from 'axios';
+
 
 
 class AoPage extends Component {
