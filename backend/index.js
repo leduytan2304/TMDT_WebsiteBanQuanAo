@@ -1,4 +1,5 @@
 import express from "express";
+import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/product.js";
 // import payment from "./routes/payment.js"
 import cors from "cors";
@@ -20,6 +21,7 @@ app.use(
 );
 
 app.use(cookieParser());
+app.use("/api", authRoutes); // API để login/register
 app.use("/api/image/", productRoutes);
 // app.use("api/payment",payment);
 

@@ -21,6 +21,11 @@ import SanPhamMoiPage from './Customer/SanPhamMoi/SanPhamMoiPage';
 import AoPage from './Customer/Ao/AoPage';
 import QuanPage from './Customer/Quan/QuanPage';
 import PhuKienPage from './Customer/PhuKien/PhuKienPage';
+import UserPage from './User/Info/Info';
+import AddressPage from './User/Address/Address';
+import CartPage from './User/Cart/Cart';
+import PaymentPage from './User/Payment/Payment';
+
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
 
@@ -56,12 +61,19 @@ class App extends Component {
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.REGISTER} component={userIsNotAuthenticated(Register)} />
-                                    <Route path={path.HOMEPAGE} component={userIsAuthenticated(HomePage)} />
+                                    <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.SIEUSALE} component={SieuSalePage} />
                                     <Route path={path.SANPHAMMOI} component={SanPhamMoiPage} />
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.PHUKIEN} component={PhuKienPage} />
+                                    <Route path={path.INFO} component={UserPage} />
+                                    <Route path={path.ADDRESS} component={AddressPage} />
+                                    <Route path={path.CART} component={CartPage} />
+                                    <Route path={path.PAYMENT} component={PaymentPage} />
+                                    {/* <Route path="/users/:id" component={SieuSalePage} /> */}
+                                    {/* <Route path={path.DETAIL_PRODUCT} component={DetailProduct} /> */}
+
                                     <Route path={path.AO_DETAIL} component={AoDetail} />
                                     <Route path={path.QUAN_DETAIL} component={QuanDetail} />
                                 </Switch>

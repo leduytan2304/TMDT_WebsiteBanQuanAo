@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { push } from "connected-react-router";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import * as actions from "../../store/actions";
 import './Signin.scss';
-import { FormattedMessage } from 'react-intl';
-
-
+// import { FormattedMessage } from 'react-intl';
+import { handleLoginApi } from '../../services/userService';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             isShowPassword: false,
             errMessage: ''
         }
     }
 
-    handleOnChangeUsername = (event) => {
+    handleOnChangeEmail = (event) => {
         this.setState({
-            username: event.target.value
+            email: event.target.value
         })
     }
 
@@ -34,17 +33,32 @@ class Login extends Component {
 
     //Xử lý đăng nhập trong này. Video 35 36
     handleLogin = async () => {
-        console.log('username: ', this.state.username, 'password: ', this.state.password)
-        console.log('all state: ', this.state)
-
-        //mấy dòng dưới test chơi thôi, xem thêm video 35 36 để lấy ra lỗi :V
-        if (!this.state.username || !this.state.password) {
-            this.setState({
-                errMessage: 'Tên đăng nhập hoặc mật khẩu không đúng' 
-            })
+        this.setState({
+            errMessage: ''
+        })
+    
+        try {
+            let dataApi = await handleLoginApi(this.state.email, this.state.password);
+            if (dataApi == 0){
+                this.setState({
+                    errMessage: "Test"
+                })
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                this.props.userLoginSuccess(dataApi.data)
+                console.log("Login success!")
+            }
         }
-        else {
-            this.props.userLoginSuccess(this.state.username)
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            console.log("Lỗi", e.response)
         }
     }
 
@@ -55,7 +69,6 @@ class Login extends Component {
     }
 
     render() {
-        //JSX
         return (
             <div className='login-background'>
                 <div className='login-container'>
@@ -66,8 +79,8 @@ class Login extends Component {
                             <input type='text' 
                             className='form-control' 
                             placeholder='Nhập email'
-                            value={this.state.username}
-                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            value={this.state.email}
+                            onChange={(event) => this.handleOnChangeEmail(event)}
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
@@ -116,6 +129,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         // navigate: (path) => dispatch(push(path)),
+
         // // userLoginFail: () => dispatch(actions.adminLoginFail()),
         navigate: (path) => this.props.history.push(path),
         userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))

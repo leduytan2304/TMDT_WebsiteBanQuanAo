@@ -1,0 +1,68 @@
+.address-page{
+    height: auto;
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 50px;
+    h1{
+        font-size:32px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .content-info{
+        padding-top: 80px;
+        .option{
+        
+            color: #000;
+            font-size: 15px;
+            line-height: 30px;
+            &:hover{
+                color: #ff0000;
+                transition: 0.2s;
+            }
+        }
+        .active .option{
+            font-weight: bold;
+            &:hover{
+                color: #000;
+            }
+        }
+        
+        a{
+            text-decoration: none;
+        }
+        .signout{
+            width: 70%;
+            margin-top: 30px;
+        }
+        form{
+            width: 100%;
+            line-height: 2;
+            .list-group-item{
+                width: 500px;
+            }
+            .list-group-item-light{
+                margin-bottom: 20px;
+            }
+            #title{
+                font-weight: bold;
+            }
+            input{
+                margin-top: 20px;
+            }
+        }
+        .add-new{
+            width:200px;
+            background-color: #FF0000;
+        }
+        .vertical-line-container{
+            display: flex;
+            .vertical-line{
+                width: 1.5px;
+                height: 200px; /* Điều chỉnh độ dài của đường kẻ dọc */
+                background-color: black; /* Màu của đường kẻ */
+                margin-left: 20px; /* Khoảng cách giữa các đường kẻ */
+            }
+        }
+    }
+}
