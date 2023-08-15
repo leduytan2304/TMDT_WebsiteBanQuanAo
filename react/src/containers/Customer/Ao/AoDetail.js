@@ -79,6 +79,7 @@ class AoDetail extends Component {
                 </div>
             </div>
             {this.state.images.map(image => (
+                
             <div className='container'>
                 <div className='row product-detail-content'>
                     <div className='col-md-6 product-detail-img'>
@@ -157,6 +158,7 @@ class AoDetail extends Component {
                         </form>
                         <div className='product-description'>
                             <h5>Chi tiết sản phẩm:</h5>
+                            <p>{image.ProductDescription}</p>
                         </div>
                     </div>
                 </div>

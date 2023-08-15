@@ -35,14 +35,10 @@ export const getImage = (req,res)=>{
 export const getDetail = (req,res)=>{
   
   const q = 'SELECT * FROM Product PD, Images IM where PD.ProductID = IM.ProductID and PD.ProductID = "' + req.params.productID  +'" ';
-
-  let id = req.params.productID
-  console.log( 'reqdb: ' +id);
   // res.params.productID =id
   // console.log(res.params.productID );
-  db.query(q,id, (err, data) => {
+  db.query(q, (err, data) => {
     if (err) return res.status(500).json(err);
-    
     return res.status(200).json(data);
     
   });

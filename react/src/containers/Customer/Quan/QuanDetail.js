@@ -3,27 +3,42 @@ import { connect } from "react-redux";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
 
 import '../DetailProduct.scss';
-
+import axios from 'axios';
 
 
 
 class AoDetail extends Component { 
-    constructor(props) {
-        super(props);
-        this.state = {
-          selectedSize: 'M',
-          quantityNum: '1',
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //       selectedSize: 'M',
+    //       quantityNum: '1',
+    //     };
+    // }
+
+
+      componentDidMount(req,res,url){
+        // const parts = url.split('/');
+        // let lastLink = parts.at(-1);
+        axios.get(`http://localhost:8000/api${window.location.pathname}`)
+          .then(res => {
+            const images = res.data;
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+    };
+
+    state = {
+        images: []
+      }  
     handleSizeChange = (event) => {
         this.setState({ selectedSize: event.target.value });
     };
-
+    
     handleQuantityChange = (change) => {
         const quantityInput = document.getElementsByName('quantity')[0];
         let currentValue = parseInt(quantityInput.value);
@@ -42,7 +57,7 @@ class AoDetail extends Component {
     handleBuyProduct = () => {
         alert('Mua hàng')
     }
-
+    
     render() {
         const { selectedSize } = this.state;
         // const { quantityNum } = this.state;
@@ -57,30 +72,37 @@ class AoDetail extends Component {
         return (
            <Fragment>
             <HomeHeader />
+            
             <div className='product-detail-header'>
                 <div className='header-title'>
                     Thông tin sản phẩm
                 </div>
             </div>
+            {this.state.images.map(image => (
+                
             <div className='container'>
                 <div className='row product-detail-content'>
                     <div className='col-md-6 product-detail-img'>
                         <Slider {...settings}>
                             <div className='detail-product-customize'>
                                 {/* <img src= {sieusaleImg} />  */}
+                                <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                 <div className='bg-image1'>
                                 </div>
                             </div>
 
                             <div className='detail-product-customize'>
                                 {/* <img src= {sieusaleImg} /> */}
+                                <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                 <div className='bg-image2'>
                                 </div>
                             </div>
 
                             <div className='detail-product-customize'>
                                 {/* <img src= {sieusaleImg} /> */}
+                                <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                 <div className='bg-image3'>
+                                
                                 </div>
                             </div>
 
@@ -88,12 +110,12 @@ class AoDetail extends Component {
                     </div>
                     <div className='col-md-6 product-detail-desc'>
                         <div className='product-name'>
-                            <h1>Merry Tee - Black</h1>
-                            <span>MSP: ABC123</span>
+                            <h1>{image.ProductName}</h1>
+                            <span>MSP: {image.ProductID}</span>
                         </div>
                         <div className='product-price'>
                             <span className='pro-discount'>-24%</span>
-                            <span className='pro-price'>289,000₫</span>
+                            <span className='pro-price'>{image.ProductPrice}</span>
                             <del>380,000₫</del>
                         </div>
                         <form className='add-item' action='/cart/add' method='post'>
@@ -136,10 +158,12 @@ class AoDetail extends Component {
                         </form>
                         <div className='product-description'>
                             <h5>Chi tiết sản phẩm:</h5>
+                            <p>{image.ProductDescription}</p>
                         </div>
                     </div>
                 </div>
             </div>
+            ))}
             <HomeFooter />
            </Fragment>
         );

@@ -10,7 +10,7 @@ export const path = {
     AO: '/ao',
     QUAN: '/quan',
     PHUKIEN: '/phu-kien',
-    AO_DETAIL: '/chi-tiet-ao/:id',
+    AO_DETAIL: '/chi-tiet-do/:id',
     QUAN_DETAIL: '/chi-tiet-quan/:id'
 };
 

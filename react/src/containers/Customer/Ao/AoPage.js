@@ -25,11 +25,11 @@ class AoPage extends Component {
         images: []
       }
 
-    handleViewDetailAo = (ProductID) => {
+    handleViewDetailCloth = (ProductID) => {
         // console.log("ID sản phẩm",params.slug);
         console.log(ProductID);
         
-        this.props.history.push(`/chi-tiet-ao/${ProductID}`);
+        this.props.history.push(`/chi-tiet-do/${ProductID}`);
     };
 
     render() {
@@ -70,7 +70,7 @@ class AoPage extends Component {
                                     ))} */}
 
                                     {this.state.images.map(image => (
-                                        <div className='col-3 product' onClick={() => this.handleViewDetailAo(image.ProductID)}>
+                                        <div className='col-3 product' onClick={() => this.handleViewDetailCloth(image.ProductID)}>
                                             <a href=''>
                                                 <div className='ao-product img-setting'>
                                                     <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
