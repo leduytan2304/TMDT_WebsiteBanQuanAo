@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './HomeHeader.scss';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import logo from '../../assets/logo10.png'
-// import event from '../../assets/background-event.jpg'
+import event from '../../assets/background-event.jpg'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NavLink } from 'react-router-dom';
 import * as actions from "../../store/actions";
@@ -128,17 +128,17 @@ class HomeHeader extends Component {
                             <div className='search'>
                                 <input type='text' placeholder='Tìm kiếm sản phẩm' />
                                 <i class="fas fa-search"></i>
-                            </div>                    
-                            <NavLink to='/user/info'>
-                            <div className='login-icon'>
-                                <i class="fas fa-user-circle"></i>
                             </div>
-                            </NavLink>
-                            <NavLink to='/user/cart'>
-                                <div className='cart-icon'>
-                                    <i class="fas fa-shopping-cart"></i>
+
+                            <NavLink to ='/user-info'>
+                                <div className='login-icon'>
+                                    <i class="fas fa-user-circle"></i>
                                 </div>
                             </NavLink>
+                            
+                            <div className='cart-icon'>
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
 
                             <div className="btn btn-logout" onClick={processLogout} title='Log out'>
                                 <i className="fas fa-sign-out-alt"></i>
