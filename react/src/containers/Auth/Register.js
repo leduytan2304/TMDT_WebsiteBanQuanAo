@@ -94,15 +94,6 @@ class Register extends Component {
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
-                            <label>Địa chỉ:</label>
-                            <input type='text' 
-                            className='form-control' 
-                            placeholder='Địa chỉ'
-                            value={this.state.address}
-                            onChange={(event) => this.handleOnChangeUsername(event)}
-                            />
-                        </div>
-                        <div className= 'col-12 form-group login-input'>
                             <label>Mật khẩu:</label>
                             <div className='hide-show-password'>
                                 <input type= {this.state.isShowPassword ? 'text' : 'password'}
