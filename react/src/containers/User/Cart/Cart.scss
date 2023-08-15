@@ -136,6 +136,41 @@
                 background-color: #FF0000;
             }
         }
+        .quantity-area {
+            display: inline-block;
+            width: 100% ;
+
+            .quantity-btn {
+                background-color: #fff;
+                float: left;
+                padding: 0px;
+                border: solid 1px #ececec;
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 16px;
+                outline: none;
+                height: 25px;
+                width: 25px;
+                text-align: center;
+                border-radius: 0;
+            }
+    
+            .quantity-number {
+                user-select: none;
+                background-color: #c5c5c5;
+                float: left;
+                font-weight: 600;
+                height: 25px;
+                padding: 0;
+                text-align: center;
+                width: 30px;
+                border: 1px solid #f5f5f5;
+                border-left: none;
+                border-right: none;
+                border-radius: 1px;
+                pointer-events: none;
+            }
+        }
     }
 }
 
