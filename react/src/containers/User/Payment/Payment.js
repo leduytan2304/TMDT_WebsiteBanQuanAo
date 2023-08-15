@@ -3,15 +3,14 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import { NumberProvider} from './NumberContext';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
 
-import './Cart.scss';
-import sp from '../../../assets/Ao/ao-2.png';
-import NumberInput from './NumberInput'; 
-import Price from './Price';
+import cod from '../../../assets/Users/cod.png';
+import vnpay from '../../../assets/Users/vnpay.png';
+
+import './Payment.scss';
 
 class Cart extends Component {
     
@@ -21,7 +20,7 @@ class Cart extends Component {
             <div>
             <HomeHeader />
                 <div className='cart-page'>
-                    <h1>Giỏ hàng</h1>
+                    <h1>Thanh toán</h1>
                     <hr
                         style={{
                         color: 'black',
@@ -32,98 +31,70 @@ class Cart extends Component {
                         }}
                     />
                     <div class="row content-info">
-                        <div class="col-2"> 
-                            <NavLink to="./info">
-                            <div class="option">
-                                Thông tin tài khoản 
-                            </div>
-                            </NavLink>
-                            <NavLink to="./cart">
-                            <div class="option">
-                                Giỏ hàng
-                            </div>
-                            </NavLink>
-                            <NavLink to="./address">
-                            <div class="option">
-                                Danh sách địa chỉ
-                            </div>
-                            </NavLink>
-                            <button type="button" class="btn btn-secondary signout" align="center">
-                                Đăng xuất
-                            </button>
-                        </div>
+                        <div class="col-8">
+                            <h2> Phương thức vận chuyển</h2>
+                            <form>
+                                <label class="row shipping-method" for="sm1">
+                                        <div class="col">
+                                            <h3>Chuyển phát tận nhà</h3>
+                                            <p>Phí vận chuyển: 35.000₫ </p>
+                                        </div>
+                                        <div class="col-1" align="right">
+                                            <input id="sm1" name="methud" type="radio" value="Nam" /> 
+                                        </div>
+                                </label>
 
-                        <div class="col-1 vertical-line-container">
-                            <div class="vertical-line"></div>
-                        </div>
-
-                        <div class="col-5 product-list">
-                            <div class="row alert alert-secondary">
-                                <div class="col-3 image-sp">
-                                    <img src= {sp} />
-                                </div>
+                                <label class="row shipping-method" for="sm2">
+                                        <div class="col">
+                                            <h3>Đến lấy hàng</h3>
+                                            <p>Địa chỉ: 227 Nguyễn Văn Cừ, Q.5, TP HCM </p>
+                                        </div>
+                                        <div class="col-1" align="right">
+                                            <input id="sm2" name="methud" type="radio" value="Nam" /> 
+                                        </div>
+                                </label>
+                            </form>
                                 
-                                <div class="col-7" align="left">
-                                    <b>Áo thun Highclub Signature - 5 Colors</b>
-                                    <p>Nâu / M</p>
-                                    <NumberProvider>
-                                        <NumberInput />
-                                    </NumberProvider>
-                                    
-                                </div>
-
-                                <div class="col close-but" align="right"> 
-                                    <button type="button" class="btn-close" aria-label="Close"></button>
-                                    <p>
-                                        149.000₫   
-                                    </p>
-                            
-                                </div>
-                            </div>
-
-                            <div class="row alert alert-secondary">
-                                <div class="col-3 image-sp">
-                                    <img src= {sp} />
-                                </div>
                                 
-                                <div class="col-7" align="left">
-                                    <b>Áo thun Highclub Signature - 5 Colors</b>
-                                    <p>Nâu / M</p>
-                                    <NumberProvider>
-                                        <NumberInput />
-                                    </NumberProvider>
-                                </div>
+                            <br />
 
-                                <div class="col close-but" align="right"> 
-                                    <button type="button" class="btn-close" aria-label="Close"></button>
-                                    <p>
-                                        149.000₫   
-                                    </p>
-                            
-                                </div>
-                            </div>
+                            <h2>Phương thức thanh toán</h2>
+                            <form>
+                                <label class="payment-method row" for="pm1">
+                                    <div class="col-1">
+                                        <img src={cod}></img>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Thanh toán tiền mặt</h3>
+                                    </div>
+                                    <div class="col-1" align="right">
+                                        <input id="pm1" name="methud" type="radio" value="Nam" /> 
+                                    </div>
+                                </label>
 
-                            <div class="row alert alert-secondary">
-                                <div class="col-3 image-sp">
-                                    <img src= {sp} />
-                                </div>
-                                
-                                <div class="col-7" align="left">
-                                    <b>Áo thun Highclub Signature - 5 Colors</b>
-                                    <p>Nâu / M</p>
-                                    <NumberProvider>
-                                        <NumberInput />
-                                    </NumberProvider>
-                                </div>
-
-                                <div class="col close-but" align="right"> 
-                                    <button type="button" class="btn-close" aria-label="Close"></button>
-                                    
-                                    <p>
-                                        149.000₫   
-                                    </p>
-                            
-                                </div>
+                                <label class="payment-method row" for="pm2">
+                                    <div class="col-1">
+                                        <img src={vnpay}></img>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Thanh toán qua VNPAY</h3>
+                                    </div>
+                                    <div class="col-1" align="right">
+                                        <input id="pm2" name="methud" type="radio" value="Nam" /> 
+                                    </div>
+                                </label>
+                            </form>
+                            <div align="right">
+                                <NavLink to="/user/cart">
+                                    <button type="button" class="btn btn-light btn-return">
+                                        TRỞ VỀ
+                                    </button>
+                                </NavLink>
+                                <NavLink to="#">
+                                    <button type="button" class="btn btn-danger btn-payment">
+                                        THANH TOÁN
+                                    </button>
+                                </NavLink>
                             </div>
                         </div>
 
@@ -207,11 +178,7 @@ class Cart extends Component {
                                         </div>
                                     </div>
                                     <div  align="center">
-                                        <NavLink to="./payment">
-                                        <button type="button" class="btn btn-danger btn-pay">
-                                            THANH TOÁN
-                                        </button>
-                                        </NavLink>
+                                        
                                     </div>
                             </div>
                         </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Cart.scss';
 
 const NumberInput = () => {
-  const [value, setValue] = useState(0); // thêm số lượng hiện tại của đơn hàng
+  const [value, setValue] = useState(1); // thêm số lượng hiện tại của đơn hàng
 
   const handleIncrement = () => {
     if (value < 10){
