@@ -5,7 +5,6 @@ const router = express.Router()
 
 router.get("/ao", getImageTShirt)
 router.get("/quan", getImagePant)
-// router.get("/chi-tiet-do/:slug",getDetail)
 router.get("/do",getDetail);
 
 
