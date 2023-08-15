@@ -16,6 +16,9 @@ class Register extends Component {
             username: '',
             password: '',
             repassword: '',
+            name: '',
+            phone: '',
+            address: '',
             isShowPassword: false,
             errMessage: ''
         }
@@ -73,6 +76,33 @@ class Register extends Component {
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
+                            <label>Họ tên:</label>
+                            <input type='text' 
+                            className='form-control' 
+                            placeholder='Họ tên'
+                            value={this.state.name}
+                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            />
+                        </div>
+                        <div className= 'col-12 form-group login-input'>
+                            <label>Số điện thoại:</label>
+                            <input type='text' 
+                            className='form-control' 
+                            placeholder='Số điện thoại'
+                            value={this.state.name}
+                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            />
+                        </div>
+                        <div className= 'col-12 form-group login-input'>
+                            <label>Địa chỉ:</label>
+                            <input type='text' 
+                            className='form-control' 
+                            placeholder='Địa chỉ'
+                            value={this.state.address}
+                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            />
+                        </div>
+                        <div className= 'col-12 form-group login-input'>
                             <label>Mật khẩu:</label>
                             <div className='hide-show-password'>
                                 <input type= {this.state.isShowPassword ? 'text' : 'password'}
@@ -107,13 +137,6 @@ class Register extends Component {
                         <div className='col-12'>
                             <Link to ='/login' className='return-login'>Quay lại đăng nhập</Link>
                         </div>
-                        {/* <div className='col-12 text-center mt-3'>
-                            <span className='text-other-login'>Đăng nhập với:</span>
-                        </div>
-                        <div className='col-12 login-social'>
-                            <i className="fab fa-google-plus-g google"></i>
-                            <i className="fab fa-facebook-f facebook"></i>
-                        </div> */}
                     </div>
                 </div>
             </div>
