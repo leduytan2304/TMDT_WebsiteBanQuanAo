@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import * as actions from "../../store/actions";
 import './Signin.scss';
 import { FormattedMessage } from 'react-intl';
+import { handleRegisterApi } from '../../services/userService';
 
 
 
@@ -13,43 +14,86 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             repassword: '',
             name: '',
             phone: '',
-            address: '',
             isShowPassword: false,
             errMessage: ''
         }
     }
 
+    handleOnChangeEmail = (event) => {
+        this.setState({
+            email: event.target.value
+        })
+    }
+
     handleOnChangeUsername = (event) => {
         this.setState({
-            username: event.target.value
+            name: event.target.value
+        })
+    }
+
+    handleOnChangePhone = (event) => {
+        this.setState({
+            phone: event.target.value
         })
     }
 
     handleOnChangePassword = (event) => {
         this.setState({
-            password: event.target.value,
-            repassword: event.target.value
+            password: event.target.value
         })
     }
 
-
-    //Xử lý đăng nhập trong này. Video 35 36
-    handleLogin = async () => {
-        console.log('all state: ', this.state)
-
-        //mấy dòng dưới test chơi thôi, xem thêm video 35 36 để lấy ra lỗi :V
-        if (!this.state.username || !this.state.password || !this.state.repassword) {
-            this.setState({
-                errMessage: 'Tên đăng nhập hoặc mật khẩu không đúng' 
-            })
+    handleOnChangeRePassword = (event) => {
+        this.setState({
+            repassword: event.target.value
+        })
+    }
+    
+    
+    handleRegister = async () => {
+        this.setState({
+            errMessage: ''
+        })
+    
+        try {
+            if (this.state.password !== this.state.repassword) {
+                this.setState({
+                    errMessage: "Mật khẩu xác nhận không đúng"
+                })
+                return;
+            }
+            else {
+            let dataApi = await handleRegisterApi(this.state.email, this.state.name, this.state.phone, this.state.password);
+            if (dataApi == 0){
+                this.setState({
+                    errMessage: "Haha"
+                })
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Register success!");
+                const { navigate } = this.props;
+                const redirectPath = '/login';
+                navigate(`${redirectPath}`);
+            }
+            return;
         }
-        else {
-            this.props.userRegisterSuccess(this.state.username)
+        }
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            
+            console.log("Lỗi", e.response)
         }
     }
 
@@ -71,8 +115,8 @@ class Register extends Component {
                             <input type='text' 
                             className='form-control' 
                             placeholder='Nhập email'
-                            value={this.state.username}
-                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            value={this.state.email}
+                            onChange={(event) => this.handleOnChangeEmail(event)}
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
@@ -89,8 +133,8 @@ class Register extends Component {
                             <input type='text' 
                             className='form-control' 
                             placeholder='Số điện thoại'
-                            value={this.state.name}
-                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            value={this.state.phone}
+                            onChange={(event) => this.handleOnChangePhone(event)}
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
@@ -112,7 +156,7 @@ class Register extends Component {
                                 <input type= {this.state.isShowPassword ? 'text' : 'password'}
                                 className='form-control' 
                                 placeholder='Xác nhận mật khẩu'
-                                onChange={(event) => this.handleOnChangePassword(event)}
+                                onChange={(event) => this.handleOnChangeRePassword(event)}
                                 />
                                 <span onClick = {() => {this.handleShowHidePassword()}}>
                                     <i class= {this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}></i>
@@ -123,7 +167,7 @@ class Register extends Component {
                             {this.state.errMessage}
                         </div>
                         <div className='col-12'>
-                            <button className='login-btn' onClick={() => {this.handleLogin()}}>Đăng ký</button>
+                            <button className='login-btn' onClick={() => {this.handleRegister()}}>Đăng ký</button>
                         </div>
                         <div className='col-12'>
                             <Link to ='/login' className='return-login'>Quay lại đăng nhập</Link>
