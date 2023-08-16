@@ -5,22 +5,22 @@ import { withRouter } from "react-router-dom";
 import * as actions from "../../store/actions";
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
-
+import { handleLoginApi } from '../../services/userService';
 
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             isShowPassword: false
         }
     }
 
-    handleOnChangeUsername = (event) => {
+    handleOnChangeEmail = (event) => {
         this.setState({
-            username: event.target.value
+            email: event.target.value
         })
     }
 
@@ -31,9 +31,33 @@ class Login extends Component {
     }
 
     handleLogin = async () => {
-        console.log('username: ', this.state.username, 'password: ', this.state.password)
-        console.log('all state: ', this.state)
-        this.props.userLoginSuccess(this.state.username)
+        this.setState({
+            errMessage: ''
+        })
+    
+        try {
+            let dataApi = await handleLoginApi(this.state.email, this.state.password);
+            if (dataApi == 0){
+                this.setState({
+                    errMessage: "Haha"
+                })
+                console.log("Err code", dataApi.data)
+            }
+            if (dataApi !== 0) {
+                this.props.userLoginSuccess(dataApi.data)
+                console.log("Login success!")
+            }
+        }
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            console.log("Lỗi", e.response)
+        }
     }
 
     handleShowHidePassword = () => {
@@ -53,9 +77,9 @@ class Login extends Component {
                             <label>Username:</label>
                             <input type='text' 
                             className='form-control' 
-                            placeholder='Enter your username'
-                            value={this.state.username}
-                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            placeholder='Nhập email'
+                            value={this.state.email}
+                            onChange={(event) => this.handleOnChangeEmail(event)}
                             />
                         </div>
                         <div className= 'col-12 form-group login-input'>
