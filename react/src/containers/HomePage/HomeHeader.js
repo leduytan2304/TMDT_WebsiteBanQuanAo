@@ -135,11 +135,12 @@ class HomeHeader extends Component {
                                     <i class="fas fa-user-circle"></i>
                                 </div>
                             </NavLink>
-                            
+
+                            <NavLink to ='/user/cart'>
                             <div className='cart-icon'>
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
-
+                            </NavLink>
                             <div className="btn btn-logout" onClick={processLogout} title='Log out'>
                                 <i className="fas fa-sign-out-alt"></i>
                             </div>

@@ -168,6 +168,15 @@ class Cart extends Component {
                                     </div>
                                 </div>
 
+                                <div class="row sum">
+                                    <div class="col-8">
+                                        Phí vận chuyển:
+                                    </div>
+                                    <div class="col" align="right">
+                                        <b>{VND.format(35000)}</b>
+                                    </div>
+                                </div>
+
                                 {this.state.shipping_method === 'ship' ? (
                                 <div class="row sum">
                                     <div class="col-8">
