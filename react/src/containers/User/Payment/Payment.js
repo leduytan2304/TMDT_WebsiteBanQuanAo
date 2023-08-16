@@ -11,7 +11,7 @@ import cod from '../../../assets/Users/cod.png';
 import vnpay from '../../../assets/Users/vnpay.png';
 
 import './Payment.scss';
-
+import axios from 'axios';
 const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
@@ -30,6 +30,30 @@ class Cart extends Component {
             price: '482000'
         };
     }
+
+    componentDidMount(){
+        axios.get(`http://localhost:8000/api/image/ao`)
+          .then(res => {
+            const images = res.data;
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+    };
+    
+    handlePayment(TotalMoney) {
+    
+        // Send data to the backend via POST
+        fetch('http://localhost:8888/order/create_payment_url', {  // Enter your IP address here
+            
+          method: 'POST', 
+          mode: 'cors', 
+          body: JSON.stringify(TotalMoney) // body data type must match "Content-Type" header
+    
+        })
+        
+      }
+
+
 
     paymentOptionChange = (event) => {
         this.setState({
@@ -88,19 +112,13 @@ class Cart extends Component {
                                     </button>
                                 </NavLink>
 
-                                {this.state.payment_method === 'vnpay' ? (
-                                <NavLink to={`/vnpay`}>
+                                 
+                                <NavLink to={`/success`} onClick={this.handlePayment(this.state.sum)}>
                                     <button type="button" class="btn btn-danger btn-payment">
                                         THANH TOÁN
                                     </button>
                                 </NavLink>
-                                ) : (
-                                <NavLink to={`/success`}>
-                                    <button type="button" class="btn btn-danger btn-payment">
-                                        THANH TOÁN
-                                    </button>
-                                </NavLink>
-                                )}
+                                
                             </div>
                         </div>
 
