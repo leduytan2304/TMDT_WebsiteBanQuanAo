@@ -105,7 +105,7 @@ class HomeHeader extends Component {
                                 <i class="fas fa-search" onClick={this.handleSearchIconClick}></i>
                             </div>
 
-                            <NavLink to ='/user-info'>
+                            <NavLink to ='/user/info'>
                                 <div className='login-icon'>
                                     <i class="fas fa-user-circle"></i>
                                 </div>
@@ -115,6 +115,7 @@ class HomeHeader extends Component {
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
 
+                            {/* nút đăng xuất cũ */}
                             <div className="btn btn-logout" onClick={processLogout} title='Log out'>
                                 <i className="fas fa-sign-out-alt"></i>
                             </div>

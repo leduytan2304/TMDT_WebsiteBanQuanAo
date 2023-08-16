@@ -21,6 +21,11 @@ import SanPhamMoiPage from './Customer/SanPhamMoi/SanPhamMoiPage';
 import AoPage from './Customer/Ao/AoPage';
 import QuanPage from './Customer/Quan/QuanPage';
 import PhuKienPage from './Customer/PhuKien/PhuKienPage';
+import UserPage from './User/Info/Info';
+import AddressPage from './User/Address/Address';
+import CartPage from './User/Cart/Cart';
+import PaymentPage from './User/Payment/Payment';
+import ShippingPage from './User/Shipping/Shipping';
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
 import SearchResult from './Customer/Search/SearchResult';
@@ -64,6 +69,14 @@ class App extends Component {
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.PHUKIEN} component={PhuKienPage} />
                                     <Route path={path.SEARCH} component={SearchResult} />
+                                    <Route path={path.INFO} component={UserPage} />
+                                    <Route path={path.ADDRESS} component={AddressPage} />
+                                    <Route path={path.CART} component={CartPage} />
+                                    <Route path={path.PAYMENT} component={PaymentPage} />
+                                    <Route path={path.SHIPPIMG} component={ShippingPage} />
+                                    {/* <Route path="/users/:id" component={SieuSalePage} /> */}
+                                    {/* <Route path={path.DETAIL_PRODUCT} component={DetailProduct} /> */}
+
                                     <Route path={path.AO_DETAIL} component={AoDetail} />
                                     <Route path={path.QUAN_DETAIL} component={QuanDetail} />
                                 </Switch>

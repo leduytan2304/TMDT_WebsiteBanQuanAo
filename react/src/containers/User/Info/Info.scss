@@ -1,0 +1,81 @@
+.info-page{
+    height: auto;
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 50px;
+    h1{
+        font-size:32px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .content-info{
+        padding-top: 80px;
+        .option{
+        
+            color: #000;
+            font-size: 15px;
+            line-height: 30px;
+            &:hover{
+                color: #ff0000;
+                transition: 0.2s;
+            }
+        }
+        .active .option{
+            font-weight: bold;
+            &:hover{
+                color: #000;
+            }
+        }
+        
+        a{
+            text-decoration: none;
+        }
+
+        .signout{
+            width: 70%;
+            margin-top: 30px;
+        }
+        .edit{
+            width: 50%;
+            margin-top: 30px;
+            font-size: 16px;
+        }
+        .vertical-line-container{
+            display: flex;
+            .vertical-line{
+                width: 1.5px;
+                height: 200px; /* Điều chỉnh độ dài của đường kẻ dọc */
+                background-color: black; /* Màu của đường kẻ */
+                margin-left: 20px; /* Khoảng cách giữa các đường kẻ */
+            }
+        }
+        
+    }
+    .private-info{
+        font-size: 18px;
+        line-height: 2;
+        .info-type{
+            font-weight: bold;
+        }
+    } 
+    .avatar-img img{
+        width: 100px;
+    }
+    .point-bg{
+        margin-top: 30px;
+
+        background-color: #E6B026;
+        width: 100px;   
+        opacity: 50%;
+        position: relative;
+    }
+    .point{
+        
+        top: 0;
+        left: 0;
+    }
+    .purchase-history{
+        margin-top: 50px;
+    }
+}

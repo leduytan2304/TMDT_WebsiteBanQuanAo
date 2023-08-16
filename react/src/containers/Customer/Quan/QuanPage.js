@@ -5,11 +5,13 @@ import HomeHeader from '../../HomePage/HomeHeader';
 // import SPMoi from './Section/SPMoi';
 import { withRouter } from "react-router-dom";
 import HomeFooter from '../../HomePage/HomeFooter';
-import axios from 'axios';
 import '../../HomePage/HomePage.scss';
 import '../Page.scss';
+import axios from 'axios';
+
 
 class QuanPage extends Component {
+
     componentDidMount(){
         axios.get(`http://localhost:8000/api/image/quan`)
           .then(res => {
@@ -23,14 +25,14 @@ class QuanPage extends Component {
         images: []
       }
 
-    handleViewDetailQuan = () => {
-        console.log("ID sản phẩm");
-        this.props.history.push(`/chi-tiet-quan/:1`);
+    handleViewDetailCloth = (ProductID) => {
+        // console.log("ID sản phẩm",params.slug);
+        console.log(ProductID);
+        
+        this.props.history.push(`/chi-tiet-do/${ProductID}`);
     };
 
     render() {
-
-
         return (
             <div>
                 <HomeHeader />
@@ -52,31 +54,44 @@ class QuanPage extends Component {
                                         <option value="best-selling" data-filter = "sortby = (sold_quantity:product=desc)">Bán chạy nhất</option>
                                     </select>
                                 </span> 
-                            </div>
+                                </div>
                             </div>
                             <div className='section-body'>
-                            {this.state.images.map(image => (
-                                <div className='col-3 product' onClick={() => this.handleViewDetailQuan()}>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
-                                            <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '300px', height: 'auto' }} />
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
+                               
+                                    {/* {this.state.images.map(image => (
+                                        <img 
+                                            key={image.ImageID}
+                                            src={image.ImageLink} 
+                                            alt={`Image ${image.ImageID}`} 
+                                            style={{ width: '300px', height: 'auto', margin: '10px' }}
+                                        />
+                                       
+                                        
+                                    ))} */}
+
+                                    {this.state.images.map(image => (
+                                        <div className='col-3 product' onClick={() => this.handleViewDetailCloth(image.ProductID)}>
+                                            <a href=''>
+                                                <div className='ao-product img-setting'>
+                                                    <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
+                                                    <div className='product-discount'>
+                                                        <span>-6%</span>
+                                                    </div>
+                                                </div>
+                                                <div className='product-detail text-center'>
+                                                    <div className='product-name'>{image.ProductName} </div>
+                                                    <div className='product-price'>
+                                                        <span>{image.ProductPrice}</span>
+                                                        <del>190,000₫</del>
+                                                    </div>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>{image.ProductName} </div>
-                                            <div className='product-price'>
-                                                <span>{image.ProductPrice}</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                            </div>
-                             ))}
-                                {/* <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='quan-product img-setting'>
+                                        
+                                    ))}
+                                
+                                    {/* <a hre  f=''>
+                                        <div className='ao-product img-setting'>
                                             <div className='product-discount'>
                                                 <span>-6%</span>
                                             </div>
@@ -88,10 +103,20 @@ class QuanPage extends Component {
                                                 <del>190,000₫</del>
                                             </div>
                                         </div>
-                                    </a>
-                                </div> */}
-                            
+                                    </a> */}
                             </div>
+                            {/* <div>
+                            {this.state.images.map(image => (
+                                <img 
+                                    key={image.ImageID}
+                                    src={image.ImageLink} 
+                                    alt={`Image ${image.ImageID}`} 
+                                    style={{ width: '300px', height: 'auto', margin: '10px' }}
+                                />
+                            ))}
+                            </div> */}
+
+
                         </div>
                     </div>
                 </div>
@@ -102,13 +127,13 @@ class QuanPage extends Component {
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
     };
 };

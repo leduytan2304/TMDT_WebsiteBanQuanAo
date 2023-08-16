@@ -12,17 +12,19 @@ import axios from 'axios';
 
 
 class AoDetail extends Component { 
-    constructor(props) {
-        super(props);
-        this.state = {
-          selectedSize: 'M',
-          quantityNum: '1',
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //       selectedSize: 'M',
+    //       quantityNum: '1',
+    //     };
+    // }
 
 
-    componentDidMount(){
-        axios.get(`http://localhost:8000/api/chi-tiet-do/:productID`)
+      componentDidMount(req,res,url){
+        // const parts = url.split('/');
+        // let lastLink = parts.at(-1);
+        axios.get(`http://localhost:8000/api${window.location.pathname}`)
           .then(res => {
             const images = res.data;
             this.setState({ images });
@@ -32,7 +34,7 @@ class AoDetail extends Component {
 
     state = {
         images: []
-      }
+      }  
     handleSizeChange = (event) => {
         this.setState({ selectedSize: event.target.value });
     };
@@ -77,25 +79,30 @@ class AoDetail extends Component {
                 </div>
             </div>
             {this.state.images.map(image => (
+                
             <div className='container'>
                 <div className='row product-detail-content'>
                     <div className='col-md-6 product-detail-img'>
                         <Slider {...settings}>
                             <div className='detail-product-customize'>
                                 {/* <img src= {sieusaleImg} />  */}
+                                <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                 <div className='bg-image1'>
                                 </div>
                             </div>
 
                             <div className='detail-product-customize'>
                                 {/* <img src= {sieusaleImg} /> */}
+                                <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                 <div className='bg-image2'>
                                 </div>
                             </div>
 
                             <div className='detail-product-customize'>
                                 {/* <img src= {sieusaleImg} /> */}
+                                <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                 <div className='bg-image3'>
+                                
                                 </div>
                             </div>
 
@@ -108,7 +115,7 @@ class AoDetail extends Component {
                         </div>
                         <div className='product-price'>
                             <span className='pro-discount'>-24%</span>
-                            <span className='pro-price'>289,000₫</span>
+                            <span className='pro-price'>{image.ProductPrice}</span>
                             <del>380,000₫</del>
                         </div>
                         <form className='add-item' action='/cart/add' method='post'>
@@ -151,6 +158,7 @@ class AoDetail extends Component {
                         </form>
                         <div className='product-description'>
                             <h5>Chi tiết sản phẩm:</h5>
+                            <p>{image.ProductDescription}</p>
                         </div>
                     </div>
                 </div>

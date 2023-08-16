@@ -17,6 +17,8 @@ class SearchResult extends Component {
     handleViewDetailProductSearch = () => {
         console.log("ID sản phẩm");
 
+        // thêm link chi tiết sản phẩm vào đây nha
+
         //Cái trang chi tiết áo đang bị gì ấy nên tui sẽ để cái chi tiết quần :V
         // this.props.history.push(`/chi-tiet-ao/:1`);
 
