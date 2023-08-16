@@ -17,9 +17,7 @@ export const path = {
     PAYMENT: '/user/payment',
     SHIPPIMG: '/user/shipping',
     DETAIL_PRODUCT: '/products/:id',
-
-    AO_DETAIL: '/chi-tiet-ao/:id',
-    QUAN_DETAIL: '/chi-tiet-quan/:id'
+    // QUAN_DETAIL: '/chi-tiet-do/:id'
 };
 
 export const languages = {
