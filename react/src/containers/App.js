@@ -28,6 +28,7 @@ import PaymentPage from './User/Payment/Payment';
 import ShippingPage from './User/Shipping/Shipping';
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
+import SearchResult from './Customer/Search/SearchResult';
 
 class App extends Component {
 
@@ -67,6 +68,7 @@ class App extends Component {
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.PHUKIEN} component={PhuKienPage} />
+                                    <Route path={path.SEARCH} component={SearchResult} />
                                     <Route path={path.INFO} component={UserPage} />
                                     <Route path={path.ADDRESS} component={AddressPage} />
                                     <Route path={path.CART} component={CartPage} />

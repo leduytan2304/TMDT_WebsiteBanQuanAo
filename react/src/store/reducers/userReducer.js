@@ -2,10 +2,12 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    usernInfo: null
+    userInfo: null,
+    searchQuery: null
 }
 
-const appReducer = (state = initialState, action) => {
+//cái này hồi trước để là appReducer, mà thấy sai sai nên sửa lại. Có bị lỗi mấy cái đăng nhập, đăng ký thì vào đây xem thử
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.USER_LOGIN_SUCCESS:
             return {
@@ -31,9 +33,14 @@ const appReducer = (state = initialState, action) => {
                 isLoggedIn: false,
                 userInfo: null
             }
+        // case actionTypes.SET_SEARCH_QUERY:
+        //     return {
+        //         ...state,
+        //         searchQuery: action.searchQuery
+        //     }
         default:
             return state;
     }
 }
 
-export default appReducer;
+export default userReducer;

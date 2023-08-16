@@ -1,0 +1,11 @@
+.search-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .sub-title {
+        opacity: .66;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+}
