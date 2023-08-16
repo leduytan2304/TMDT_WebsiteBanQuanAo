@@ -11,6 +11,14 @@ export const path = {
     QUAN: '/quan',
     PHUKIEN: '/phu-kien',
     AO_DETAIL: '/chi-tiet-do/:id',
+    INFO: '/user/info',
+    ADDRESS: '/user/address',
+    CART: '/user/cart',
+    PAYMENT: '/user/payment',
+    SHIPPIMG: '/user/shipping',
+    DETAIL_PRODUCT: '/products/:id',
+
+    AO_DETAIL: '/chi-tiet-ao/:id',
     QUAN_DETAIL: '/chi-tiet-quan/:id'
 };
 
