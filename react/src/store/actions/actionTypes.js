@@ -14,6 +14,7 @@ const actionTypes = Object.freeze({
     USER_REGISTER_SUCCESS: 'USER_REGISTER_SUCCESS',
     USER_LOGIN_FAIL: 'USER_LOGIN_FAIL',
     PROCESS_LOGOUT: 'PROCESS_LOGOUT',
+    // SET_SEARCH_QUERY: 'SET_SEARCH_QUERY'
 })
 
 export default actionTypes;

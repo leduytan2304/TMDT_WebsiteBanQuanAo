@@ -11,7 +11,8 @@ export const path = {
     QUAN: '/quan',
     PHUKIEN: '/phu-kien',
     AO_DETAIL: '/chi-tiet-ao/:id',
-    QUAN_DETAIL: '/chi-tiet-quan/:id'
+    QUAN_DETAIL: '/chi-tiet-quan/:id',
+    SEARCH: '/search'
 };
 
 export const languages = {

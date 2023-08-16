@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import './HomeHeader.scss';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from "react-router-dom";
 import logo from '../../assets/logo10.png'
 import event from '../../assets/background-event.jpg'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
@@ -10,45 +11,32 @@ import * as actions from "../../store/actions";
 
 class HomeHeader extends Component {
 
-    // state = {
-    //     links: [
-    //         {
-    //             id: 1,
-    //             name: "SIÊU SALE",
-    //             to: "/sieu-sale",
-    //             className: "child-content"
-    //         }, 
-    //         {
-    //             id: 2,
-    //             name: "SẢN PHẨM MỚI",
-    //             to: "/sieu-sale",
-    //             className: "child-content"
-    //         }, 
-    //         {
-    //             id: 3,
-    //             name: "ÁO",
-    //             to: "/sieu-sale",
-    //             className: "child-content"
-    //         }, 
-    //         {
-    //             id: 4,
-    //             name: "QUẦN",
-    //             to: "/sieu-sale",
-    //             className: "child-content"
-    //         }, 
-    //         {
-    //             id: 5,
-    //             name: "PHỤ KIỆN",
-    //             to: "/sieu-sale",
-    //             className: "child-content"
-    //         }
-    //     ],
-    //     activeLink: null
-    // };
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: '',
+        };
+    }
 
-    // handleClick = id => {
-    //     this.setState({ activeLink: id });
-    // };
+    handleSearchInputChange = (event) => {
+        this.setState({ search: event.target.value });
+    };
+
+    handleSearchIconClick = () => {
+        const { search } = this.state;
+        if (search.trim() === "") {
+            console.log("Search is empty or contains only spaces");
+            return; // Không làm bước tiếp theo nếu search trống
+        }
+        console.log(search);
+        this.props.history.push(`/search?query=${search}`);
+    };
+
+    handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          this.handleSearchIconClick();
+        }
+    };
 
     render() {
         // const { links, activeLink } = this.state;
@@ -66,23 +54,6 @@ class HomeHeader extends Component {
                         </div>
 
                         <div className='center-content'>
-                            {/* {links.map(link => {
-                                return (
-                                    <div>
-                                        <div key={link.id} onClick={() => this.handleClick(link.id)}
-                                            className={
-                                            link.className +
-                                            (link.id === activeLink ? " active_item" : "")
-                                        }>
-  
-                                            <b>
-                                                {link.name}
-                                            </b>
-                                        </div>
-                                        <Link to = {link.to}></Link>
-                                    </div>
-                                );
-                            })} */}
                             <NavLink to ='/sieu-sale'>
                                 <div className='child-content'>
                                     <div>
@@ -126,8 +97,12 @@ class HomeHeader extends Component {
 
                         <div className='right-content'>
                             <div className='search'>
-                                <input type='text' placeholder='Tìm kiếm sản phẩm' />
-                                <i class="fas fa-search"></i>
+                                <input type='text' 
+                                       placeholder='Tìm kiếm sản phẩm' 
+                                       value={this.state.search} 
+                                       onChange={this.handleSearchInputChange}
+                                       onKeyDown={this.handleKeyPress} />
+                                <i class="fas fa-search" onClick={this.handleSearchIconClick}></i>
                             </div>
 
                             <NavLink to ='/user-info'>
@@ -161,14 +136,15 @@ class HomeHeader extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         processLogout: () => dispatch(actions.processLogout()),
+        // setSearchQuery: (searchQuery) => dispatch(actions.setSearchQuery(searchQuery))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));

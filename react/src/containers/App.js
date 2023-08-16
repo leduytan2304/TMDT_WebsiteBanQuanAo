@@ -23,6 +23,7 @@ import QuanPage from './Customer/Quan/QuanPage';
 import PhuKienPage from './Customer/PhuKien/PhuKienPage';
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
+import SearchResult from './Customer/Search/SearchResult';
 
 class App extends Component {
 
@@ -62,6 +63,7 @@ class App extends Component {
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.PHUKIEN} component={PhuKienPage} />
+                                    <Route path={path.SEARCH} component={SearchResult} />
                                     <Route path={path.AO_DETAIL} component={AoDetail} />
                                     <Route path={path.QUAN_DETAIL} component={QuanDetail} />
                                 </Switch>
