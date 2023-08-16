@@ -14,6 +14,7 @@ export const path = {
     ADDRESS: '/user/address',
     CART: '/user/cart',
     PAYMENT: '/user/payment',
+    SHIPPIMG: '/user/shipping',
     DETAIL_PRODUCT: '/products/:id',
 
     AO_DETAIL: '/chi-tiet-ao/:id',

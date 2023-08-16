@@ -7,10 +7,7 @@ import { useState } from 'react';
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
 
-import cod from '../../../assets/Users/cod.png';
-import vnpay from '../../../assets/Users/vnpay.png';
-
-import './Payment.scss';
+import './Shipping.scss';
 
 const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
@@ -23,6 +20,7 @@ class Cart extends Component {
         super(props);
         this.state = {
             payment_method: 'cod', // Giá trị mặc định được chọn
+            shipping_method: 'ship',
             quantityNum: ['1','1','1'],
             unit_sum: ['149000','149000','149000'],
             sum: '447000',
@@ -37,6 +35,24 @@ class Cart extends Component {
         });
     }
 
+    shippingOptionChange = (event) => {
+        this.setState({
+            shipping_method: event.target.value,
+        });
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.shipping_method !== prevState.shipping_method) {
+            if (this.state.shipping_method === 'ship'){
+                let res = parseInt(this.state.sum) + parseInt(35000);
+                console.log(res);
+                this.setState({price: res - this.state.discount});
+            }
+            else {
+                this.setState({price: this.state.price - parseInt(35000) - this.state.discount});
+            }
+        }
+    }
     render() {
 
         return (
@@ -55,57 +71,11 @@ class Cart extends Component {
                     />
                     <div class="row content-info">
                         <div class="col-9">
-                            <h2>Phương thức thanh toán</h2>
-                            <form>
-                                <label class="payment-method row" for="pm1">
-                                    <div class="col-1">
-                                        <img src={cod}></img>
-                                    </div>
-                                    <div class="col">
-                                        <h3>Thanh toán tiền mặt</h3>
-                                    </div>
-                                    <div class="col-1" align="right">
-                                        <input id="pm1" type="radio" value="cod" checked={this.state.payment_method === 'cod'} onChange={this.paymentOptionChange}/> 
-                                    </div>
-                                </label>
-
-                                <label class="payment-method row" for="pm2">
-                                    <div class="col-1">
-                                        <img src={vnpay}></img>
-                                    </div>
-                                    <div class="col">
-                                        <h3>Thanh toán qua VNPAY</h3>
-                                    </div>
-                                    <div class="col-1" align="right">
-                                        <input id="pm2" name="methud" type="radio" value="vnpay" checked={this.state.payment_method === 'vnpay'} onChange={this.paymentOptionChange}/> 
-                                    </div>
-                                </label>
-                            </form>
-                            <div class="button" align="right">
-                                <NavLink to="/user/cart">
-                                    <button type="button" class="btn btn-light btn-return">
-                                        TRỞ VỀ
-                                    </button>
-                                </NavLink>
-
-                                {this.state.payment_method === 'vnpay' ? (
-                                <NavLink to={`/vnpay`}>
-                                    <button type="button" class="btn btn-danger btn-payment">
-                                        THANH TOÁN
-                                    </button>
-                                </NavLink>
-                                ) : (
-                                <NavLink to={`/success`}>
-                                    <button type="button" class="btn btn-danger btn-payment">
-                                        THANH TOÁN
-                                    </button>
-                                </NavLink>
-                                )}
-                            </div>
+                            
                         </div>
 
                         <div class="col">
-                        <div class="bill">
+                            <div class="bill">
                                 <h2>Thông tin đơn hàng</h2>
                                 <hr
                                     style={{
