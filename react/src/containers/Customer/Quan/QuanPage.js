@@ -10,7 +10,7 @@ import '../Page.scss';
 import axios from 'axios';
 
 
-class AoPage extends Component {
+class QuanPage extends Component {
 
     componentDidMount(){
         axios.get(`http://localhost:8000/api/image/quan`)
@@ -40,7 +40,7 @@ class AoPage extends Component {
                     <div className='section-container'>
                         <div className='section-content'>
                             <div className='section-header header-position'>
-                                <span className='title-section'>Áo</span>
+                                <span className='title-section'>Quần</span>
                                 <div className='col-3 browse-tags'>
                                 <span className='dropdown'>
                                     <select className='sort'>
@@ -138,4 +138,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AoPage);
+export default connect(mapStateToProps, mapDispatchToProps)(QuanPage);

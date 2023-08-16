@@ -11,7 +11,7 @@ import axios from 'axios';
 
 
 
-class AoDetail extends Component { 
+class QuanDetail extends Component { 
     // constructor(props) {
     //     super(props);
     //     this.state = {
@@ -181,4 +181,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AoDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(QuanDetail);

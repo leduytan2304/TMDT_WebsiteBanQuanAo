@@ -21,3 +21,8 @@ export const userLoginFail = () => ({
 export const processLogout = () => ({
     type: actionTypes.PROCESS_LOGOUT
 })
+
+// export const setSearchQuery = (searchQuery) => ({
+//     type: actionTypes.SET_SEARCH_QUERY,
+//     searchQuery: searchQuery
+// })
