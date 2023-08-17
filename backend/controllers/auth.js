@@ -86,4 +86,5 @@ export const logout = (req, res) => {
     secure:true,
     sameSite:"none"
   }).status(200).json("User has been logged out.")
+
 };

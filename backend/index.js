@@ -27,7 +27,7 @@ app.use("/api/image", productRoutes);
 app.use("/api/chi-tiet-do",detailProduct)
 // app.use("/api/chi-tiet-quan",detailProduct)
 app.use("/api", authRoutes); // API để login/register
-// app.use("/api/user", userRoutes)
+app.use("/api/user", userRoutes)
 
 // app.use("api/payment",payment);
 
