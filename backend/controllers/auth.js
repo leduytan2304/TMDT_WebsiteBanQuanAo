@@ -87,3 +87,40 @@ export const logout = (req, res) => {
     sameSite:"none"
   }).status(200).json("User has been logged out.")
 };
+
+
+export const testing = (req ,res)=>{
+  const currentUrl = req.params.userID;
+  // console.log('url ' + currentUrl);
+  const values = [
+      req.body
+    ]
+    const getProductVariant = 'select * FROM ProductVariant PV where PV.ProductID = "' +values[0].productID+ '" and ProductSizeID = "' + (values[0].size) +'"';
+    console.log('getProductVariant :' + getProductVariant);
+    console.log(values);
+    db.query(getProductVariant, (err, data) => {
+      
+      if (err) return res.status(500).json(err);
+      console.log(getProductVariant);
+      const updateCart = 'call sp_AddProductIntoShoppingCart(' + db.query(getProductVariant) + "'," + values[0].size + ", '"+ U0025 + '"';
+      console.log(updateCart);
+      return res.status(200).json(data);
+      
+    });
+  }
+
+export const testing2 = (req ,res)=>{
+  const currentUrl = req.params.userID;
+  // console.log('url ' + currentUrl);
+ 
+    console.log(values);
+    const getProductVariant = 'select * FROM ProductVariant PV where PV.ProductID = "' +values[2].productID+ '" and ProductSizeID = "' + (values[2].size) +'"';
+    console.log('getProductVariant :' + getProductVariant);
+    console.log((values[2].productID));
+    db.query(getProductVariant, (err, data) => {
+      if (err) return res.status(500).json(err);
+      console.log(getProductVariant);
+      return res.status(200).json(data);
+      
+    });
+}

@@ -33,20 +33,22 @@ class Cart extends Component {
     state = {
         totalMoney: []
     }
-    componentDidMount(){
-        fetch('https://my-json-server.typicode.com/typicode/demo/posts/4',{
-            method: "POST",
+    request_data(){
+        fetch('http://localhost:8000/api/testing', {
+            method: 'POST',
             body: JSON.stringify({
-                title: "foo",
-                body: "bar",
-                userId: 1
-            }),headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
-      .then(response => response.json())
-      .then(json => console.log(json))
-    };
+              id: 1,
+              title: 'ádasda',
+              body: 'ádsa',
+              userId: 1,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+    }
     
 
     paymentOptionChange = (event) => {
@@ -108,7 +110,7 @@ class Cart extends Component {
 
                                  
                                 <NavLink to={`/success`} >
-                                    <button type="button" class="btn btn-danger btn-payment">
+                                    <button type="button" class="btn btn-danger btn-payment" onClick={this.request_data(this.state.sum)}>
                                         THANH TOÁN
                                     </button>
                                 </NavLink>
