@@ -30,30 +30,24 @@ class Cart extends Component {
             price: '482000'
         };
     }
-
+    state = {
+        totalMoney: []
+    }
     componentDidMount(){
-        axios.get(`http://localhost:8000/api/image/ao`)
-          .then(res => {
-            const images = res.data;
-            this.setState({ images });
-          })
-          .catch(error => console.log(error));
+        fetch('https://my-json-server.typicode.com/typicode/demo/posts/4',{
+            method: "POST",
+            body: JSON.stringify({
+                title: "foo",
+                body: "bar",
+                userId: 1
+            }),headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+      .then(response => response.json())
+      .then(json => console.log(json))
     };
     
-    handlePayment(TotalMoney) {
-    
-        // Send data to the backend via POST
-        fetch('http://localhost:8888/order/create_payment_url', {  // Enter your IP address here
-            
-          method: 'POST', 
-          mode: 'cors', 
-          body: JSON.stringify(TotalMoney) // body data type must match "Content-Type" header
-    
-        })
-        
-      }
-
-
 
     paymentOptionChange = (event) => {
         this.setState({
@@ -113,7 +107,7 @@ class Cart extends Component {
                                 </NavLink>
 
                                  
-                                <NavLink to={`/success`} onClick={this.handlePayment(this.state.sum)}>
+                                <NavLink to={`/success`} >
                                     <button type="button" class="btn btn-danger btn-payment">
                                         THANH TOÁN
                                     </button>
