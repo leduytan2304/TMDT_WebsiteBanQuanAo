@@ -97,8 +97,8 @@ export const testing = (req ,res)=>{
       req.body
     ]
     const getProductVariant = 'select ProductVariantID FROM ProductVariant PV where PV.ProductID = "' +values[0].productID+ '" and ProductSizeID = "' + (values[0].size) +'"';
-    console.log('getProductVariant :' + getProductVariant);
-    console.log(values);
+    // console.log('getProductVariant :' + getProductVariant);
+    // console.log(values);
     db.query(getProductVariant, (err, result) => {
       if (err) return res.status(500).json(err);
       // console.log("Query: "+getProductVariant);
@@ -108,6 +108,7 @@ export const testing = (req ,res)=>{
       db.query(updateCart, function(err, result) {
         if (err) throw err;
         console.log('final result ', result[0][0].Result);
+        res.status(200).json(result)
       })
     });
     
@@ -122,17 +123,17 @@ export const testing = (req ,res)=>{
   }
 
 
-export const testing2 = (req ,res)=>{
+export const cartDetail = (req ,res)=>{
   const currentUrl = req.params.userID;
-  // console.log('url ' + currentUrl);
- 
-    console.log(values);
-    const getProductVariant = 'select * FROM ProductVariant PV where PV.ProductID = "' +values[2].productID+ '" and ProductSizeID = "' + (values[2].size) +'"';
-    console.log('getProductVariant :' + getProductVariant);
-    console.log((values[2].productID));
-    db.query(getProductVariant, (err, data) => {
-      if (err) return res.status(500).json(err);
-      console.log(getProductVariant);
-      return res.status(200).json(data);
-      
-    });}
+  const values = [
+      req.body
+    ]
+    const selectItemInCart = "call sp_ViewShoppingCartDetails('" +currentUrl +"')"
+    console.log(selectItemInCart);
+    db.query(selectItemInCart, function(err, result) {
+      if (err) throw err;
+      console.log('final result ', result);
+      // res.status(200).json(result)
+    }) 
+  
+}
