@@ -138,8 +138,8 @@ class Info extends Component {
                                     </tr>
                                 </thead>
 
-                                {this.state.orders.map((order, index) => (
                                 <tbody  class="table-group-divider">
+                                    {this.state.orders.map((order, index) => (
                                     <tr >
                                         <th key={index} scope="row">{index + 1}</th>
                                         <td>{order.OrderID}</td>
@@ -147,9 +147,9 @@ class Info extends Component {
                                         <td>{order.TotalCost}</td>
                                         <td>{order.OrderStatus}</td>
                                     </tr>
+                                    ))}
                                 </tbody>
-                                ))}
-
+                                
                             </table>
                         </div>
                     </div>
