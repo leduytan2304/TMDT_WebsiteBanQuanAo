@@ -52,7 +52,7 @@ class AoDetail extends Component {
         this.setState({ quantityNum: currentValue });
     }
 
-    handleAddToCart = (url) => {
+    handleAddToCart = () => {
         const lastSegment = window.location.pathname.split("/").pop();
 
             fetch('http://localhost:8000/api/testing/' +'U0025' , {
