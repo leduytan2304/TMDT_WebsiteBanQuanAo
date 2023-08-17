@@ -11,20 +11,22 @@ import './Address.scss';
 
 
 class Address extends Component {
-    componentDidMount(){
-        // const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo).UserID;
+    constructor(props) {
+        super(props);
+        this.state = {
+            address: []
+        }
+    }
 
-        axios.get(`http://localhost:8000/api/user/address/U0025`)
+    componentDidMount(){
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.UserID;
+        axios.get(`http://localhost:8000/api/user/address/${personsObject}`)
         .then(res => {
         const address = res.data;
         this.setState({ address });
         })
         .catch(error => console.log(error));
     };
-
-    state = {
-        address: []
-      }
 
     render() {
         return (

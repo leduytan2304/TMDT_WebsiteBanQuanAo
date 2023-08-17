@@ -11,30 +11,30 @@ import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
 
 class Info extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            persons: [],
+            orders: []
+        }
+    }
 
     componentDidMount(){
-        // const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo).UserID;
-
-        axios.get(`http://localhost:8000/api/user/profile/U0025`)
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.UserID;
+        axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data;
         this.setState({ persons });
         })
         .catch(error => console.log(error));
 
-        axios.get(`http://localhost:8000/api/user/order/U0025`)
+        axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
         .then(res => {
         const orders = res.data;
         this.setState({ orders });
         })
         .catch(error => console.log(error));
-
     };
-
-    state = {
-        persons: [],
-        orders: []
-      }
       
     render() {
         return (
