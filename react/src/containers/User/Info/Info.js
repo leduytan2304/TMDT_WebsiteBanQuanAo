@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import moment from "moment"
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -38,7 +37,6 @@ class Info extends Component {
       }
       
     render() {
-        console.log(this.state.address)
         return (
             <div>
                 <HomeHeader />
