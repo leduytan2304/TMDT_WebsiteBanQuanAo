@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import * as actions from "../../store/actions";
 import './Signin.scss';
 import { FormattedMessage } from 'react-intl';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { handleRegisterApi } from '../../services/userService';
 
 
@@ -76,10 +79,12 @@ class Register extends Component {
                 console.log("Err code", dataApi)
             }
             if (dataApi !== 0) {
+                toast.success('Đăng ký thành công, xin mời đăng nhập', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 4000,
+                })
                 console.log("Register success!");
-                const { navigate } = this.props;
-                const redirectPath = '/login';
-                navigate(`${redirectPath}`);
+                this.props.history.push('/login');
             }
             return;
         }
@@ -92,7 +97,6 @@ class Register extends Component {
                     })
                 }
             }
-            
             console.log("Lỗi", e.response)
         }
     }
@@ -168,6 +172,7 @@ class Register extends Component {
                         </div>
                         <div className='col-12'>
                             <button className='login-btn' onClick={() => {this.handleRegister()}}>Đăng ký</button>
+                            <ToastContainer />
                         </div>
                         <div className='col-12'>
                             <Link to ='/login' className='return-login'>Quay lại đăng nhập</Link>
