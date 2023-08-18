@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-
+import axios from 'axios';
 import './Cart.scss';
 import sp from '../../../assets/Ao/ao-2.png';
 
@@ -22,30 +22,74 @@ class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            productName :[],
             quantityNum: ['1','1','1'],
-            unit_price:['149000','149000','149000'],
+            unit_price:[],
             unit_sum: [],
             sum: '0',
             discount: '0',
-            price: '0'
+            price: '0',
+            images:[]
         };
     }
+
+    // const unitSum = images[0].map((image) => {
+    //     const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
+    //     sum += temp;
+    //     return temp;   })
+
     // hàm set giá trị cho price và unit_sum
     componentDidMount() { 
-        let sum = 0;
-        const unitSum = this.state.quantityNum.map((quantity, index) => {
-            const temp = parseFloat(this.state.unit_price[index]) * parseInt(quantity);
-            sum += temp;
-            return temp;   
+        var sum = 0;
+
+        axios.get(`http://localhost:8000/api/cart/U0025`)
+        .then(res => {
+          const images = res.data;
+          this.setState({ images });
+          
+        const quantity_number =images[0].map((image) => {
+            const temp =parseInt(image.ProductQuantity);
+                // console.log(sum);
+                return temp;  
+        });
+
+        const product_name =images[0].map((image) => {
+            const temp =(image.ProductName);
+                // console.log(sum);
+                return temp;  
+        });
+
+        const unitSum = images[0].map((image) => {
+            const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
+                
+                sum += temp;
+                // console.log(sum);
+                return temp;  
+        });
+
+        const unitPrice = images[0].map((image) => {
+            const temp = parseFloat(image.ProductPrice);
+                
+                sum += temp;
+                // console.log(sum);
+                return temp;  
         });
         this.setState({ unit_sum: unitSum });
         this.setState({sum: sum})
+        this.setState({quantityNum: quantity_number})
+        this.setState({productName: product_name})
+        this.setState({unit_price: unitPrice})
+       
 
         // thay đổi giá trị thành tiền
         const discount = this.state.discount;
         this.setState({price: sum-discount});
+        })
+        .catch(error => console.log(error));
+  };
+       
         
-    }
+    
 
     //hàm cập nhật khi có thay đổi
     componentDidUpdate(prevProps, prevState) {
@@ -83,6 +127,17 @@ class Cart extends Component {
         });
     }
 
+
+    // {this.state.productName.map((name, index) => (
+    //     <div key={index}>
+    //         {index === 0 && (
+    //             <>
+    //             <b>{name}</b>
+    //             <p>Nâu / M</p>
+    //             </>
+    //         )}
+    //     </div>
+    // ))}
     render() {
 
         return (
@@ -124,123 +179,56 @@ class Cart extends Component {
                         <div class="col-1 vertical-line-container">
                             <div class="vertical-line"></div>
                         </div>
-
+                      
                         <div class="col-5 product-list">
+                        {this.state.productName.map((name,index) => (
+                            
                             <div class="row alert alert-secondary">
                                 <div class="col-3 image-sp">
                                     <img src= {sp} />
                                 </div>
                                 
                                 <div class="col-7" align="left">
-                                    <b>Áo thun Highclub Signature - 5 Colors</b>
-                                    <p>Nâu / M</p>
+                                        <b>{name}</b>
+                                        <p>Nâu / M</p>
                                     <div className='quantity-area'>
-                                        {this.state.quantityNum.map((quantity, index) => (
+                                        
                                             <div key={index}>
-                                                {index === 0 && (
                                                     <>
                                                     <input type='button' className='quantity-btn' value='-' onClick={() => this.handleQuantityChange('-',index)} />
                                                         <input
                                                             type="number"
                                                             class="quantity-number"
                                                             name={`quantity-${index}`}
-                                                            value={quantity}
+                                                            value={this.state.quantityNum[index]}
                                                             onChange={e => this.handleQuantityChange(e, index)}
                                                         />
                                                     <input type='button' className='quantity-btn' value='+' onClick={() => this.handleQuantityChange('+',index)} />
                                                     </>
-                                                )}
+                                                
                                             </div>
-                                        ))}
                                     </div>
-                                </div>
-
-                                <div class="col close-but" align="right"> 
-                                    <button type="button" class="btn-close" aria-label="Close"></button>
-                                    <p>
-                                        {VND.format(this.state.unit_price[0])}  
-                                    </p>
-                            
-                                </div>
-                            </div>
-
-                            <div class="row alert alert-secondary">
-                                <div class="col-3 image-sp">
-                                    <img src= {sp} />
                                 </div>
                                 
-                                <div class="col-7" align="left">
-                                    <b>Áo thun Highclub Signature - 5 Colors</b>
-                                    <p>Nâu / M</p>
-                                    <div className='quantity-area'>
-                                        {this.state.quantityNum.map((quantity, index) => (
-                                            <div key={index}>
-                                                {index === 1 && (
-                                                    <>
-                                                    <input type='button' className='quantity-btn' value='-' onClick={() => this.handleQuantityChange('-',index)} />
-                                                        <input
-                                                            type="number"
-                                                            class="quantity-number"
-                                                            name={`quantity-${index}`}
-                                                            value={quantity}
-                                                            onChange={e => this.handleQuantityChange(e, index)}
-                                                        />
-                                                    <input type='button' className='quantity-btn' value='+' onClick={() => this.handleQuantityChange('+',index)} />
-                                                    </>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
 
                                 <div class="col close-but" align="right"> 
                                     <button type="button" class="btn-close" aria-label="Close"></button>
                                     <p>
-                                        {VND.format(this.state.unit_price[1])}
+                                        {VND.format(this.state.unit_price[index])}  
                                     </p>
                             
                                 </div>
                             </div>
-
-                            <div class="row alert alert-secondary">
-                                <div class="col-3 image-sp">
-                                    <img src= {sp} />
-                                </div>
+                                    ))}
+                            
+                            
+                           
                                 
-                                <div class="col-7" align="left">
-                                    <b>Áo thun Highclub Signature - 5 Colors</b>
-                                    <p>Nâu / M</p>
-                                    <div className='quantity-area'>
-                                        {this.state.quantityNum.map((quantity, index) => (
-                                            <div key={index}>
-                                                {index === 2 && (
-                                                    <>
-                                                    <input type='button' className='quantity-btn' value='-' onClick={() => this.handleQuantityChange('-',index)} />
-                                                        <input
-                                                            type="number"
-                                                            class="quantity-number"
-                                                            name={`quantity-${index}`}
-                                                            value={quantity}
-                                                            onChange={e => this.handleQuantityChange(e, index)}
-                                                        />
-                                                    <input type='button' className='quantity-btn' value='+' onClick={() => this.handleQuantityChange('+',index)} />
-                                                    </>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div class="col close-but" align="right"> 
-                                    <button type="button" class="btn-close" aria-label="Close"></button>
-                                    <p>
-                                        {VND.format(this.state.unit_price[2])}  
-                                    </p>
-                            
-                                </div>
-                            </div>
+                                
                         </div>
-
+                        
+                      
+                                                    
                         <div class="col">
                             <div class="bill">
                                 <h2>Thông tin đơn hàng</h2>
