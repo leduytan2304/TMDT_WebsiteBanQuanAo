@@ -29,7 +29,11 @@ class Cart extends Component {
             sum: '0',
             discount: '0',
             price: '0',
-            images:[]
+            images:[],
+            ImageLink:[],
+            Size:[],
+            ColorName:[]
+            
         };
     }
 
@@ -74,11 +78,31 @@ class Cart extends Component {
                 // console.log(sum);
                 return temp;  
         });
+
+        const imageLink =images[0].map((image) => {
+            const temp =(image.ImageLink);
+                // console.log(sum);
+                return temp;  
+        });
+        const size =images[0].map((image) => {
+            const temp =(image.ProductSizeID);
+                // console.log(sum);
+                return temp;  
+        });
+        const colorName =images[0].map((image) => {
+            const temp =(image.ColorName);
+                // console.log(sum);
+                return temp;  
+        });
+
         this.setState({ unit_sum: unitSum });
         this.setState({sum: sum})
         this.setState({quantityNum: quantity_number})
         this.setState({productName: product_name})
         this.setState({unit_price: unitPrice})
+        this.setState({ImageLink: imageLink})
+        this.setState({Size: size})
+        this.setState({ColorName: colorName})
        
 
         // thay đổi giá trị thành tiền
@@ -185,12 +209,12 @@ class Cart extends Component {
                             
                             <div class="row alert alert-secondary">
                                 <div class="col-3 image-sp">
-                                    <img src= {sp} />
+                                    <img src= {this.state.ImageLink[index]} />
                                 </div>
                                 
                                 <div class="col-7" align="left">
                                         <b>{name}</b>
-                                        <p>Nâu / M</p>
+                                        <p>Size: {this.state.Size[index]}</p>
                                     <div className='quantity-area'>
                                         
                                             <div key={index}>
@@ -228,7 +252,7 @@ class Cart extends Component {
                         </div>
                         
                       
-                                                    
+                                                 
                         <div class="col">
                             <div class="bill">
                                 <h2>Thông tin đơn hàng</h2>
@@ -240,40 +264,20 @@ class Cart extends Component {
                                     margin: '0 auto'
                                     }}
                                 />
+                                {this.state.productName.map((name,index) => (  
                                 <div class="row product-bill">                                 
                                     <div class="col-9" align="left">
-                                        <b>Áo thun Highclub Signature</b>
-                                        <p>Nâu / M</p>
+                                        <b>{name}</b>
+                                        <p>{this.state.ColorName[index]}</p>
                                     </div>
                                     <div class="col" align="right"> 
-                                        <p> x{this.state.quantityNum[0]} </p>
-                                        <p> {VND.format(this.state.unit_sum[0])}  </p>
+                                        <p> x{this.state.quantityNum[index]} </p>
+                                        <p> {VND.format(this.state.unit_price[index])}  </p>
+                                        <p> {VND.format(this.state.quantityNum[index] *this.state.unit_price[index] )}  </p>
+                                        
                                     </div>
                                 </div>
-
-                                 <div class="row product-bill">                                 
-                                    <div class="col-9" align="left">
-                                        <b>Áo thun Highclub Signature</b>
-                                        <p>Nâu / M</p>
-                                    </div>
-                                    <div class="col" align="right"> 
-                                        <p> x{this.state.quantityNum[1]} </p>
-                                        <p> {VND.format(this.state.unit_sum[1])}  </p>
-                                    </div>
-                                </div>
-
-                                <div class="row product-bill">                                 
-                                    <div class="col-9" align="left">
-                                        <b>Áo thun Highclub Signature</b>
-                                        <p>Nâu / M</p>
-                                    </div>
-                                    <div class="col" align="right"> 
-                                        <p> x{this.state.quantityNum[2]} </p>
-                                        <p> {VND.format(this.state.unit_sum[2])}  </p>
-                                    </div>
-                                </div>
-
-                                <br />
+                                    ))}
                                 
                                 <hr
                                     style={{
@@ -289,7 +293,7 @@ class Cart extends Component {
                                         Thành tiền:
                                     </div>
                                     <div class="col" align="right">
-                                        <b>{VND.format(this.state.sum)}</b>
+                                        <b>{VND.format(this.state.price)}</b>
                                     </div>
                                 </div>
 
