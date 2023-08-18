@@ -20,7 +20,7 @@ class Info extends Component {
     }
 
     componentDidMount(){
-        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.UserID;
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data;

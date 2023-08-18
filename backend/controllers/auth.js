@@ -76,7 +76,11 @@ export const login = (req, res) => {
         httpOnly: true,
       })
       .status(200)
-      .json(others)
+      .send({
+            "userID": data[0].UserID,
+            "isAdmin": data[0].isAdmin
+      })
+
   });
   
 };
