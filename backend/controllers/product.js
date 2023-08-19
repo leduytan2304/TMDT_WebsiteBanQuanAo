@@ -39,7 +39,7 @@ export const getDetail = (req,res)=>{
   // console.log(res.params.productID );
   db.query(q, (err, data) => {
     if (err) return res.status(500).json(err);
-    console.log(q);
+    // console.log(q);
     return res.status(200).json(data);
     
   });

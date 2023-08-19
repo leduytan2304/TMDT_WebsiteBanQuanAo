@@ -35,20 +35,22 @@ class Payment extends Component {
     state = {
         totalMoney: []
     }
-    componentDidMount(){
-        fetch('https://my-json-server.typicode.com/typicode/demo/posts/4',{
-            method: "POST",
+    request_data(){
+        fetch('http://localhost:8000/api/testing', {
+            method: 'POST',
             body: JSON.stringify({
-                title: "foo",
-                body: "bar",
-                userId: 1
-            }),headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
-      .then(response => response.json())
-      .then(json => console.log(json))
-    };
+              id: 1,
+              title: 'ádasda',
+              body: 'ádsa',
+              userId: 1,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+    }
     
 
     paymentOptionChange = (event) => {
@@ -75,9 +77,47 @@ class Payment extends Component {
                     />
                     <div class="row content-info">
                         <div class="col-9">
-                            {this.state.page === 'payment_method' &&(
-                                <PaymentMethod />
-                            )}
+                            <h2>Phương thức thanh toán</h2>
+                            <form>
+                                <label class="payment-method row" for="pm1">
+                                    <div class="col-1">
+                                        <img src={cod}></img>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Thanh toán tiền mặt</h3>
+                                    </div>
+                                    <div class="col-1" align="right">
+                                        <input id="pm1" type="radio" value="cod" checked={this.state.payment_method === 'cod'} onChange={this.paymentOptionChange}/> 
+                                    </div>
+                                </label>
+
+                                <label class="payment-method row" for="pm2">
+                                    <div class="col-1">
+                                        <img src={vnpay}></img>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Thanh toán qua VNPAY</h3>
+                                    </div>
+                                    <div class="col-1" align="right">
+                                        <input id="pm2" name="methud" type="radio" value="vnpay" checked={this.state.payment_method === 'vnpay'} onChange={this.paymentOptionChange}/> 
+                                    </div>
+                                </label>
+                            </form>
+                            <div class="button" align="right">
+                                <NavLink to="/user/cart">
+                                    <button type="button" class="btn btn-light btn-return">
+                                        TRỞ VỀ
+                                    </button>
+                                </NavLink>
+
+                                 
+                                <NavLink to={`/success`} >
+                                    <button type="button" class="btn btn-danger btn-payment" onClick={this.request_data(this.state.sum)}>
+                                        THANH TOÁN
+                                    </button>
+                                </NavLink>
+                                
+                            </div>
                         </div>
 
                         <div class="col">

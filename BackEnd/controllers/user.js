@@ -1,12 +1,32 @@
 import { db } from "../connect.js";
 
 export const getUserInfo = (req ,res)=>{
-    const q = 'select LastName, Tel, Email from sql6637195.UserAccount where UserID = "' + req.params.userID  +'" ';
+    const q = "Call sp_ViewProfile(?)";
 
-    db.query(q, (err, data) => {
+    db.query(q, req.params.userID, (err, data) => {
       if (err) return res.status(500).json(err);
       
-      return res.status(200).json(data);
+      return res.status(200).json(data[0]);
       
     });
+}
+
+export const getUserAddress = (req ,res)=>{
+  const q = "Call sp_ViewAddress(?)"
+
+  db.query(q, req.params.userID, (err, data) => {
+    if (err) return res.status(500).json(err);
+    
+    return res.status(200).json(data[0]);
+  });
+}
+
+export const getOrderHistory = (req ,res)=>{
+  const q = "Call sp_ViewOrderHistory(?)"
+
+  db.query(q, req.params.userID, (err, data) => {
+    if (err) return res.status(500).json(err);
+    
+    return res.status(200).json(data[0]);
+  });
 }

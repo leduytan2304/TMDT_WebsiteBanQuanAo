@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Button, Modal,Form } from 'react-bootstrap';
+import axios from 'axios';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -16,7 +17,8 @@ class Address extends Component {
         super(props);
         this.state = {
             show: false,
-            delivery_addr: 'addr1'
+            delivery_addr: 'addr1',
+            address: []
         };
     }   
 
@@ -34,8 +36,17 @@ class Address extends Component {
         });
     }
 
-    render() {
+    componentDidMount(){
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        axios.get(`http://localhost:8000/api/user/address/${personsObject}`)
+        .then(res => {
+        const address = res.data;
+        this.setState({ address });
+        })
+        .catch(error => console.log(error));
+    };
 
+    render() {
         return (
             <div>
             <HomeHeader />
@@ -76,72 +87,36 @@ class Address extends Component {
                             <div class="vertical-line"></div>
                         </div>
 
-                        <div class="col-6"> 
+                        <div  class="col-6"> 
                             <form action="#">
-                                <label for="dc1">
-                                    <li class="list-group-item list-group-item-dark title-address"> 
-                                        Nguyễn Văn A
-                                    </li>
-                                    <li class="list-group-item list-group-item-light info-address">
-                                        <div class="row">
-                                            <div class="col-2" id="title">
-                                                Địa chỉ: <br />
-                                                Sđt:
-                                            </div>
-                                            <div class="col-9">
-                                                227 Nguyễn Văn Cừ, Quận 5, TP HCM <br />
-                                                0123456789
-                                            </div>
-                                            <div class="col-1">
-                                            <input id="dc1" type="radio" value="addr1" checked={this.state.delivery_addr === 'addr1'} onChange={this.paymentOptionChange}/> 
-                                            </div>
-                                        </div>
-                                    </li>
-                                </label>
+                                {this.state.address.map(addres => (
+                                <label key = {addres.AddressID} for="dc1">
 
-                                <label for="dc2">
-                                    <li class="list-group-item list-group-item-dark title-address"> 
-                                        Nguyễn Văn A
-                                    </li>
-                                    <li class="list-group-item list-group-item-light info-address">
-                                        <div class="row">
-                                            <div class="col-2" id="title">
-                                                Địa chỉ: <br />
-                                                Sđt:
-                                            </div>
-                                            <div class="col-9">
-                                                227 Nguyễn Văn Cừ, Quận 5, TP HCM <br />
-                                                0123456789
-                                            </div>
-                                            <div class="col-1 ">
-                                            <input id="dc2" type="radio" value="addr2" checked={this.state.delivery_addr === 'addr2'} onChange={this.paymentOptionChange}/>  <br />
-                                            </div>
-                                        </div>
-                                    </li>
-                                </label>
+                                <li class="list-group-item list-group-item-dark title-address"> 
+                                    {addres.ReceiverName} 
+                                </li>
 
-                                <label for="dc3">
-                                    <li class="list-group-item list-group-item-dark title-address"> 
-                                        Nguyễn Văn A
-                                    </li>
-                                    <li class="list-group-item list-group-item-light info-address">
-                                        <div class="row">
-                                            <div class="col-2" id="title">
-                                                Địa chỉ: <br />
-                                                Sđt:
-                                            </div>
-                                            <div class="col-9">
-                                                227 Nguyễn Văn Cừ, Quận 5, TP HCM <br />
-                                                0123456789
-                                            </div>
-                                            <div class="col-1">
-                                            <input id="dc3" type="radio" value="addr3" checked={this.state.delivery_addr === 'addr3'} onChange={this.paymentOptionChange}/>  <br />
-                                            </div>
+                                <li class="list-group-item list-group-item-light info-address">
+                                    <div class="row">
+                                        <div class="col-2" id="title">
+                                            Địa chỉ:<br />
+                                            Sđt:
                                         </div>
-                                    </li>
+                                        <div class="col-9">
+                                        {addres.Address}  <br />
+                                        {addres.ReceiverPhoneNumber}
+                                        </div>
+                                        <div class="col-1">
+                                        <input id="dc1" type="radio" value="addr1" checked={this.state.delivery_addr === 'addr1'} onChange={this.paymentOptionChange}/> 
+                                        </div>
+                                    </div>
+                                </li>
                                 </label>
+                               ))}
+                               
                             </form>
                         </div>
+                        
                         <div class="col-3">
                             <Button className="btn btn-danger add-new" variant="primary" onClick={this.handleShow}>
                                     THÊM ĐỊA CHỈ MỚI
@@ -181,6 +156,7 @@ class Address extends Component {
                                 </Modal>
 
                         </div>
+
                     </div>
                 </div>
                 <HomeFooter />
