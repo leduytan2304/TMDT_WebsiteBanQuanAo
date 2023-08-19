@@ -297,7 +297,7 @@ class Cart extends Component {
                                 />
 
                                 <div class="row sum">
-                                    <div class="col-8">
+                                    <div class="col-7">
                                         Thành tiền:
                                     </div>
                                     <div class="col" align="right">
@@ -306,7 +306,7 @@ class Cart extends Component {
                                 </div>
 
                                 <div class="row discout">
-                                    <div class="col-8" id="dc1">
+                                    <div class="col-7" id="dc1">
                                         Giảm giá:
                                     </div>
                                     <div class="col" align="right" id="dc1">
@@ -315,7 +315,7 @@ class Cart extends Component {
                                 </div>
 
                                 <div class="row final-price">
-                                    <div class="col-8">
+                                    <div class="col-7">
                                         Tổng tiền:
                                     </div>
                                     <div class="col" align="right" id="price">

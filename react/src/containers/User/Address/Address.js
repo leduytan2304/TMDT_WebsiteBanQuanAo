@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -10,6 +11,29 @@ import './Address.scss';
 
 
 class Address extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false,
+            delivery_addr: 'addr1'
+        };
+    }   
+
+    handleClose = () => {
+        this.setState({ show: false });
+    };
+
+    handleShow = () => {
+        this.setState({ show: true });
+    };  
+
+    paymentOptionChange = (event) => {
+        this.setState({
+            delivery_addr: event.target.value,
+        });
+    }
+
     render() {
 
         return (
@@ -69,7 +93,7 @@ class Address extends Component {
                                                 0123456789
                                             </div>
                                             <div class="col-1">
-                                                <input id="dc1" name="diachi" type="radio" value="Nam" /> <br />
+                                            <input id="dc1" type="radio" value="addr1" checked={this.state.delivery_addr === 'addr1'} onChange={this.paymentOptionChange}/> 
                                             </div>
                                         </div>
                                     </li>
@@ -90,7 +114,7 @@ class Address extends Component {
                                                 0123456789
                                             </div>
                                             <div class="col-1 ">
-                                                <input id="dc2" name="diachi" type="radio" value="Nam" /> <br />
+                                            <input id="dc2" type="radio" value="addr2" checked={this.state.delivery_addr === 'addr2'} onChange={this.paymentOptionChange}/>  <br />
                                             </div>
                                         </div>
                                     </li>
@@ -111,7 +135,7 @@ class Address extends Component {
                                                 0123456789
                                             </div>
                                             <div class="col-1">
-                                                <input id="dc3" name="diachi" type="radio" value="Nam" /> <br />
+                                            <input id="dc3" type="radio" value="addr3" checked={this.state.delivery_addr === 'addr3'} onChange={this.paymentOptionChange}/>  <br />
                                             </div>
                                         </div>
                                     </li>
@@ -119,7 +143,43 @@ class Address extends Component {
                             </form>
                         </div>
                         <div class="col-3">
-                            <button type="button" class="btn btn-danger add-new">THÊM ĐỊA CHỈ MỚI</button>
+                            <Button className="btn btn-danger add-new" variant="primary" onClick={this.handleShow}>
+                                    THÊM ĐỊA CHỈ MỚI
+                                </Button>
+                                <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                    <Modal.Header  style={{margin: '10px'}}> 
+                                        <Modal.Title>
+                                            Thêm địa chỉ mới
+                                        </Modal.Title>
+                                    </Modal.Header>
+
+                                    <Modal.Body>
+                                    <Form style={{padding: '10px'}}>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Họ và tên</Form.Label>
+                                            <Form.Control type="text" />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Số điện thoại</Form.Label>
+                                            <Form.Control type="number" />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Địa chỉ</Form.Label>
+                                            <Form.Control type="text" />
+                                        </Form.Group>
+                                    </Form>
+                                    </Modal.Body>
+
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                            Trở về
+                                        </Button>
+                                        <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                            OK
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
+
                         </div>
                     </div>
                 </div>

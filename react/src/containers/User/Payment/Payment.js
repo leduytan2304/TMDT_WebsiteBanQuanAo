@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
+import PaymentMethod from './Payment_method/Payment_method';
 
 import cod from '../../../assets/Users/cod.png';
 import vnpay from '../../../assets/Users/vnpay.png';
@@ -17,12 +18,13 @@ const VND = new Intl.NumberFormat('vi-VN', {
     currency: 'VND',
   });
 
-class Cart extends Component {
+class Payment extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             payment_method: 'cod', // Giá trị mặc định được chọn
+            page: 'payment_method', // biến kiểm tra hiển thị trang
             quantityNum: ['1','1','1'],
             unit_sum: ['149000','149000','149000'],
             sum: '447000',
@@ -73,47 +75,9 @@ class Cart extends Component {
                     />
                     <div class="row content-info">
                         <div class="col-9">
-                            <h2>Phương thức thanh toán</h2>
-                            <form>
-                                <label class="payment-method row" for="pm1">
-                                    <div class="col-1">
-                                        <img src={cod}></img>
-                                    </div>
-                                    <div class="col">
-                                        <h3>Thanh toán tiền mặt</h3>
-                                    </div>
-                                    <div class="col-1" align="right">
-                                        <input id="pm1" type="radio" value="cod" checked={this.state.payment_method === 'cod'} onChange={this.paymentOptionChange}/> 
-                                    </div>
-                                </label>
-
-                                <label class="payment-method row" for="pm2">
-                                    <div class="col-1">
-                                        <img src={vnpay}></img>
-                                    </div>
-                                    <div class="col">
-                                        <h3>Thanh toán qua VNPAY</h3>
-                                    </div>
-                                    <div class="col-1" align="right">
-                                        <input id="pm2" name="methud" type="radio" value="vnpay" checked={this.state.payment_method === 'vnpay'} onChange={this.paymentOptionChange}/> 
-                                    </div>
-                                </label>
-                            </form>
-                            <div class="button" align="right">
-                                <NavLink to="/user/cart">
-                                    <button type="button" class="btn btn-light btn-return">
-                                        TRỞ VỀ
-                                    </button>
-                                </NavLink>
-
-                                 
-                                <NavLink to={`/success`} >
-                                    <button type="button" class="btn btn-danger btn-payment">
-                                        THANH TOÁN
-                                    </button>
-                                </NavLink>
-                                
-                            </div>
+                            {this.state.page === 'payment_method' &&(
+                                <PaymentMethod />
+                            )}
                         </div>
 
                         <div class="col">
@@ -243,4 +207,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);

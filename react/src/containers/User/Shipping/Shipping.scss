@@ -92,25 +92,7 @@
             }    
         }
 
-        .btn-payment{
-            margin: 0;
-            width: 150px;
-            height: 35px;
-            background-color: #FF0000;
-            border-radius: 0;
-            margin-left: 5px;
-            box-shadow: 1px 1px 1px #e4e3e3;
-            &:hover{
-                background-color: #d60000;
-            }
-        }
-        .btn-return{
-            width: 150px;
-            height: 35px;
-            box-shadow: 1px 1px 1px #e4e3e3;
-            border-radius: 0;
-            border: 1.5px solid #e4e3e3;
-        }
+        
 
 
         h2{
