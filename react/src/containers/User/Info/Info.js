@@ -11,6 +11,8 @@ import HomeFooter from '../../HomePage/HomeFooter';
 import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
 
+const defaultValue = 'Default Value';
+
 class Info extends Component {
     constructor(props) {
         super(props);
@@ -133,7 +135,7 @@ class Info extends Component {
                                 <Form style={{padding: '10px'}}>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Họ và tên</Form.Label>
-                                        <Form.Control type="text"/>
+                                        <Form.Control type="text" defaultValue={defaultValue}/>
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Ngày sinh</Form.Label>
