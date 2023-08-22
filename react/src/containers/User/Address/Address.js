@@ -119,41 +119,41 @@ class Address extends Component {
                         
                         <div class="col-3">
                             <Button className="btn btn-danger add-new" variant="primary" onClick={this.handleShow}>
-                                    THÊM ĐỊA CHỈ MỚI
-                                </Button>
-                                <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
-                                    <Modal.Header  style={{margin: '10px'}}> 
-                                        <Modal.Title>
-                                            Thêm địa chỉ mới
-                                        </Modal.Title>
-                                    </Modal.Header>
+                                THÊM ĐỊA CHỈ MỚI
+                            </Button>
+                            <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                <Modal.Header  style={{margin: '10px'}}> 
+                                    <Modal.Title>
+                                        Thêm địa chỉ mới
+                                    </Modal.Title>
+                                </Modal.Header>
 
-                                    <Modal.Body>
-                                    <Form style={{padding: '10px'}}>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>Họ và tên</Form.Label>
-                                            <Form.Control type="text" />
-                                        </Form.Group>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>Số điện thoại</Form.Label>
-                                            <Form.Control type="number" />
-                                        </Form.Group>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>Địa chỉ</Form.Label>
-                                            <Form.Control type="text" />
-                                        </Form.Group>
-                                    </Form>
-                                    </Modal.Body>
+                                <Modal.Body>
+                                <Form style={{padding: '10px'}}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Họ và tên</Form.Label>
+                                        <Form.Control type="text" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Số điện thoại</Form.Label>
+                                        <Form.Control type="number" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Địa chỉ</Form.Label>
+                                        <Form.Control type="text" />
+                                    </Form.Group>
+                                </Form>
+                                </Modal.Body>
 
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={this.handleClose} className="btn-return">
-                                            Trở về
-                                        </Button>
-                                        <Button variant="primary" onClick={this.handleClose} className="btn-payment">
-                                            OK
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                        Trở về
+                                    </Button>
+                                    <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                        OK
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
 
                         </div>
 

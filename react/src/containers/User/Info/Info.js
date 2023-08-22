@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -15,8 +16,23 @@ class Info extends Component {
         super(props);
         this.state = {
             persons: [],
-            orders: []
+            orders: [],
+            show: false,
         }
+    }
+
+    handleClose = () => {
+        this.setState({ show: false });
+    };
+
+    handleShow = () => {
+        this.setState({ show: true });
+    };  
+
+    paymentOptionChange = (event) => {
+        this.setState({
+            delivery_addr: event.target.value,
+        });
     }
 
     componentDidMount(){
@@ -88,23 +104,67 @@ class Info extends Component {
                                 Địa chỉ: <br />
                             </div>
                             
-                            {this.state.persons.map(person => (
-                           
                             <div class="col-8">
-
-                                {person.Fullname}  <br />
-                                {person.DOB} <br />
-                                {person.Email} <br />
-                                {person.Tel} <br />
-                                {person.Address} <br />
-
-                            <button type="button" class="btn btn-secondary edit">
-                                Chỉnh sửa
-                            </button>  
-
+                                {this.state.persons.map(person => (
+                                <>
+                                    {person.Fullname}  <br />
+                                    {person.DOB} <br />
+                                    {person.Email} <br />
+                                    {person.Tel} <br />
+                                    {person.Address} <br />
+                                </>
+                                ))}
                             </div>
-                            ))} 
+                            
                         </div>
+
+                        <div align="center">
+                            <Button className="btn btn-secondary edit" variant="primary" onClick={this.handleShow}>
+                                Chỉnh sửa
+                            </Button>
+                            <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                <Modal.Header  style={{margin: '10px'}}> 
+                                    <Modal.Title>
+                                        <b>Thêm địa chỉ mới </b>
+                                    </Modal.Title>
+                                </Modal.Header>
+
+                                <Modal.Body>
+                                <Form style={{padding: '10px'}}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Họ và tên</Form.Label>
+                                        <Form.Control type="text"/>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Ngày sinh</Form.Label>
+                                        <Form.Control type="date" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Email</Form.Label>
+                                        <Form.Control type="email" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Số điện thoại</Form.Label>
+                                        <Form.Control type="number" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Địa chỉ</Form.Label>
+                                        <Form.Control type="text" />
+                                    </Form.Group>
+                                </Form>
+                                </Modal.Body>
+
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                        Trở về
+                                    </Button>
+                                    <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                        OK
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+                        </div>
+
                         {this.state.persons.map(person => (
                         <div class="col" align="right"> 
 
