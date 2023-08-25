@@ -12,13 +12,14 @@ import axios from 'axios';
 
 
 class AoDetail extends Component { 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //       selectedSize: 'M',
-    //       quantityNum: '1',
-    //     };
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+          selectedSize: 'M',
+          quantityNum: '1',
+          images: []
+        };
+    }
 
 
       componentDidMount(req,res,url){
@@ -32,9 +33,9 @@ class AoDetail extends Component {
           .catch(error => console.log(error));
     };
 
-    state = {
-        images: []
-      }  
+    // state = {
+    //     images: []
+    //   }  
     handleSizeChange = (event) => {
         this.setState({ selectedSize: event.target.value });
     };
@@ -60,7 +61,7 @@ class AoDetail extends Component {
     
     render() {
         const { selectedSize } = this.state;
-        // const { quantityNum } = this.state;
+        const { quantityNum } = this.state;
         console.log(this.props.match.params.id); 
         let settings = {
             dots: true,

@@ -3,10 +3,10 @@ export const adminMenu = [
         name: 'menu.admin.catalog-product', 
         menus: [
             {
-                name: 'menu.admin.catalog-manage', link: '/system/catalog-manage'
+                name: 'menu.admin.catalog-manage', link: '/admin/catalog-manage'
             },
             {
-                name: 'menu.admin.product-manage', link: '/system/product-manage'
+                name: 'menu.admin.product-manage', link: '/admin/product-manage'
             },
         ]
     },
@@ -14,7 +14,7 @@ export const adminMenu = [
         name: 'menu.admin.customer', 
         menus: [
             {
-                name: 'menu.admin.customer-manage', link: '/system/customer-manage'
+                name: 'menu.admin.customer-manage', link: '/admin/customer-manage'
             },
         ]
     },
@@ -22,7 +22,7 @@ export const adminMenu = [
         name: 'menu.admin.order', 
         menus: [
             {
-                name: 'menu.admin.order-manage', link: '/system/order-manage'
+                name: 'menu.admin.order-manage', link: '/admin/order-manage'
             },
         ]
     },
@@ -30,7 +30,7 @@ export const adminMenu = [
         name: 'menu.admin.sales', 
         menus: [
             {
-                name: 'menu.admin.sales-statistics', link: '/system/sales-statistics'
+                name: 'menu.admin.sales-statistics', link: '/admin/sales-statistics'
             },
         ]
     }

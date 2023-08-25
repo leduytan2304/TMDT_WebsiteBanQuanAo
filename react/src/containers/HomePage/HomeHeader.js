@@ -85,14 +85,6 @@ class HomeHeader extends Component {
                                     </div>
                                 </div>
                             </NavLink>
-
-                            <NavLink to ='/phu-kien'>
-                                <div className='child-content'>
-                                    <div>
-                                        PHỤ KIỆN
-                                    </div>
-                                </div>
-                            </NavLink>
                         </div>
 
                         <div className='right-content'>

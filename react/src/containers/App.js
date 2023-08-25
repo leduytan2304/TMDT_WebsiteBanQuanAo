@@ -11,7 +11,7 @@ import { path } from '../utils'
 import Home from '../routes/Home';
 import Login from './Auth/Login';
 import Register from './Auth/Register';
-import System from '../routes/System';
+import Admin from '../routes/Admin';
 import { CustomToastCloseButton } from '../components/CustomToast';
 // import ConfirmModal from '../components/ConfirmModal';
 import HomePage from './HomePage/HomePage.js';
@@ -20,7 +20,6 @@ import SieuSalePage from './Customer/SieuSale/SieuSalePage';
 import SanPhamMoiPage from './Customer/SanPhamMoi/SanPhamMoiPage';
 import AoPage from './Customer/Ao/AoPage';
 import QuanPage from './Customer/Quan/QuanPage';
-import PhuKienPage from './Customer/PhuKien/PhuKienPage';
 import UserPage from './User/Info/Info';
 import AddressPage from './User/Address/Address';
 import CartPage from './User/Cart/Cart';
@@ -63,11 +62,11 @@ class App extends Component {
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.REGISTER} component={userIsNotAuthenticated(Register)} />
+                                    <Route path={path.ADMIN} component={userIsNotAuthenticated(Admin)} />
                                     <Route path={path.SIEUSALE} component={SieuSalePage} />
                                     <Route path={path.SANPHAMMOI} component={SanPhamMoiPage} />
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
-                                    <Route path={path.PHUKIEN} component={PhuKienPage} />
                                     <Route path={path.SEARCH} component={SearchResult} />
                                     <Route path={path.INFO} component={UserPage} />
                                     <Route path={path.ADDRESS} component={AddressPage} />

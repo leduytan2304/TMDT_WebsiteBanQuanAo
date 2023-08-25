@@ -48,25 +48,25 @@ class SieuSalePage extends Component {
                             </div>
                             </div>
                             <div className='section-body'>
-                            {this.state.images.map(image => (
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='sieusale-product img-setting'>
-                                        <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '300px', height: 'auto' }} />
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
+                                {this.state.images.map(image => (
+                                    <div className='col-3 product'>
+                                        <a href=''>
+                                            <div className='sieusale-product img-setting'>
+                                            <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
+                                                <div className='product-discount'>
+                                                    <span>-6%</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>{image.ProductName} </div>
-                                            <div className='product-price'>
-                                                <span>{image.ProductPrice}</span>
-                                                <del>190,000₫</del>
+                                            <div className='product-detail text-center'>
+                                                <div className='product-name'>{image.ProductName} </div>
+                                                <div className='product-price'>
+                                                    <span>{image.ProductPrice}</span>
+                                                    <del>190,000₫</del>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                              ))}    
+                                        </a>
+                                    </div>
+                                ))}    
                             </div>
                             
                         </div>
