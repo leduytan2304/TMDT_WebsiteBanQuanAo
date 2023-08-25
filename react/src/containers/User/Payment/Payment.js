@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
+import PaymentMethod from './Payment_method/Payment_method';
 
 import cod from '../../../assets/Users/cod.png';
 import vnpay from '../../../assets/Users/vnpay.png';
@@ -17,12 +18,13 @@ const VND = new Intl.NumberFormat('vi-VN', {
     currency: 'VND',
   });
 
-class Cart extends Component {
+class Payment extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             payment_method: 'cod', // Giá trị mặc định được chọn
+            page: 'payment_method', // biến kiểm tra hiển thị trang
             quantityNum: ['1','1','1'],
             unit_sum: ['149000','149000','149000'],
             sum: '447000',
@@ -33,20 +35,22 @@ class Cart extends Component {
     state = {
         totalMoney: []
     }
-    componentDidMount(){
-        fetch('https://my-json-server.typicode.com/typicode/demo/posts/4',{
-            method: "POST",
+    request_data(){
+        fetch('http://localhost:8000/api/testing', {
+            method: 'POST',
             body: JSON.stringify({
-                title: "foo",
-                body: "bar",
-                userId: 1
-            }),headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
-      .then(response => response.json())
-      .then(json => console.log(json))
-    };
+              id: 1,
+              title: 'ádasda',
+              body: 'ádsa',
+              userId: 1,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+    }
     
 
     paymentOptionChange = (event) => {
@@ -108,7 +112,7 @@ class Cart extends Component {
 
                                  
                                 <NavLink to={`/success`} >
-                                    <button type="button" class="btn btn-danger btn-payment">
+                                    <button type="button" class="btn btn-danger btn-payment" onClick={this.request_data(this.state.sum)}>
                                         THANH TOÁN
                                     </button>
                                 </NavLink>
@@ -180,6 +184,15 @@ class Cart extends Component {
                                     </div>
                                 </div>
 
+                                <div class="row sum">
+                                    <div class="col-8">
+                                        Phí vận chuyển:
+                                    </div>
+                                    <div class="col" align="right">
+                                        <b>{VND.format(35000)}</b>
+                                    </div>
+                                </div>
+
                                 {this.state.shipping_method === 'ship' ? (
                                 <div class="row sum">
                                     <div class="col-8">
@@ -234,4 +247,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);

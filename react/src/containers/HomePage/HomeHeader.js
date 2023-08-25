@@ -102,10 +102,12 @@ class HomeHeader extends Component {
                                     <i class="fas fa-user-circle"></i>
                                 </div>
                             </NavLink>
-                            
+
+                            <NavLink to ='/user/cart'>
                             <div className='cart-icon'>
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
+                            </NavLink>
 
                             {/* nút đăng xuất cũ */}
                             <div className="btn btn-logout" onClick={processLogout} title='Log out'>

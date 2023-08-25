@@ -3,6 +3,7 @@ import productRoutes from "./routes/product.js";
 import detailProduct from "./routes/detailProduct.js"
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+
 // import payment from "./routes/payment.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -24,7 +25,8 @@ app.use(
 
 app.use(cookieParser());
 app.use("/api/image", productRoutes);
-app.use("/api/chi-tiet-do",detailProduct)
+app.use("/api/chi-tiet-do",detailProduct);
+// app.use("/api/testing",testaa)
 // app.use("/api/payment",payment)
 // app.use("/api/chi-tiet-quan",detailProduct)
 app.use("/api", authRoutes); // API để login/register

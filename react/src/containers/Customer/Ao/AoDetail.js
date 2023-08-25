@@ -52,8 +52,23 @@ class AoDetail extends Component {
     }
 
     handleAddToCart = () => {
-        alert('Thêm vào giỏ');
-    }
+        const lastSegment = window.location.pathname.split("/").pop();
+
+            fetch('http://localhost:8000/api/testing/' +'U0025' , {
+                method: 'POST',
+                body: JSON.stringify({
+                  userID: 'U0025',
+                  productID: lastSegment,
+                  size: this.state.selectedSize,
+                  number: this.state.quantityNum,
+                }),
+                headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                },
+              })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
+        }
 
     handleBuyProduct = () => {
         alert('Mua hàng')

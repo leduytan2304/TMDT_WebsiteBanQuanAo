@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
-import UserManage from '../containers/System/UserManage';
-import Catalog_Manage from '../containers/System/Catalog_Manage/Catalog_Manage';
-import Product_Manage from '../containers/System/Product_Manage/Product_Manage';
-import Customer_Manage from '../containers/System/Customer_Manage/Customer_Manage';
-import Order_Manage from '../containers/System/Order_Manage/Order_Manage';
-import Sales_Statistics from '../containers/System/Sales_Statistics/Sales_Statistics';
+// import UserManage from '../containers/System/UserManage';
+import Catalog_Manage from '../containers/Admin/Catalog_Manage/Catalog_Manage';
+import Product_Manage from '../containers/Admin/Product_Manage/Product_Manage';
+import Customer_Manage from '../containers/Admin/Customer_Manage/Customer_Manage';
+import Order_Manage from '../containers/Admin/Order_Manage/Order_Manage';
+import Sales_Statistics from '../containers/Admin/Sales_Statistics/Sales_Statistics';
 import Header from '../containers/Header/Header';
 
 class Admin extends Component {

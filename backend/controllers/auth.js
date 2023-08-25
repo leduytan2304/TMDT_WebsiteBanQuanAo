@@ -76,7 +76,11 @@ export const login = (req, res) => {
         httpOnly: true,
       })
       .status(200)
-      .json(others)
+      .send({
+            "userID": data[0].UserID,
+            "isAdmin": data[0].isAdmin
+      })
+
   });
   
 };
@@ -88,3 +92,54 @@ export const logout = (req, res) => {
   }).status(200).json("User has been logged out.")
 
 };
+
+
+export const testing = (req ,res)=>{
+  const currentUrl = req.params.userID;
+  // console.log('url ' + currentUrl);
+  const values = [
+      req.body
+    ]
+    const getProductVariant = 'select ProductVariantID FROM ProductVariant PV where PV.ProductID = "' +values[0].productID+ '" and ProductSizeID = "' + (values[0].size) +'"';
+    // console.log('getProductVariant :' + getProductVariant);
+    // console.log(values);
+    db.query(getProductVariant, (err, result) => {
+      if (err) return res.status(500).json(err);
+      // console.log("Query: "+getProductVariant);
+      console.log(result[0].ProductVariantID);
+      //cau truy van goi store pro sp_AddProductIntoShoppingCart
+      var updateCart = "call sp_AddProductIntoShoppingCart('" + result[0].ProductVariantID + "','" + values[0].number + "', '"+ values[0].userID + "')";
+      db.query(updateCart, function(err, result) {
+        if (err) throw err;
+        // console.log('final result ', result[0][0].Result);
+        res.status(200).json(result)
+      })
+    });
+    
+    // var updateCart = "call sp_AddProductIntoShoppingCart('" + result[0].ProductVariantID + "','" + values[0].number + "', '"+ values[0].userID + "')";
+    // db.query(updateCart, (err, result) => {
+    //   if (err) return res.status(500).json(err);
+    //   console.log(result);
+    // });
+      
+      
+    
+  }
+
+
+export const cartDetail = (req ,res)=>{
+  const currentUrl = req.params.userID;
+  const values = [
+      req.body
+    ]
+    const selectItemInCart = "call sp_ViewShoppingCartDetails('" +currentUrl +"')"
+    console.log(selectItemInCart);
+    db.query(selectItemInCart, function(err, result) {
+      if (err) throw err;
+      // console.log('final result ', result);
+      
+      
+       res.status(200).json(result)
+    }) 
+  
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import { Button, Modal,Form } from 'react-bootstrap';
 import axios from 'axios';
 
 import HomeHeader from '../../HomePage/HomeHeader';
@@ -11,20 +12,39 @@ import './Address.scss';
 
 
 class Address extends Component {
-    componentDidMount(){
-        // const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo).UserID;
 
-        axios.get(`http://localhost:8000/api/user/address/U0025`)
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false,
+            delivery_addr: 'addr1',
+            address: []
+        };
+    }   
+
+    handleClose = () => {
+        this.setState({ show: false });
+    };
+
+    handleShow = () => {
+        this.setState({ show: true });
+    };  
+
+    paymentOptionChange = (event) => {
+        this.setState({
+            delivery_addr: event.target.value,
+        });
+    }
+
+    componentDidMount(){
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        axios.get(`http://localhost:8000/api/user/address/${personsObject}`)
         .then(res => {
         const address = res.data;
         this.setState({ address });
         })
         .catch(error => console.log(error));
     };
-
-    state = {
-        address: []
-      }
 
     render() {
         return (
@@ -69,36 +89,72 @@ class Address extends Component {
 
                         <div  class="col-6"> 
                             <form action="#">
-                            {this.state.address.map(addres => (
+                                {this.state.address.map(addres => (
                                 <label key = {addres.AddressID} for="dc1">
 
-                                    <li class="list-group-item list-group-item-dark title-address"> 
-                                        {addres.ReceiverName} 
-                                    </li>
+                                <li class="list-group-item list-group-item-dark title-address"> 
+                                    {addres.ReceiverName} 
+                                </li>
 
-                                    <li class="list-group-item list-group-item-light info-address">
-                                        <div class="row">
-                                            <div class="col-2" id="title">
-                                                Địa chỉ:<br />
-                                                Sđt:
-                                            </div>
-                                            <div class="col-9">
-                                            {addres.Address}  <br />
-                                            {addres.ReceiverPhoneNumber}
-                                            </div>
-                                            <div class="col-1">
-                                                <input id="dc1" name="diachi" type="radio" value="Nam" /> <br />
-                                            </div>
+                                <li class="list-group-item list-group-item-light info-address">
+                                    <div class="row">
+                                        <div class="col-2" id="title">
+                                            Địa chỉ:<br />
+                                            Sđt:
                                         </div>
-                                    </li>
-
+                                        <div class="col-9">
+                                        {addres.Address}  <br />
+                                        {addres.ReceiverPhoneNumber}
+                                        </div>
+                                        <div class="col-1">
+                                        <input id="dc1" type="radio" value="addr1" checked={this.state.delivery_addr === 'addr1'} onChange={this.paymentOptionChange}/> 
+                                        </div>
+                                    </div>
+                                </li>
                                 </label>
                                ))}
+                               
                             </form>
                         </div>
                         
                         <div class="col-3">
-                            <button type="button" class="btn btn-danger add-new">THÊM ĐỊA CHỈ MỚI</button>
+                            <Button className="btn btn-danger add-new" variant="primary" onClick={this.handleShow}>
+                                THÊM ĐỊA CHỈ MỚI
+                            </Button>
+                            <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                <Modal.Header  style={{margin: '10px'}}> 
+                                    <Modal.Title>
+                                        Thêm địa chỉ mới
+                                    </Modal.Title>
+                                </Modal.Header>
+
+                                <Modal.Body>
+                                <Form style={{padding: '10px'}}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Họ và tên</Form.Label>
+                                        <Form.Control type="text" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Số điện thoại</Form.Label>
+                                        <Form.Control type="number" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Địa chỉ</Form.Label>
+                                        <Form.Control type="text" />
+                                    </Form.Group>
+                                </Form>
+                                </Modal.Body>
+
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                        Trở về
+                                    </Button>
+                                    <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                        OK
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+
                         </div>
 
                     </div>
