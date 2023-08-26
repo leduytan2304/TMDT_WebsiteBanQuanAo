@@ -23,7 +23,7 @@ class Cart extends Component {
         super(props);
         this.state = {
             productName :[],
-            quantityNum: ['1','1','1'],
+            quantityNum: [],
             unit_price:[],
             unit_sum: [],
             sum: '0',
@@ -44,70 +44,77 @@ class Cart extends Component {
 
     // hàm set giá trị cho price và unit_sum
     componentDidMount() { 
-        var sum = 0;
+        let sum = 0;
 
         axios.get(`http://localhost:8000/api/cart/U0025`)
         .then(res => {
-          const images = res.data;
-          this.setState({ images });
-          
-        const quantity_number =images[0].map((image) => {
-            const temp =parseInt(image.ProductQuantity);
-                // console.log(sum);
-                return temp;  
-        });
+            const images = res.data;
+            this.setState({ images });
+        
+            const quantity_number =images[0].map((image) => {
+                const temp =parseInt(image.ProductQuantity);
+                    // console.log(sum);
+                    return temp;  
+            });
 
-        const product_name =images[0].map((image) => {
-            const temp =(image.ProductName);
-                // console.log(sum);
-                return temp;  
-        });
+            const product_name =images[0].map((image) => {
+                const temp =(image.ProductName);
+                    // console.log(sum);
+                    return temp;  
+            });
 
-        const unitSum = images[0].map((image) => {
-            const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
-                
-                sum += temp;
-                // console.log(sum);
-                return temp;  
-        });
+            const unitSum = images[0].map((image) => {
+                const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
+                    
+                    sum += temp;
+                    // console.log(sum);
+                    return temp;  
+            });
 
-        const unitPrice = images[0].map((image) => {
-            const temp = parseFloat(image.ProductPrice);
-                
-                sum += temp;
-                // console.log(sum);
-                return temp;  
-        });
+            const unitPrice = images[0].map((image) => {
+                const temp = parseFloat(image.ProductPrice);
+                    
+                    sum += temp;
+                    // console.log(sum);
+                    return temp;  
+            });
 
-        const imageLink =images[0].map((image) => {
-            const temp =(image.ImageLink);
-                // console.log(sum);
-                return temp;  
-        });
-        const size =images[0].map((image) => {
-            const temp =(image.ProductSizeID);
-                // console.log(sum);
-                return temp;  
-        });
-        const colorName =images[0].map((image) => {
-            const temp =(image.ColorName);
-                // console.log(sum);
-                return temp;  
-        });
+            const imageLink =images[0].map((image) => {
+                const temp =(image.ImageLink);
+                    // console.log(sum);
+                    return temp;  
+            });
+            const size =images[0].map((image) => {
+                const temp =(image.ProductSizeID);
+                    // console.log(sum);
+                    return temp;  
+            });
+            const colorName =images[0].map((image) => {
+                const temp =(image.ColorName);
+                    // console.log(sum);
+                    return temp;  
+            });
 
-        this.setState({ unit_sum: unitSum });
-        this.setState({sum: sum})
-        this.setState({quantityNum: quantity_number})
-        this.setState({productName: product_name})
-        this.setState({unit_price: unitPrice})
-        this.setState({ImageLink: imageLink})
-        this.setState({Size: size})
-        this.setState({ColorName: colorName})
-       
+            this.setState({ unit_sum: unitSum });
+            this.setState({quantityNum: quantity_number})
+            this.setState({productName: product_name})
+            this.setState({unit_price: unitPrice})
+            this.setState({ImageLink: imageLink})
+            this.setState({Size: size})
+            this.setState({ColorName: colorName})
 
-        // thay đổi giá trị thành tiền
-        const discount = this.state.discount;
-        this.setState({price: sum-discount});
+            // hàm khởi tạo cho sum ( thành tiền )
+            let sumtemp = 0;
+            this.state.quantityNum.map((quantity, index) => {
+                let temp = parseFloat(this.state.unit_price[index]) * parseInt(quantity);
+                sumtemp += temp;
+                return temp;   
+            });
+            this.setState({ sum: sumtemp})
+
+            // khởi tạo cho price ( tổng tiền )
+            const discount = this.state.discount;
+            this.setState({price: this.state.sum-discount});
         })
         .catch(error => console.log(error));
   };
@@ -293,7 +300,7 @@ class Cart extends Component {
                                         Thành tiền:
                                     </div>
                                     <div class="col" align="right">
-                                        <b>{VND.format(this.state.price)}</b>
+                                        <b>{VND.format(this.state.sum)}</b>
                                     </div>
                                 </div>
 
