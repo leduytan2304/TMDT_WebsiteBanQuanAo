@@ -242,9 +242,9 @@ class PaymentMethod extends Component {
                                 </button>
                             </NavLink>
 
-                                
+                           
                             <button type="button" onClick={this.changePage} class="btn btn-danger btn-payment">
-                                THANH TOÁN
+                            THANH TOÁN
                             </button>
                             
                         </div>
