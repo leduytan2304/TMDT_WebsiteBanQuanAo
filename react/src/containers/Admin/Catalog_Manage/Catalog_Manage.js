@@ -102,12 +102,13 @@ class Catalog_Manage extends Component {
 
     handleConfirmAddPro = () => {
         this.setState({ showAddProduct: false});
-        alert('Thêm sản phẩm vào danh mục')
+        // alert('Thêm sản phẩm vào danh mục')
     }
 
-    handleShowAddPro = () => {
+    handleShowAddPro = (categoryName) => {
         this.setState({ 
             showAddProduct: true,
+            selectedCategoryName:categoryName
         });
     }
 
@@ -237,7 +238,8 @@ class Catalog_Manage extends Component {
                                                 </div>
                                                 <div className='catalog-customize add-catalog'>
                                                     {/* <img src= {sieusaleImg} />  */}
-                                                    <div className='add-image' onClick={() => this.handleShowAddPro()}>
+                                                    <div className='add-image' 
+                                                        onClick={() => this.handleShowAddPro(category.name)}>
 
                                                     </div>
                                                 </div>
@@ -267,10 +269,10 @@ class Catalog_Manage extends Component {
                                          handleShow = {this.handleShowEdit}/>
                         )} 
                         {this.state.showAddProduct && (
-                            <AddProduct_Catalog show = {this.state.showAddProduct} 
-                                        handleClose = {this.handleCloseAddPro} 
-                                        handleConfirm = {this.handleConfirmAddPro}
-                                        handleShow = {this.handleShowAddPro}/>
+                            <AddProduct_Catalog  show = {this.state.showAddProduct}
+                                        name = {this.state.selectedCategoryName}
+                                        handleClose = {this.handleCloseAddPro}
+                                        handleConfirm = {this.handleConfirmAddPro} />
                         )} 
                     </div>
                 </div>
