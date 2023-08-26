@@ -59,10 +59,6 @@ class Register extends Component {
     
     
     handleRegister = async () => {
-        this.setState({
-            errMessage: ''
-        })
-    
         try {
             if (this.state.password !== this.state.repassword) {
                 this.setState({

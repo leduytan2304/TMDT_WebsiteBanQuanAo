@@ -15,6 +15,7 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
+            errMessage: '',
             isShowPassword: false
         }
     }
@@ -32,21 +33,18 @@ class Login extends Component {
     }
 
     handleLogin = async () => {
-        this.setState({
-            errMessage: ''
-        })
-    
         try {
             let dataApi = await handleLoginApi(this.state.email, this.state.password);
             if (dataApi == 0){
                 this.setState({
                     errMessage: "Haha"
                 })
-                console.log("Err code", dataApi.data)
+                console.log("Err code", dataApi)
             }
             if (dataApi !== 0) {
+                console.log("Login success!");
+                localStorage.setItem("accessToken", dataApi.data.accessToken)
                 this.props.userLoginSuccess(dataApi.data)
-                console.log("Login success!")
             }
         }
         catch(e){

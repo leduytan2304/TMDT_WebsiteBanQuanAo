@@ -2,6 +2,8 @@ import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import moment from "moment/moment.js";
+import dotenv from "dotenv"
+dotenv.config()
 
 function generateFormattedId(count) {   // Hàm tạo id User với form 'U0000'
   const idNumber = count + 1;
@@ -62,28 +64,47 @@ export const login = (req, res) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) return res.status(404).json("User not found!");
 
-    const checkPassword = bcrypt.compareSync(req.body.password.toString(), data[0].PW);
+    const checkPassword = bcrypt.compareSync(req.body.password, data[0].PW);
 
     if (!checkPassword)
       return res.status(400).json("Wrong password or username!");
 
-    const token = jwt.sign({ id: data[0].UserID }, "secretkey");
+    const token = jwt.sign(
+      { id: data[0].UserID, role: data[0].isAdmin,
+        exp: Math.floor(Date.now() / 1000) + (60 * 60) },
+        'fashall');
 
     const { password, ...others } = data[0];
 
     res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .send({
+      .status(200).cookie("token", token)
+      .json({
             "userID": data[0].UserID,
-            "isAdmin": data[0].isAdmin
+            "isAdmin": data[0].isAdmin,
+            "accessToken": token
       })
 
   });
   
 };
+
+export const verifyJWT = (req, res, next) => {
+  const token = req.header["access-token"];
+  console.log(req.header)
+  if(!token){
+    return res.json("We need token, please provide it for next time")
+  } else{
+    jwt.verify(token, "fashall", (err, decoded) => {
+      if(err){
+        res.json("Not authentication")
+      }else {
+        req.UserID = decoded.id;
+        console.log(req.UserID);
+        next();
+      }
+    })
+  }
+}
 
 export const logout = (req, res) => {
   res.clearCookie("accessToken",{
