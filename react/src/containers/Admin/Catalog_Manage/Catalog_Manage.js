@@ -7,7 +7,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import '../../HomePage/HomeFooter';
+// import '../../HomePage/HomeFooter';
 import '../admin.scss';
 import HomeFooter from '../../HomePage/HomeFooter';
 
@@ -148,7 +148,7 @@ class Catalog_Manage extends Component {
             <React.Fragment>
                 <div className='admin-container'>
                     <div className='admin-content'>
-                        <div className='catalog-header'>
+                        <div className='admin-header'>
                             <span>Danh mục: </span>
                             <i className="fas fa-plus-circle" onClick={() => this.handleShowAdd()}></i>
                         </div>
@@ -176,7 +176,7 @@ class Catalog_Manage extends Component {
                                             //     ))}
                                             // </ul>
                                             <Slider {...settings}>
-                                                <div className='catalog-customize'>
+                                                <div className='slider-customize'>
                                                     {/* <img src= {sieusaleImg} />  */}
                                                     <div className='bg-image'>
                                                         <div className='product-discount'>
@@ -191,7 +191,7 @@ class Catalog_Manage extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className='catalog-customize'>
+                                                <div className='slider-customize'>
                                                     {/* <img src= {sieusaleImg} />  */}
                                                     <div className='bg-image'>
                                                         <div className='product-discount'>
@@ -206,7 +206,7 @@ class Catalog_Manage extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className='catalog-customize'>
+                                                <div className='slider-customize'>
                                                     {/* <img src= {sieusaleImg} />  */}
                                                     <div className='bg-image'>
                                                         <div className='product-discount'>
@@ -221,7 +221,7 @@ class Catalog_Manage extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className='catalog-customize'>
+                                                <div className='slider-customize'>
                                                     {/* <img src= {sieusaleImg} />  */}
                                                     <div className='bg-image'>
                                                         <div className='product-discount'>
@@ -236,7 +236,7 @@ class Catalog_Manage extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className='catalog-customize add-catalog'>
+                                                <div className='slider-customize add-catalog'>
                                                     {/* <img src= {sieusaleImg} />  */}
                                                     <div className='add-image' 
                                                         onClick={() => this.handleShowAddPro(category.name)}>
