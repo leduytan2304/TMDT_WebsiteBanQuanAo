@@ -111,11 +111,14 @@ class Payment extends Component {
                                 </NavLink>
 
                                  
-                                <NavLink to={`/success`} >
-                                    <button type="button" class="btn btn-danger btn-payment" onClick={this.request_data(this.state.sum)}>
+                               
+                                <a href="http://localhost:8888/order/create_payment_url">
+                                <button type="button" class="btn btn-danger btn-payment" onClick={this.request_data(this.state.sum)}>
                                         THANH TOÁN
                                     </button>
-                                </NavLink>
+                                </a>
+                                    
+                                
                                 
                             </div>
                         </div>
