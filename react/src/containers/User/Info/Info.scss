@@ -33,13 +33,10 @@
         }
 
         .signout{
-            width: 70%;
+            width: 150px;
             margin-top: 30px;
         }
-        .edit{
-            width: 150px;
-            font-size: 16px;
-        }
+
         .vertical-line-container{
             display: flex;
             .vertical-line{
@@ -51,6 +48,12 @@
         }
         
     }
+
+    .edit{
+        width: 150px;
+        font-size: 15px;
+    }
+
     .private-info{
         font-size: 18px;
         line-height: 2;
@@ -77,4 +80,8 @@
     .purchase-history{
         margin-top: 50px;
     }
+}
+
+.form-label{
+    font-weight: bold;
 }
