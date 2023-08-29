@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Modal,Form } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -120,53 +120,6 @@ class Info extends Component {
                             
                         </div>
 
-                        <div align="center">
-                            <Button className="btn btn-secondary edit" variant="primary" onClick={this.handleShow}>
-                                Chỉnh sửa
-                            </Button>
-                            <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
-                                <Modal.Header  style={{margin: '10px'}}> 
-                                    <Modal.Title>
-                                        <b>Thêm địa chỉ mới </b>
-                                    </Modal.Title>
-                                </Modal.Header>
-
-                                <Modal.Body>
-                                <Form style={{padding: '10px'}}>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Họ và tên</Form.Label>
-                                        <Form.Control type="text" defaultValue={defaultValue}/>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Ngày sinh</Form.Label>
-                                        <Form.Control type="date" />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Email</Form.Label>
-                                        <Form.Control type="email" />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Số điện thoại</Form.Label>
-                                        <Form.Control type="number" />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Địa chỉ</Form.Label>
-                                        <Form.Control type="text" />
-                                    </Form.Group>
-                                </Form>
-                                </Modal.Body>
-
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={this.handleClose} className="btn-return">
-                                        Trở về
-                                    </Button>
-                                    <Button variant="primary" onClick={this.handleClose} className="btn-payment">
-                                        OK
-                                    </Button>
-                                </Modal.Footer>
-                            </Modal>
-                        </div>
-
                         {this.state.persons.map(person => (
                         <div class="col" align="right"> 
 
@@ -183,6 +136,85 @@ class Info extends Component {
                         </div>
                         ))}
 
+                    </div>
+
+                    <div align="center">
+                        <Button className="btn btn-secondary edit" variant="primary" onClick={this.handleShow}>
+                            Chỉnh sửa
+                        </Button>
+                        <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="lg">
+                            <Modal.Header  style={{margin: '10px'}}> 
+                                <Modal.Title>
+                                    <b>Chỉnh sửa thông tin </b>
+                                </Modal.Title>
+                            </Modal.Header>
+
+                            <Modal.Body>
+                                <Form style={{padding: '10px'}}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Avatar</Form.Label>
+                                        <Form.Control type="file" accept="image/jpeg, image/png"/>
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Họ và tên</Form.Label>
+                                        <Form.Control type="text" defaultValue={defaultValue}/>
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Ngày sinh</Form.Label>
+                                        <Form.Control type="date" />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Email</Form.Label>
+                                        <Form.Control type="email" />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Số điện thoại</Form.Label>
+                                        <Form.Control type="number" />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Số nhà</Form.Label>
+                                        <Form.Control type="text"/>
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Đường</Form.Label>
+                                        <Form.Control type="text"/>
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Row >
+                                            <Col>
+                                                <Form.Label>Phường</Form.Label>
+                                                <Form.Control type="text"/>
+                                            </Col>
+                                            <Col>
+                                                <Form.Label>Quận</Form.Label>
+                                                <Form.Control type="text"/>
+                                            </Col>
+                                            <Col>
+                                                <Form.Label>Thành phố</Form.Label>
+                                                <Form.Control type="text"/>
+                                            </Col>
+                                        </Row>
+                                    </Form.Group>
+                                    
+                                </Form>
+                            </Modal.Body>
+
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                    Trở về
+                                </Button>
+                                <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                    OK
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
 
                     <div class="row purchase-history">

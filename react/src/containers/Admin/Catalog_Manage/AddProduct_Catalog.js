@@ -51,7 +51,7 @@ class AddProduct_Catalog extends Component {
                         <Modal.Title>Thêm sản phẩm vào danh mục</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className='text-center'>
+                        <div className='text-center add-product-catalog-title'>
                             Danh mục: 
                             <span className='fw-bold'> {name}</span>
                         </div>

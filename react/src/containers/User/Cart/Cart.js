@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -168,7 +169,13 @@ class Cart extends Component {
         .catch(error => console.log(error));
   };
        
-        
+    handleClose = () => {
+        this.setState({ show: false });
+    };
+
+    handleShow = () => {
+        this.setState({ show: true });
+    };  
     
 
     //hàm cập nhật khi có thay đổi
@@ -351,11 +358,7 @@ class Cart extends Component {
                             
                                 </div>
                             </div>
-                                    ))}
-                            
-                            
-                           
-                                
+                                    ))}    
                                 
                         </div>
                         
@@ -404,14 +407,65 @@ class Cart extends Component {
                                         <b>{VND.format(this.state.sum)}</b>
                                     </div>
                                 </div>
+                                
+                                <div align="center">
+                                    <Button className="discount" variant="primary" onClick={this.handleShow}>
+                                        <div class="row">
+                                            <div class="col-7" id="dc1" align="left">
+                                                Giảm giá:
+                                            </div>
+                                            <div class="col" align="right" id="dc1">
+                                                <b>- {VND.format(this.state.discount)}</b>
+                                            </div>
+                                        </div>
+                                    </Button>
+                                    
+                                    <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                        <Modal.Header  style={{margin: '10px'}}> 
+                                            <Modal.Title>
+                                                Chọn voucher
+                                            </Modal.Title>
+                                        </Modal.Header>
 
-                                <div class="row discout">
-                                    <div class="col-7" id="dc1">
-                                        Giảm giá:
-                                    </div>
-                                    <div class="col" align="right" id="dc1">
-                                        <b>- {VND.format(this.state.discount)}</b>
-                                    </div>
+                                        <Modal.Body>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" placeholder="Username" />
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="btn voucher-btn">ÁP DỤNG</button>
+                                            </div>
+                                        </div>
+
+                                        <hr
+                                            style={{
+                                            color: '#00000020',
+                                            width: '450px',
+                                            height: '1.5px',
+                                            margin: '0 auto',
+                                            opacity: '1',
+                                            marginTop: '20px',
+                                            marginBottom: '20px'
+                                            }}
+                                        />
+
+                                        <div class="row">
+                                            <div class="col-2">
+
+                                            </div>
+                                            
+                                        </div>
+                                        </Modal.Body>
+
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                                Trở về
+                                            </Button>
+                                            <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                                OK
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
                                 </div>
 
                                 <div class="row final-price">

@@ -110,11 +110,14 @@
                 font-size: 15px;
             }
 
-            .discout{
-                margin: 5px 10px 0px 10px;
+            .discount {
+                width: 93%;
                 font-size: 15px;
+                font-weight: 100;
+                color: #000;
                 background-color: #e4e3e3;
                 border-radius: 3px;
+
                 #dc1{
                     padding: 0;
                     padding-right: 5px;
@@ -188,4 +191,16 @@
     i{
         font-size: 20px;
     }
+}
+
+.voucher-btn{
+    background-color: #fff;
+    font-weight: bold;
+    border: solid 1px #cecece;
+    width: 100px;
+    font-size: 12px;
+    &:hover{
+        background-color: #cecece;
+    }
+
 }
