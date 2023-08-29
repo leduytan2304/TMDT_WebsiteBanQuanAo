@@ -121,12 +121,10 @@ export const testing = (req ,res)=>{
   const values = [
       req.body
     ]
+    console.log(req.body);
     const getProductVariant = 'select ProductVariantID FROM ProductVariant PV where PV.ProductID = "' +values[0].productID+ '" and ProductSizeID = "' + (values[0].size) +'"';
-    // console.log('getProductVariant :' + getProductVariant);
-    // console.log(values);
     db.query(getProductVariant, (err, result) => {
       if (err) return res.status(500).json(err);
-      // console.log("Query: "+getProductVariant);
       console.log(result[0].ProductVariantID);
       //cau truy van goi store pro sp_AddProductIntoShoppingCart
       var updateCart = "call sp_AddProductIntoShoppingCart('" + result[0].ProductVariantID + "','" + values[0].number + "', '"+ values[0].userID + "')";
@@ -137,11 +135,7 @@ export const testing = (req ,res)=>{
       })
     });
     
-    // var updateCart = "call sp_AddProductIntoShoppingCart('" + result[0].ProductVariantID + "','" + values[0].number + "', '"+ values[0].userID + "')";
-    // db.query(updateCart, (err, result) => {
-    //   if (err) return res.status(500).json(err);
-    //   console.log(result);
-    // });
+   
       
       
     

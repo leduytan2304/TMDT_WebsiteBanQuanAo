@@ -38,13 +38,6 @@ export const addProductToCart = (req ,res)=>{
     return res.status(500).json(err);
     
     else {
-      
-      // const secondQuery = "select sql6642429.uf_CalShoppingcartTotalCost('" + data[0].ShoppingCartID + "')";
-      // db.query(secondQuery, (err, data2) => {
-      //     if (err) return res.status(500).json(err);
-      //     console.log(data2);
-      //     return res.status(200).json(data2);
-      // })
       console.log(result1);
       const addProduct = 'call sp_AddProductIntoShoppingCart("' + result1[0].ProductVariantID +'","1","' + req.body.userID +'")';
       console.log('query2: ', addProduct);
@@ -91,9 +84,9 @@ export const removeProductFromCart = (req ,res)=>{
       console.log('query2: ', addProduct);
       db.query(addProduct, (err, result2) => {
       if (err) return res.status(500).json(err);
-      // console.log("Query: "+getProductVariant);
+
       console.log(result2);
-      //cau truy van goi store pro sp_AddProductIntoShoppingCart
+  
       return res.status(200).json(result2);
       
     });
@@ -131,9 +124,7 @@ export const deleteProductFromCart = (req ,res)=>{
       console.log('query2: ', addProduct);
       db.query(addProduct, (err, result2) => {
       if (err) return res.status(500).json(err);
-      // console.log("Query: "+getProductVariant);
       console.log(result2);
-      //cau truy van goi store pro sp_AddProductIntoShoppingCart
       return res.status(200).json(result2);
       
     });
