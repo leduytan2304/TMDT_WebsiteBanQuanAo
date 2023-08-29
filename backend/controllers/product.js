@@ -5,7 +5,7 @@ export const getImageTShirt = (req,res)=>{
 
     db.query(q, (err, data) => {
       if (err) return res.status(500).json(err);
-      
+      // console.log(data);
       return res.status(200).json(data);
       
     });

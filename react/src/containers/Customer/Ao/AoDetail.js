@@ -23,8 +23,7 @@ class AoDetail extends Component {
 
 
       componentDidMount(req,res,url){
-        // const parts = url.split('/');
-        // let lastLink = parts.at(-1);
+     
         axios.get(`http://localhost:8000/api${window.location.pathname}`)
           .then(res => {
             const images = res.data;
@@ -49,12 +48,13 @@ class AoDetail extends Component {
             currentValue += 1;
         }
         this.setState({ quantityNum: currentValue });
+       
     }
 
     handleAddToCart = () => {
         const lastSegment = window.location.pathname.split("/").pop();
 
-            fetch('http://localhost:8000/api/testing/' +'U0025' , {
+            fetch('http://localhost:8000/api/testing/' +'U0025' , { // thay đổi user sau
                 method: 'POST',
                 body: JSON.stringify({
                   userID: 'U0025',
