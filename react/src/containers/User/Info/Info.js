@@ -10,6 +10,7 @@ import HomeFooter from '../../HomePage/HomeFooter';
 
 import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
+import { handleEditProfileApi } from '../../../services/userService';
 
 const defaultValue = 'Default Value';
 
@@ -19,12 +20,74 @@ class Info extends Component {
         this.state = {
             persons: [],
             orders: [],
+            personsEdit: [{
+                Firstname: '',
+                Lastname: '',
+                Dob: '',
+                Tel: '',
+                Email: '',
+                Gender: ''
+            }],
+
             show: false,
         }
     }
 
+    handleOnChangeFirstName = (event) => {
+        const updatedPerson = { ...this.state.personsEdit }; // Create a copy of the person object
+      
+        // Update the Firstname of the person
+        updatedPerson.Firstname = event.target.value;
+      
+        // Update the state with the modified person object
+        this.setState({ personsEdit: updatedPerson });
+    };
+
+    handleOnChangeLastName = (event) => {
+        const updatedPerson = { ...this.state.personsEdit }; 
+
+        updatedPerson.Lastname = event.target.value;
+      
+        this.setState({ personsEdit: updatedPerson });
+    };
+
+    handleOnChangeDob = (event) => {
+        const updatedPerson = { ...this.state.personsEdit }; 
+
+        updatedPerson.Dob = event.target.value;
+      
+        this.setState({ personsEdit: updatedPerson });
+    };
+
+    handleOnChangeTel = (event) => {
+        const updatedPerson = { ...this.state.personsEdit }; 
+
+        updatedPerson.Tel = event.target.value;
+      
+        this.setState({ personsEdit: updatedPerson });
+    };
+
+    handleOnChangeEmail = (event) => {
+        const updatedPerson = { ...this.state.personsEdit }; 
+
+        updatedPerson.Email = event.target.value;
+      
+        this.setState({ personsEdit: updatedPerson });
+    };
+
+    handleOnChangeGender = (event) => {
+        const updatedPerson = { ...this.state.personsEdit }; 
+
+        updatedPerson.Gender = event.target.value;
+      
+        this.setState({ personsEdit: updatedPerson });
+    };
+
     handleClose = () => {
-        this.setState({ show: false });
+        this.setState({ 
+            show: false,
+            personsEdit: this.state.persons
+        });
     };
 
     handleShow = () => {
@@ -37,12 +100,40 @@ class Info extends Component {
         });
     }
 
+    handleEdit = async () => {
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        try {
+            let dataApi = await handleEditProfileApi(personsObject, this.state.personsEdit['Firstname'], 
+            this.state.personsEdit['Lastname'], this.state.personsEdit['Tel'], this.state.personsEdit['Dob'] ,this.state.personsEdit['Gender'] , this.state.personsEdit['Email']);
+            if (dataApi == 0){
+                console.log("Err code ", dataApi)
+            }
+            else if (dataApi !== 0) {
+                this.setState({show: false});
+                console.log("Message: ", dataApi);
+            }
+        }
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            console.log("Lỗi", e.response)
+        }
+    }
+
+    
     componentDidMount(){
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
-        const persons = res.data;
-        this.setState({ persons });
+        const persons = res.data[0];
+        const personsEdit = res.data[0];
+        console.log(persons)
+        this.setState({ persons, personsEdit });
         })
         .catch(error => console.log(error));
 
@@ -53,7 +144,7 @@ class Info extends Component {
         })
         .catch(error => console.log(error));
     };
-      
+
     render() {
         return (
             <div>
@@ -101,26 +192,28 @@ class Info extends Component {
                             <div class="col-4 info-type">
                                 Họ tên: <br height="50px" /> 
                                 Ngày sinh: <br />
+                                Giới tính: <br />
                                 Email: <br />
                                 Sđt: <br />
                                 Địa chỉ: <br />
                             </div>
                             
                             <div class="col-8">
-                                {this.state.persons.map(person => (
+                                {/* {this.state.persons.map(person => ( */}
                                 <>
-                                    {person.Fullname}  <br />
-                                    {person.DOB} <br />
-                                    {person.Email} <br />
-                                    {person.Tel} <br />
-                                    {person.Address} <br />
+                                {this.state.persons['Lastname']} {this.state.persons['Firstname']} <br />
+                                    {this.state.persons['Dob']} <br />
+                                    {this.state.persons['Gender']} <br />
+                                    {this.state.persons['Email']} <br />
+                                    {this.state.persons['Tel']} <br />
+                                    {this.state.persons['Address']} <br />
                                 </>
-                                ))}
+                                {/* ))} */}
                             </div>
                             
                         </div>
 
-                        {this.state.persons.map(person => (
+                        {/* {this.state.persons.map(person => ( */}
                         <div class="col" align="right"> 
 
                             <div class="avatar-img">
@@ -129,12 +222,12 @@ class Info extends Component {
 
                             <div class="point-bg">
                                 <div class="point" align="center">
-                                    {person.CurrentPoint}
+                                    {this.state.persons['CurrentPoint']}
                                 </div>
                             </div>
 
                         </div>
-                        ))}
+                        {/* ))} */}
 
                     </div>
 
@@ -157,26 +250,43 @@ class Info extends Component {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Họ và tên</Form.Label>
-                                        <Form.Control type="text" defaultValue={defaultValue}/>
+                                        <Form.Label>Họ</Form.Label>
+                                        <Form.Control type="text" value={this.state.personsEdit['Lastname']}
+                                        onChange={this.handleOnChangeLastName}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Tên</Form.Label>
+                                        <Form.Control type="text" value={this.state.personsEdit.Firstname}
+                                        onChange={this.handleOnChangeFirstName}/>
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
                                         <Form.Label>Ngày sinh</Form.Label>
-                                        <Form.Control type="date" />
+                                        <Form.Control type="text" value={this.state.personsEdit['Dob']} 
+                                        onChange={this.handleOnChangeDob}/>
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
                                         <Form.Label>Email</Form.Label>
-                                        <Form.Control type="email" />
+                                        <Form.Control type="email" value={this.state.personsEdit['Email']}
+                                        onChange={this.handleOnChangeEmail}/>
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Gới tính</Form.Label>
+                                        <Form.Control type="gender" value={this.state.personsEdit['Gender']}
+                                        onChange={this.handleOnChangeGender}/>
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
                                         <Form.Label>Số điện thoại</Form.Label>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" value={this.state.personsEdit['Tel']}
+                                        onChange={this.handleOnChangeTel}/>
                                     </Form.Group>
 
-                                    <Form.Group className="mb-3">
+                                    {/* <Form.Group className="mb-3">
                                         <Form.Label>Số nhà</Form.Label>
                                         <Form.Control type="text"/>
                                     </Form.Group>
@@ -201,7 +311,7 @@ class Info extends Component {
                                                 <Form.Control type="text"/>
                                             </Col>
                                         </Row>
-                                    </Form.Group>
+                                    </Form.Group> */}
                                     
                                 </Form>
                             </Modal.Body>
@@ -210,9 +320,10 @@ class Info extends Component {
                                 <Button variant="secondary" onClick={this.handleClose} className="btn-return">
                                     Trở về
                                 </Button>
-                                <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                <Button variant="primary" onClick={() => {this.handleEdit()}} className="btn-payment">
                                     OK
                                 </Button>
+                                
                             </Modal.Footer>
                         </Modal>
                     </div>
