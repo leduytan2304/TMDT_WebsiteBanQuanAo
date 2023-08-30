@@ -1,15 +1,14 @@
 import { db } from "../connect.js";
 
 export const getTotalPriceShopingCart = (req ,res)=>{
-    const q = "SELECT ShoppingCartID FROM sql6642429.ShoppingCart where UserID = 'U0025';";
-    const secondQuery = "select sql6642429.uf_CalShoppingcartTotalCost('" + q + "')";
+    const q = "SELECT ShoppingCartID FROM ShoppingCart where UserID = 'U0025';"; // thay đổi user sau
     db.query(q, (err, data) => {
       if (err) 
       return res.status(500).json(err);
       
       else {
         
-        const secondQuery = "select sql6642429.uf_CalShoppingcartTotalCost('" + data[0].ShoppingCartID + "')";
+        const secondQuery = "select uf_CalShoppingcartTotalCost('" + data[0].ShoppingCartID + "')";
         db.query(secondQuery, (err, data2) => {
             if (err) return res.status(500).json(err);
             console.log(data2);
