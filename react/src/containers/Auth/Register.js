@@ -110,21 +110,21 @@ class Register extends Component {
                 <div className='register-container'>
                     <div className='login-content row'>
                         <div className= 'col-12 login-text'>Đăng ký</div>
+
                         <div className= 'col-12 form-group login-input'>
                             <label>Email:</label>
                             <input type='text' 
                             className='form-control' 
                             placeholder='Nhập email'
-                            value={this.state.email}
                             onChange={(event) => this.handleOnChangeEmail(event)}
                             />
                         </div>
+
                         <div className= 'col-12 form-group login-input'>
                             <label>Họ tên:</label>
                             <input type='text' 
                             className='form-control' 
                             placeholder='Họ tên'
-                            value={this.state.name}
                             onChange={(event) => this.handleOnChangeUsername(event)}
                             />
                         </div>
@@ -133,7 +133,6 @@ class Register extends Component {
                             <input type='text' 
                             className='form-control' 
                             placeholder='Số điện thoại'
-                            value={this.state.phone}
                             onChange={(event) => this.handleOnChangePhone(event)}
                             />
                         </div>
