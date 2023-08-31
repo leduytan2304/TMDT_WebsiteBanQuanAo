@@ -5,10 +5,14 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
+
 import { Multiselect } from "multiselect-react-dropdown";
 
 import '../ModalAdmin.scss';
 import './AddNewProduct.scss';
+
 
 class AddNewProduct extends Component {
 
@@ -16,10 +20,15 @@ class AddNewProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          plainArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
+          colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
+          sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
           inputList: [],
           addNewColor: false,
           selectedColors: [],
+          selectedSize: [],
+          previewImgURL: [],
+          isOpen: false,
+          photoIndex: '',
         };
     }
 
@@ -29,6 +38,14 @@ class AddNewProduct extends Component {
         });
     
         console.log("Selected Colors:", selectedList);
+    };
+
+    handleSizeSelect = (selectedList, selectedItem) => {
+        this.setState({
+          selectedSize: selectedList,
+        });
+    
+        console.log("Selected Size:", selectedList);
     };
 
     handleInputChange = (e, index) => {
@@ -69,6 +86,31 @@ class AddNewProduct extends Component {
         });
     };
 
+    handleOnChangeIMG = (event) => {
+        let data = event.target.files;
+        // let file = data[0];
+        let files = Array.from(data);
+
+        let objectUrls = files.map(file => URL.createObjectURL(file));
+        this.setState(prevState => ({
+            previewImgURL: prevState.previewImgURL.concat(objectUrls),
+        }));
+
+        // if (files) {
+        //     // let objectUrl = URL.createObjectURL(file);
+        //     let objectUrls = files.map(file => URL.createObjectURL(file));
+        //     this.setState({
+        //         previewImgURL: objectUrls
+        //     })
+        // }
+    }
+
+    openPreviewIMG = (index) => {
+        this.setState({
+            isOpen: true,
+            photoIndex: index,
+        })
+    }
 
 
     render() {
@@ -117,16 +159,43 @@ class AddNewProduct extends Component {
                                     </span> 
                                 </div>
                             </div>
-                            <div className='product-color'>
+                            <div className='product-title'>
+                                <Form.Label>Hình ảnh:</Form.Label>
+                                <div className='select-input'>
+                                
+                                    <div className='input-img'>
+                                        <div className='preview-img'>
+                                            {this.state.previewImgURL.map((url, index) => (
+                                                <div
+                                                    key={index}
+                                                    className='preview-img-item'
+                                                    style={{ backgroundImage: `url(${url})` }}
+                                                    onClick={() => this.openPreviewIMG(index)}
+                                                ></div>
+                                            ))}
+                                        </div>
+                                        <input id='add-img' 
+                                               type='file' 
+                                               hidden 
+                                               onChange={(event) => this.handleOnChangeIMG(event)}
+                                               multiple/>
+                                        <Form.Label className='label-upload' htmlFor='add-img'>Tải ảnh lên 
+                                            <i className='fas fa-upload'></i>
+                                        </Form.Label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='product-color-size'>
                                 <Form.Label>Màu sắc:</Form.Label>
                                 <div className='product-title'>
                                     <div className='select-color-product'>
                                         <Form.Label>Chọn màu:</Form.Label>
                                         <div className='multi-select'>
-                                            {/* <Multiselect showArrow options={this.state.plainArray} isObject={false} /> */}
+                                            {/* <Multiselect showArrow options={this.state.colorArray} isObject={false} /> */}
                                             <Multiselect
+                                                placeholder='Chọn màu'
                                                 showArrow
-                                                options={this.state.plainArray}
+                                                options={this.state.colorArray}
                                                 onSelect={this.handleColorSelect}
                                                 onRemove={this.handleColorSelect}
                                                 selectedValues={this.state.selectedColors}
@@ -160,6 +229,26 @@ class AddNewProduct extends Component {
                                     </div>
                                 </div>
                             </div>
+                            <div className='product-color-size'>
+                                <Form.Label>Size:</Form.Label>
+                                <div className='product-title'>
+                                    <div className='select-color-product'>
+                                        <Form.Label>Chọn size:</Form.Label>
+                                        <div className='multi-select'>
+                                            {/* <Multiselect showArrow options={this.state.colorArray} isObject={false} /> */}
+                                            <Multiselect
+                                                placeholder='Chọn size'
+                                                showArrow
+                                                options={this.state.sizeArray}
+                                                onSelect={this.handleSizeSelect}
+                                                onRemove={this.handleSizeSelect}
+                                                selectedValues={this.state.selectedSize}
+                                                isObject={false}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div className='product-title'>
                                 <Form.Label>Giảm giá:</Form.Label>
                                 <Form.Control
@@ -188,6 +277,12 @@ class AddNewProduct extends Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
+                {this.state.isOpen &&
+                                <Lightbox
+                                    mainSrc={this.state.previewImgURL[this.state.photoIndex]}
+                                    onCloseRequest={() => this.setState({ isOpen: false })}
+                                />
+                             }
             </>
         );
     }
