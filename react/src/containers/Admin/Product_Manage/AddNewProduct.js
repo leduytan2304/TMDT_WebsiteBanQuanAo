@@ -278,11 +278,11 @@ class AddNewProduct extends Component {
                     </Modal.Footer>
                 </Modal>
                 {this.state.isOpen &&
-                                <Lightbox
-                                    mainSrc={this.state.previewImgURL[this.state.photoIndex]}
-                                    onCloseRequest={() => this.setState({ isOpen: false })}
-                                />
-                             }
+                    <Lightbox
+                        mainSrc={this.state.previewImgURL[this.state.photoIndex]}
+                        onCloseRequest={() => this.setState({ isOpen: false })}
+                    />
+                }
             </>
         );
     }
