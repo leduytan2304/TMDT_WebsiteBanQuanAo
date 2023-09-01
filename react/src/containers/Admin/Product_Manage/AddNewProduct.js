@@ -69,12 +69,14 @@ class AddNewProduct extends Component {
         };
     }
 
+    // bắt sự kiện thay đôi trong input mã sản phẩm
     handleChangeIDProduct = (event) => {
         this.setState({
             id_product: event.target.value,
         })
     }
 
+    // bắt sự kiện thay đổi trong input tên sản phẩm
     handleChangeProductName = (event) => {
         this.setState({
             product_name: event.target.value,
@@ -182,6 +184,7 @@ class AddNewProduct extends Component {
         })
     }
 
+    // lưu các thông tin vào state
     handleSave = () => {
         const { inputList, selectedColors,id_product,product_name,selectedCatalog,
             previewImgURL,selectedSize,discount,price} = this.state;
@@ -214,16 +217,19 @@ class AddNewProduct extends Component {
         }
     }
 
-    handleChange = (selectedCatalog) => {
+    // bắt sự kiện chọn danh mục
+    handleChangeCatalog  = (selectedCatalog) => {
         this.setState({ selectedCatalog });
     }
 
+    // bắt sự kiện thay đổi trong input giám giá
     handleChangeDiscount = (event) => {
         this.setState({
             discount: event.target.value,
         })
     }
 
+    // bắt sự kiện thay đổi trong input giá bán
     handleChangePrice = (event) => {
         this.setState({
             price: event.target.value,
@@ -270,8 +276,9 @@ class AddNewProduct extends Component {
                                 <div className='select-input'>
                                     <Select 
                                         value = {this.state.selectedCatalog}
-                                        onChange={this.handleChange}
-                                        // options = {this.state.listCatalog}
+                                        onChange={this.handleChangeCatalog}
+
+                                        //kéo lên trên cùng để xem options
                                         options={options}
                                         placeholder = {'--Danh mục--'}
                                         name = {"selectedCatalog"}
