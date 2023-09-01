@@ -35,13 +35,71 @@ class Payment extends Component {
             discount: '0',
             price: '0',
             totalMoney: [],
+            address: []
         };
     }
-    
+    handleCreateOrder = () => {
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        // lấy thông tin khách hàng 
+            console.log('real: ',UserID);
+
+
+            // khong fetch ddc
+          fetch(`http://localhost:8000/api/cart_payment/createOrder/${UserID}` , { // thay đổi user sau
+          method: 'POST',
+          body: JSON.stringify({
+            userID: UserID ,
+            delivery_option: "Giao hàng",
+            user_address: this.state.address[0].UserAddress,
+            receiver_name: this.state.address[0].ReceiverName,
+            receiver_number: this.state.address[0].ReceiverPhoneNumber,
+            payment_method_name: "Chuyển khoản",
+            customer_payment_details: "Thanh toán thông qua ...",
+            payment_transaction_time:"NOW()",
+             payment_status: "Đã thanh toán",
+             voucher_id : null,
+             point_redeem : 0,
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
+          .then((response) => {response.json()
+        })
+          .then((json) => console.log(json));
+
+        //   {
+        //     "userID": "U0025" ,
+        //     "delivery_option": "Giao hàng",
+        //     "user_address": "123 Trần Hưng Đạo",
+        //     "receiver_name": "LDT",
+        //     "receiver_number": "123456",
+        //     "payment_method_name": "Chuyển khoản",
+        //     "customer_payment_details": "Thanh toán thông qua ...",
+        //     "payment_transaction_time":"NOW()",
+        //      "payment_status": "Đã thanh toán",
+        //      "voucher_id" : null,
+        //      "point_redeem": 0
+        //   }
+
+          
+      console.log('post success')
+            
+        };
     componentDidMount() { 
         let sum = 0;
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        console.log('UserID: ',UserID);
+        axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
+        .then(res => {
+          const data = res.data 
+          this.setState({address : data});
+          console.log('Name: ',this.state.address[0] );
+        })
+        
+       
 
-        axios.get(`http://localhost:8000/api/cart/U0025`)
+        axios.get(`http://localhost:8000/api/cart/${UserID}`)
         .then(res => {
             const images = res.data;
             this.setState({ images });
@@ -61,6 +119,8 @@ class Payment extends Component {
                     // console.log(sum);
                     return temp;  
             });
+            
+            
 
             const unitSum = images[0].map((image) => {
                 const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
@@ -72,7 +132,6 @@ class Payment extends Component {
 
             const unitPrice = images[0].map((image) => {
                 const temp = parseFloat(image.ProductPrice);
-                    
                     sum += temp;
                     // console.log(sum);
                     return temp;  
@@ -96,6 +155,7 @@ class Payment extends Component {
             this.setState({Size: size})
             this.setState({ColorName: colorName})
             this.setState({ProductID: productID})
+            
 
             // hàm khởi tạo cho sum ( thành tiền )
             let sumtemp = 0;
@@ -112,7 +172,7 @@ class Payment extends Component {
         })
         .catch(error => console.log(error));
   };
-
+ 
     render() {
 
         return (
@@ -166,11 +226,11 @@ class Payment extends Component {
 
                                  
                                
-                                <a href="http://localhost:8888/order/create_payment_url">
-                                <button type="button" class="btn btn-danger btn-payment" >
+                               
+                                <button type="button" class="btn btn-danger btn-payment" onclick = {() => this.handleCreateOrder()} >
                                         THANH TOÁN
                                     </button>
-                                </a>
+                               
                                     
                                 
                                 

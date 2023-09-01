@@ -24,9 +24,7 @@ class AoDetail extends Component {
 
       componentDidMount(req,res,url){
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-
-        console.log(UserID);
-     
+        console.log('UserID: ',UserID);
         axios.get(`http://localhost:8000/api${window.location.pathname}`)
           .then(res => {
             const images = res.data;
@@ -56,13 +54,12 @@ class AoDetail extends Component {
 
     handleAddToCart = () => {
         const lastSegment = window.location.pathname.split("/").pop();
-
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
             fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
                 method: 'POST',
                 body: JSON.stringify({
-                  userID: 'U0025',
+                  userID: UserID,
                   productID: lastSegment,
                   size: this.state.selectedSize,
                   number: this.state.quantityNum,

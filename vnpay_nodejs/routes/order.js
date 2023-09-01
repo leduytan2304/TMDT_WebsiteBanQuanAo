@@ -13,8 +13,24 @@ router.get('/', function(req, res, next){
     res.render('orderlist', { title: 'Danh sách đơn hàng' })
 });
 
-router.get('/create_payment_url', function (req, res, next) {
-    res.render('order', {title: 'Xác nhận đơn của bạn', amount: 10000})
+router.get('/create_payment_url',async function  (req, res, next) {
+    var totalMoney  =[];
+    
+    await axios.get(`http://localhost:8000/api/cart_payment/U0025`)
+    .then(res => {
+      totalMoney.push(res.data)
+      console.log('totalMoney1: ',totalMoney);
+    })
+    .catch(error => console.log(error));
+    
+    console.log('totalMoney2: ',totalMoney[0][0][0]);
+    for (var key in totalMoney[0][0]) {
+        console.log("Key1: " + key);
+        console.log("Value: " + totalMoney[0][0][key]);
+        res.render('order', {title: 'Xác nhận đơn của bạn', amount: totalMoney[0][0][key]})
+
+    }
+    
 
     
 });
@@ -31,7 +47,11 @@ router.get('/refund', function (req, res, next) {
     res.render('refund', {title: 'Hoàn tiền giao dịch thanh toán'})
 });
 
-
+// router.post('/create_payment_url', function (req, res, next) {
+//     console.log(req.body);
+//     console.log(req.params.userID);
+//     res.redirect(vnpUrl)
+// });
 router.post('/create_payment_url', function (req, res, next) {
     
     process.env.TZ = 'Asia/Ho_Chi_Minh';
@@ -111,6 +131,9 @@ router.get('/vnpay_return', function (req, res, next) {
 
     if(secureHash === signed){
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+
+
+
 
         res.render('success', {code: vnp_Params['vnp_ResponseCode']})
     } else{

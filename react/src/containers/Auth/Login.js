@@ -7,8 +7,7 @@ import * as actions from "../../store/actions";
 import './Signin.scss';
 import { FormattedMessage } from 'react-intl';
 import { handleLoginApi } from '../../services/userService';
-
-
+import axios from 'axios';
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +42,9 @@ class Login extends Component {
             }
             if (dataApi !== 0) {
                 console.log("Login success!");
-                localStorage.setItem("accessToken", dataApi.data.accessToken)
+                const userID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID
+                console.log(userID);
+                  localStorage.setItem("accessToken", dataApi.data.accessToken)
                 this.props.userLoginSuccess(dataApi.data)
             }
         }
@@ -58,6 +59,19 @@ class Login extends Component {
             console.log("Lỗi", e.response)
         }
     }
+    componentDidMount() { 
+
+        axios.get(`http://localhost:8000/api/user/getUserId/${this.state.email}`)
+        .then(res => {
+            const images = res.data;
+            this.setState({ images });
+            const productID =images[0].map((image) => {
+                const temp =(image.ProductID);
+                    // console.log(sum);
+                    return temp;  
+            })})
+    }
+    
 
     handleShowHidePassword = () => {
         this.setState({

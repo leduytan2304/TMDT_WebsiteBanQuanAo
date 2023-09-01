@@ -7,6 +7,7 @@ router.get("/profile/:userID", getUserInfo);
 router.put("/profile/edit", editUserInfo);
 router.get("/address/:userID", getUserAddress);
 router.get("/order/:userID", getOrderHistory);
+// router.get("/getUserId/:userEMail", getUserID);
 
 
 
