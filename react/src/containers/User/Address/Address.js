@@ -88,33 +88,41 @@ class Address extends Component {
                         </div>
 
                         <div  class="col-6"> 
+
                             <form action="#">
+
                                 {this.state.address.map(addres => (
                                 <label key = {addres.AddressID} for="dc1">
 
                                 <li class="list-group-item list-group-item-dark title-address"> 
                                     {addres.ReceiverName} 
                                 </li>
-
+                                
                                 <li class="list-group-item list-group-item-light info-address">
                                     <div class="row">
                                         <div class="col-2" id="title">
                                             Địa chỉ:<br />
                                             Sđt:
                                         </div>
+
                                         <div class="col-9">
-                                        {addres.Address}  <br />
-                                        {addres.ReceiverPhoneNumber}
+                                            {addres.Address}  <br />
+                                            {addres.ReceiverPhoneNumber}
                                         </div>
+
                                         <div class="col-1">
-                                        <input id="dc1" type="radio" value="addr1" checked={this.state.delivery_addr === 'addr1'} onChange={this.paymentOptionChange}/> 
+                                            <input id="dc1" type="radio" value="addr1" checked={this.state.delivery_addr === 'addr1'} onChange={this.paymentOptionChange}/> 
                                         </div>
+                                        
                                     </div>
+                                    
                                 </li>
                                 </label>
+                                
                                ))}
                                
                             </form>
+
                         </div>
                         
                         <div class="col-3">

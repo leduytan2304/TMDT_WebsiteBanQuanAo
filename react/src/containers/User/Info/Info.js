@@ -20,15 +20,7 @@ class Info extends Component {
         this.state = {
             persons: [],
             orders: [],
-            personsEdit: [{
-                Firstname: '',
-                Lastname: '',
-                Dob: '',
-                Tel: '',
-                Email: '',
-                Gender: ''
-            }],
-
+            personsEdit: [],
             show: false,
         }
     }
@@ -125,27 +117,48 @@ class Info extends Component {
         }
     }
 
+    componentDidMount() {
+        const dataFetchedFlag = JSON.parse(localStorage.getItem('persist:user')).isLoggedIn;
     
-    componentDidMount(){
+        if (dataFetchedFlag === 'true') {
+          this.loadInfo();
+          this.loadOrder();
+        } else {
+          setTimeout(() => {
+            this.loadInfo();
+            this.loadOrder();
+          }, 500);
+        }
+      }
+
+    
+    async loadInfo() {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
+        await axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data[0];
         const personsEdit = res.data[0];
-        console.log(persons)
-        this.setState({ persons, personsEdit });
+        this.setState({ persons, personsEdit});
         })
         .catch(error => console.log(error));
+    }
 
-        axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
+    async loadOrder() {
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        await axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
         .then(res => {
         const orders = res.data;
-        this.setState({ orders });
+        this.setState({ orders, load: true });
         })
         .catch(error => console.log(error));
     };
 
     render() {
+        const { persons } = this.state;
+        if (persons.length === 0) {
+            return <div className="loading">Loading...</div>;
+        }
+
         return (
             <div>
                 <HomeHeader />
@@ -201,7 +214,7 @@ class Info extends Component {
                             <div class="col-8">
                                 {/* {this.state.persons.map(person => ( */}
                                 <>
-                                {this.state.persons.Lastname} {this.state.persons['Firstname']} <br />
+                                {this.state.persons['Lastname']} {this.state.persons['Firstname']} <br />
                                     {this.state.persons['Dob']} <br />
                                     {this.state.persons['Gender']} <br />
                                     {this.state.persons['Email']} <br />
