@@ -201,7 +201,7 @@ class Info extends Component {
                             <div class="col-8">
                                 {/* {this.state.persons.map(person => ( */}
                                 <>
-                                {this.state.persons['Lastname']} {this.state.persons['Firstname']} <br />
+                                {this.state.persons.Lastname} {this.state.persons['Firstname']} <br />
                                     {this.state.persons['Dob']} <br />
                                     {this.state.persons['Gender']} <br />
                                     {this.state.persons['Email']} <br />
@@ -251,7 +251,7 @@ class Info extends Component {
 
                                     <Form.Group className="mb-3">
                                         <Form.Label>Họ</Form.Label>
-                                        <Form.Control type="text" value={this.state.personsEdit['Lastname']}
+                                        <Form.Control type="text" value={this.state.personsEdit.Lastname}
                                         onChange={this.handleOnChangeLastName}
                                         />
                                     </Form.Group>

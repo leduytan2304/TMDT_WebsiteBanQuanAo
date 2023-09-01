@@ -25,7 +25,7 @@ class AoDetail extends Component {
       componentDidMount(req,res,url){
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
-        console.log(UserID);
+        console.log("UserID", UserID);
      
         axios.get(`http://localhost:8000/api${window.location.pathname}`)
           .then(res => {
