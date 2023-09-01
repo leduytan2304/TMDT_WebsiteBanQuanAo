@@ -9,27 +9,34 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NavLink } from 'react-router-dom';
 import * as actions from "../../store/actions";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class HomeHeader extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            search: '',
+            keyword: '',
         };
     }
 
     handleSearchInputChange = (event) => {
-        this.setState({ search: event.target.value });
+        this.setState({ keyword: event.target.value });
     };
 
     handleSearchIconClick = () => {
-        const { search } = this.state;
-        if (search.trim() === "") {
+        const { keyword } = this.state;
+        if (keyword.trim() === "") {
             console.log("Search is empty or contains only spaces");
+            toast.error('Chưa nhập thông tin tìm kiếm', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 4000,
+            })
             return; // Không làm bước tiếp theo nếu search trống
         }
-        console.log(search);
-        this.props.history.push(`/search?query=${search}`);
+        console.log(keyword);
+        this.props.history.push(`/search?query=${keyword}`);
     };
 
     handleKeyPress = (event) => {
@@ -91,7 +98,7 @@ class HomeHeader extends Component {
                             <div className='search'>
                                 <input type='text' 
                                        placeholder='Tìm kiếm sản phẩm' 
-                                       value={this.state.search} 
+                                       value={this.state.keyword} 
                                        onChange={this.handleSearchInputChange}
                                        onKeyDown={this.handleKeyPress} />
                                 <i class="fas fa-search" onClick={this.handleSearchIconClick}></i>
