@@ -6,30 +6,54 @@ import HomeFooter from '../../HomePage/HomeFooter';
 import '../../HomePage/HomePage.scss';
 import '../Page.scss';
 import './SearchResult.scss';
+import axios from 'axios';
 
 // import '../DetailProduct.scss';
 // import axios from 'axios';
 
 
-
 class SearchResult extends Component { 
+    state = {
+        images: []
+      };
 
-    handleViewDetailProductSearch = () => {
+    fetchData = (keyword) => {
+        axios.get(`http://localhost:8000/api/image/search?query=${keyword}`)
+          .then(res => {
+            const images = res.data;
+            console.log(images)
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+      };
+
+    componentDidMount(){
+        const search = this.getSearchFromQueryParams();
+        this.fetchData(search);
+    };
+
+    componentDidUpdate(prevProps) {
+        const prevSearch = this.getSearchFromQueryParams(prevProps);
+        const currentSearch = this.getSearchFromQueryParams();
+    
+        if (prevSearch !== currentSearch) {
+          this.fetchData(currentSearch);
+        }
+      }
+    
+    getSearchFromQueryParams(props = this.props) {
+        return props.location.search.split('=')[1];
+      }
+
+    handleViewDetailProductSearch = (ProductID) => {
         console.log("ID sản phẩm");
 
-        // thêm link chi tiết sản phẩm vào đây nha
-
-        //Cái trang chi tiết áo đang bị gì ấy nên tui sẽ để cái chi tiết quần :V
-        // this.props.history.push(`/chi-tiet-ao/:1`);
-
-        // hoặc cái này, tùy vào kiểm tra như thế nào để biết sản phẩm đó là áo hay quần chứ tui không biết :v
-        this.props.history.push(`/chi-tiet-quan/:1`);
+        this.props.history.push(`/chi-tiet-do/${ProductID}`);
     };
     
 
     render() {
         return (
-
            <Fragment>
             <HomeHeader />
                 <div className='section'>
@@ -37,23 +61,27 @@ class SearchResult extends Component {
                         <div className='section-content'>
                             <div className='section-header header-position search-header'>
                                 <span className='title-section'>Tìm kiếm</span>
-                                <h5 className='sub-title'>Có <span>1</span> sản phẩm cho tìm kiếm</h5>
+                                <h5 className='sub-title'>Có <span>{this.state.images.length}</span> sản phẩm cho tìm kiếm</h5>
                             </div>
                             <div className='section-body'>
-                                <div className='col-3 product' onClick={() => this.handleViewDetailProductSearch()}>
-                                    <div className='product-img'>
+                            {this.state.images.map((image, index) => (
+                                <div className='col-3 product' onClick={() => this.handleViewDetailProductSearch(image.ProductID)}>
+
+                                    <div  className='product-img'>
+                                    <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                         <div className='product-discount'>
                                             <span>-6%</span>
                                         </div>
                                     </div>
                                     <div className='product-detail text-center'>
-                                        <div className='product-name'>Basic Tee - Brown/White </div>
+                                        <div className='product-name'>{image.ProductName} </div>
                                         <div className='product-price'>
-                                            <span>179,000₫</span>
+                                        <span>{image.ProductPrice}</span>
                                             <del>190,000₫</del>
                                         </div>
                                     </div>
                                 </div>
+                            ))}
                             </div>
                         </div>
                     </div>
