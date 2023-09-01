@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-import PaymentMethod from './Payment_method/Payment_method';
 
 import cod from '../../../assets/Users/cod.png';
 import vnpay from '../../../assets/Users/vnpay.png';
 
+import Discount from '../Cart/Discount/Discount'
+
 import './Payment.scss';
-import axios from 'axios';
 const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
@@ -29,7 +29,8 @@ class Payment extends Component {
             unit_sum: ['149000','149000','149000'],
             sum: '447000',
             discount: '0',
-            price: '482000'
+            price: '482000',
+            show: 'false',
         };
     }
     state = {
@@ -52,7 +53,14 @@ class Payment extends Component {
             .then((json) => console.log(json));
     }
     
+    handleClose = () => {
+        this.setState({ show: false });
+    };
 
+    handleShow = () => {
+        this.setState({ show: true });
+    };  
+    
     paymentOptionChange = (event) => {
         this.setState({
             payment_method: event.target.value,
@@ -109,17 +117,13 @@ class Payment extends Component {
                                         TRỞ VỀ
                                     </button>
                                 </NavLink>
-
-                                 
-                               
+ 
                                 <a href="http://localhost:8888/order/create_payment_url">
                                 <button type="button" class="btn btn-danger btn-payment" onClick={this.request_data(this.state.sum)}>
                                         THANH TOÁN
                                     </button>
                                 </a>
-                                    
-                                
-                                
+
                             </div>
                         </div>
 
@@ -196,27 +200,49 @@ class Payment extends Component {
                                     </div>
                                 </div>
 
-                                {this.state.shipping_method === 'ship' ? (
-                                <div class="row sum">
-                                    <div class="col-8">
-                                        Phí vận chuyển:
+                                <div align="center">
+                                    
+                                    <div className="discount row" onClick={this.handleShow}>
+                                        <div class="col-7" id="dc1" align="left">
+                                            Giảm giá:
+                                        </div>
+                                        <div class="col" align="right" id="dc1">
+                                            <b>- {VND.format(this.state.discount)}</b>
+                                        </div>
+                                        
+                                        <div class="row discount-use">
+                                            <div class="col-7" align="left">
+                                                - Khách hàng Đồng
+                                            </div>
+                                            <div class="col" align="right">
+                                                - {VND.format(12345)}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col" align="right">
-                                        <b>{VND.format(35000)}</b>
-                                    </div>
-                                </div>
-                                ) : (
-                                    <div>
-                                    </div>
-                                )}
 
-                                <div class="row discout">
-                                    <div class="col-8" id="dc1">
-                                        Giảm giá:
-                                    </div>
-                                    <div class="col" align="right" id="dc1">
-                                        <b>- {VND.format(this.state.discount)}</b>
-                                    </div>
+                                    <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                        <Modal.Header  style={{margin: '10px'}}> 
+                                            <Modal.Title>
+                                                <b>Chọn voucher</b>
+                                            </Modal.Title>
+                                        </Modal.Header>
+
+                                        <Modal.Body>
+
+                                            <Discount />
+
+                                        </Modal.Body>
+
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                                Trở về
+                                            </Button>
+                                            <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                                OK
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                    
                                 </div>
 
                                 <div class="row final-price">
