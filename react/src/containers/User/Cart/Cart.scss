@@ -14,6 +14,15 @@
     background: rgba(137, 137, 137, 0.821); 
 }
 
+input[type=number]::-webkit-inner-spin-button, //xóa nút tăng giảm trong input number
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+
 .cart-page{
     height: auto;
     margin-top: 50px;
