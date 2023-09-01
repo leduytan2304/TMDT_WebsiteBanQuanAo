@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "TMDT",
+			"path": "../StudyDE/TMDT"
+		},
+		{
+			"name": "vnpay_nodejs",
+			"path": "."
+		}
+	],
+	"settings": {}
+}

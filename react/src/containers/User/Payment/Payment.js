@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, Modal,Form } from 'react-bootstrap';
+import axios from 'axios';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -25,32 +26,18 @@ class Payment extends Component {
         this.state = {
             payment_method: 'cod', // Giá trị mặc định được chọn
             page: 'payment_method', // biến kiểm tra hiển thị trang
-            quantityNum: ['1','1','1'],
-            unit_sum: ['149000','149000','149000'],
-            sum: '447000',
+            productName:[],
+            quantityNum: [],
+            unit_sum: [],
+            unit_price:[],
+            images:[],
+            Size:[],
+            sum: '0',
             discount: '0',
-            price: '482000',
             show: 'false',
+            price: '0',
+            totalMoney: [],
         };
-    }
-    state = {
-        totalMoney: []
-    }
-    request_data(){
-        fetch('http://localhost:8000/api/testing', {
-            method: 'POST',
-            body: JSON.stringify({
-              id: 1,
-              title: 'ádasda',
-              body: 'ádsa',
-              userId: 1,
-            }),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-          })
-            .then((response) => response.json())
-            .then((json) => console.log(json));
     }
     
     handleClose = () => {
@@ -66,6 +53,80 @@ class Payment extends Component {
             payment_method: event.target.value,
         });
     }
+    componentDidMount() { 
+        let sum = 0;
+
+        axios.get(`http://localhost:8000/api/cart/U0025`)
+        .then(res => {
+            const images = res.data;
+            this.setState({ images });
+            const productID =images[0].map((image) => {
+                const temp =(image);
+                 //console.log(image.ProductID);
+                    return temp;  
+            });
+            const quantity_number =images[0].map((image) => {
+                const temp =parseInt(image.ProductQuantity);
+                    // console.log(sum);
+                    return temp;  
+            });
+
+            const product_name =images[0].map((image) => {
+                const temp =(image.ProductName);
+                    // console.log(sum);
+                    return temp;  
+            });
+
+            const unitSum = images[0].map((image) => {
+                const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
+                    
+                    sum += temp;
+                    // console.log(sum);
+                    return temp;  
+            });
+
+            const unitPrice = images[0].map((image) => {
+                const temp = parseFloat(image.ProductPrice);
+                    
+                    sum += temp;
+                    // console.log(sum);
+                    return temp;  
+            });
+
+            const size =images[0].map((image) => {
+                const temp =(image.ProductSizeID);
+                    // console.log(sum);
+                    return temp;  
+            });
+            const colorName =images[0].map((image) => {
+                const temp =(image.ColorName);
+                    // console.log(sum);
+                    return temp;  
+            });
+
+            this.setState({ unit_sum: unitSum })
+            this.setState({quantityNum: quantity_number})
+            this.setState({productName: product_name})
+            this.setState({unit_price: unitPrice})
+            this.setState({Size: size})
+            this.setState({ColorName: colorName})
+            this.setState({ProductID: productID})
+
+            // hàm khởi tạo cho sum ( thành tiền )
+            let sumtemp = 0;
+            this.state.quantityNum.map((quantity, index) => {
+                let temp = parseFloat(this.state.unit_price[index]) * parseInt(quantity);
+                sumtemp += temp;
+                return temp;   
+            });
+            this.setState({ sum: sumtemp})
+
+            // khởi tạo cho price ( tổng tiền )
+            const discount = this.state.discount;
+            this.setState({price: this.state.sum-discount});
+        })
+        .catch(error => console.log(error));
+  };
 
     render() {
 
@@ -119,7 +180,7 @@ class Payment extends Component {
                                 </NavLink>
  
                                 <a href="http://localhost:8888/order/create_payment_url">
-                                <button type="button" class="btn btn-danger btn-payment" onClick={this.request_data(this.state.sum)}>
+                                <button type="button" class="btn btn-danger btn-payment" >
                                         THANH TOÁN
                                     </button>
                                 </a>
@@ -138,38 +199,20 @@ class Payment extends Component {
                                     margin: '0 auto'
                                     }}
                                 />
-                                <div class="row product-bill">                                 
-                                    <div class="col-9" align="left">
-                                        <b>Áo thun Highclub Signature</b>
-                                        <p>Nâu / M</p>
-                                    </div>
-                                    <div class="col" align="right"> 
-                                        <p> x{this.state.quantityNum[0]} </p>
-                                        <p> {VND.format(this.state.unit_sum[0])}  </p>
-                                    </div>
-                                </div>
+                                 {this.state.productName.map((name,index) => (  
 
-                                 <div class="row product-bill">                                 
+                                <div key={index} class="row product-bill">                                 
                                     <div class="col-9" align="left">
-                                        <b>Áo thun Highclub Signature</b>
-                                        <p>Nâu / M</p>
+                                        <b>{name}</b>
+                                        <p>x{this.state.quantityNum[index]}</p>
                                     </div>
                                     <div class="col" align="right"> 
-                                        <p> x{this.state.quantityNum[1]} </p>
-                                        <p> {VND.format(this.state.unit_sum[1])}  </p>
+                                        <p>{this.state.unit_price[index]} </p>
+                                        <p> {VND.format(this.state.unit_sum[index])}  </p>
                                     </div>
                                 </div>
-
-                                <div class="row product-bill">                                 
-                                    <div class="col-9" align="left">
-                                        <b>Áo thun Highclub Signature</b>
-                                        <p>Nâu / M</p>
-                                    </div>
-                                    <div class="col" align="right"> 
-                                        <p> x{this.state.quantityNum[2]} </p>
-                                        <p> {VND.format(this.state.unit_sum[2])}  </p>
-                                    </div>
-                                </div>
+                                
+                                ))}
 
                                 <br />
                                 

@@ -1,40 +1,22 @@
 /**
  * Created by CTT VNPAY
  */
-
-import { db } from "../connect.js";
-import moment from "moment/moment.js";
-import dotenv from "dotenv"
-dotenv.config()
 let express = require('express');
 let router = express.Router();
 let $ = require('jquery');
 const request = require('request');
 const moment = require('moment');
-
+const axios = require('axios');
+const { response } = require('../app');
 
 router.get('/', function(req, res, next){
     res.render('orderlist', { title: 'Danh sách đơn hàng' })
 });
 
-router.get('/create_payment_url/:UserID', function (req, res, next) {
-     const cartDetail = (req ,res)=>{
-        const currentUrl = req.params.userID;
-        const values = [
-            req.body
-          ]
-          const selectItemInCart = "call sp_ViewShoppingCartDetails('" +currentUrl +"')"
-          console.log(selectItemInCart);
-          db.query(selectItemInCart, function(err, result) {
-            if (err) throw err;
-            // console.log('final result ', result);
-            
-            
-             res.status(200).json(result)
-          }) 
-        
-      }
-    res.render('order', {title: 'Tạo mới đơn hàng', amount: 10000})
+router.get('/create_payment_url', function (req, res, next) {
+    res.render('order', {title: 'Xác nhận đơn của bạn', amount: 10000})
+
+    
 });
 
 router.get('/querydr', function (req, res, next) {

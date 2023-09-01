@@ -1,11 +1,15 @@
 import express from "express";
-import { getUserInfo, getUserAddress, getOrderHistory } from "../controllers/user.js";
+import { getTotalPriceShopingCart,addProductToCart,removeProductFromCart, deleteProductFromCart } from "../controllers/cart.js";
 const router = express.Router()
 
 
-router.get("/profile/:userID", getUserInfo);
-router.get("/address/:userID", getUserAddress);
-router.get("/order/:userID", getOrderHistory);
+router.get("/:userID", getTotalPriceShopingCart); // đẩy số tiền cần thanh toán lên api
+router.post("/addProduct/:userID",addProductToCart)//thêm sản phẩm vào giỏ hàng bên trong giỏ hàng
+router.put("/removeProduct/:userID",removeProductFromCart)//thêm sản phẩm vào giỏ hàng bên trong giỏ hàng
+router.put("/deleteProduct/:userID",deleteProductFromCart)//thêm sản phẩm vào giỏ hàng bên trong giỏ hàng
+
+// router.get("/address/:userID", getUserAddress);
+// router.get("/order/:userID", getOrderHistory);
 
 
 

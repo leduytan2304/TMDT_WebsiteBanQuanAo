@@ -25,7 +25,7 @@ class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
+            ProductID :[],
             productName :[],
             quantityNum: [],
             unit_price:[],
@@ -41,12 +41,55 @@ class Cart extends Component {
         };
     }
 
+
     // const unitSum = images[0].map((image) => {
     //     const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
     //     sum += temp;
     //     return temp;   })
 
     // hàm set giá trị cho price và unit_sum
+
+    
+    handleIncreaseItemToCart = () => {
+        const lastSegment = window.location.pathname.split("/").pop();
+
+            fetch('http://localhost:8000/api/cart_payment/addProduct/' +'U0025' , { // thay đổi user sau
+                method: 'POST',
+                body: JSON.stringify({
+                  userID: 'U0025', // thay đổi user sau
+                  productID: this.state.ProductID,
+                  size: this.state.selectedSize,
+                  number: this.state.quantityNum,
+                }),
+                headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                },
+              })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
+        }
+    handlecreaseItemToCart = () => {
+            const lastSegment = window.location.pathname.split("/").pop();
+    
+                fetch('http://localhost:8000/api/cart_payment/addProduct/' +'U0025' , { // thay đổi user sau
+                    method: 'POST',
+                    body: JSON.stringify({
+                      userID: 'U0025', // thay đổi user sau
+                      productID: this.state.ProductID,
+                      size: this.state.selectedSize,
+                      number: this.state.quantityNum,
+                    }),
+                    headers: {
+                      'Content-type': 'application/json; charset=UTF-8',
+                    },
+                  })
+                    .then((response) => response.json())
+                    .then((json) => console.log(json));
+            }
+
+
+
+
     componentDidMount() { 
         let sum = 0;
 
@@ -54,7 +97,11 @@ class Cart extends Component {
         .then(res => {
             const images = res.data;
             this.setState({ images });
-        
+            const productID =images[0].map((image) => {
+                const temp =(image.ProductID);
+                    // console.log(sum);
+                    return temp;  
+            });
             const quantity_number =images[0].map((image) => {
                 const temp =parseInt(image.ProductQuantity);
                     // console.log(sum);
@@ -106,6 +153,7 @@ class Cart extends Component {
             this.setState({ImageLink: imageLink})
             this.setState({Size: size})
             this.setState({ColorName: colorName})
+            this.setState({ProductID: productID})
 
             // hàm khởi tạo cho sum ( thành tiền )
             let sumtemp = 0;
@@ -150,7 +198,8 @@ class Cart extends Component {
             
         }
     }
-
+    
+    // productID, productSize,
     //hàm thay đổi số lượng sản phẩm
     handleQuantityChange = (change, index) => {
         this.setState(prevState => {
@@ -159,13 +208,64 @@ class Cart extends Component {
     
             if (change === '-' && currentValue > 0) {
                 currentValue --;
+
+                fetch('http://localhost:8000/api/cart_payment/removeProduct/' +'U0025' , { // thay đổi user sau
+                method: 'PUT',
+                body: JSON.stringify({
+                  userID: 'U0025',
+                  productID: this.state.ProductID[index],
+                  size: this.state.Size[index],
+                  number: this.state.quantityNum[index],
+                }),
+                headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                },
+              })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
             } else if (change === '+' && currentValue < 100) {
                 currentValue ++;
+                
+                fetch('http://localhost:8000/api/cart_payment/addProduct/' +'U0025' , { // thay đổi user sau
+                method: 'POST',
+                body: JSON.stringify({
+                  userID: 'U0025',
+                  productID: this.state.ProductID[index],
+                  size: this.state.Size[index],
+                  number: this.state.quantityNum[index],
+                }),
+                headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                },
+              })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
             }
-    
+            console.log(this.state.quantityNum[index]);
+
+            
+
+
             newQuantityNum[index] = currentValue;
             return { quantityNum: newQuantityNum };
         });
+    }
+    removeItem = (index,componentDidMount) =>{
+        fetch('http://localhost:8000/api/cart_payment/deleteProduct/' +'U0025' , { // thay đổi user sau
+                method: 'PUT',
+                body: JSON.stringify({
+                  userID: 'U0025',
+                  productID: this.state.ProductID[index],
+                  size: this.state.Size[index],
+                  number: this.state.quantityNum[index],
+                }),
+                headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                },
+              })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
+
     }
 
     // {this.state.productName.map((name, index) => (
@@ -243,7 +343,8 @@ class Cart extends Component {
                                                             value={this.state.quantityNum[index]}
                                                             onChange={e => this.handleQuantityChange(e, index)}
                                                         />
-                                                    <input type='button' className='quantity-btn' value='+' onClick={() => this.handleQuantityChange('+',index)} />
+                                                    <input type='button' className='quantity-btn' value='+' onClick={() => this.handleQuantityChange('+',index)} /> 
+                                                    {/* , this.state.ProductID[index], this.state.Size[index], */}
                                                     </>
                                                 
                                             </div>
@@ -252,7 +353,7 @@ class Cart extends Component {
                                 
 
                                 <div class="col close-but" align="right"> 
-                                    <button type="button" class="btn-close" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" aria-label="Close" onClick={() => this.removeItem(index)}></button>
                                     <p>
                                         {VND.format(this.state.unit_price[index])}  
                                     </p>
