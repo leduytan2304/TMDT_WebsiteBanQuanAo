@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NavLink } from 'react-router-dom';
 import * as actions from "../../store/actions";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class HomeHeader extends Component {
 
     constructor(props) {
@@ -26,6 +29,10 @@ class HomeHeader extends Component {
         const { search } = this.state;
         if (search.trim() === "") {
             console.log("Search is empty or contains only spaces");
+            toast.error('Chưa nhập thông tin tìm kiếm', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 4000,
+            })
             return; // Không làm bước tiếp theo nếu search trống
         }
         console.log(search);

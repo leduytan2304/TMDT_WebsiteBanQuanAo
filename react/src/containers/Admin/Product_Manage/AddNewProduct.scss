@@ -16,10 +16,15 @@
 }
 
 .mb-3 {
-    .product-color-size {
+    .product-color, .product-size, .product-description-edit {
         .product-title {
             display: flex;
             flex-wrap: wrap;
+
+            .rc-md-editor {
+                width: 100%;
+                margin-top: 10px;
+            }
 
             .form-label {
                 color: black;
@@ -68,7 +73,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-bottom: 10px;
+        padding-bottom: 20px;
         margin-bottom: 10px;
         border-bottom: 1px solid rgb(158, 153, 153);
 
@@ -93,15 +98,52 @@
                     display: flex;
                     flex-wrap: wrap;
                     height: 100px;
+                    margin-bottom: 10px;
                     border: 1px solid #ddd;
 
                     .preview-img-item {
                         width: 100px;
-                        height: 90%;
+                        height: 80%;
                         background-size: cover;
                         background-repeat: no-repeat;
-                        margin: 5px;
+                        margin: 10px;
                         cursor: pointer;
+                        position: relative;
+
+                        .img-overlay {
+                            position: absolute;
+                            top: -5px;
+                            left: -5px;
+                            width: 110%;
+                            height: 110%;
+                            background-color: rgba(188, 174, 174, 0.5);
+                            display: none;
+                            opacity: 0;
+                            transition: opacity 0.3s;
+                        }
+
+                        .fa-times-circle {
+                            display: none;
+                            position: relative;
+                            color: #e21111;
+                            font-size: 17px;
+                            width: 17px;
+                            background-color: #fff;
+                        }
+
+                        &:hover {
+                            .img-overlay {
+                                display: block;
+                                opacity: 1; /* Hiển thị và làm mờ lớp mờ khi hover */
+                            }
+                            .fa-times-circle {
+                                display: block;
+
+                                &:hover {
+                                    color: #ff0000;
+                                }
+                            }
+                        }
                     }
                 }
 

@@ -32,7 +32,7 @@ class SearchResult extends Component {
 
            <Fragment>
             <HomeHeader />
-                <div className='section'>
+                <div className='section-homepage'>
                     <div className='section-container'>
                         <div className='section-content'>
                             <div className='section-header header-position search-header'>

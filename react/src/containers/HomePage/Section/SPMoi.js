@@ -49,7 +49,7 @@ class SPMoi extends Component {
     render() {
         return (
             <div>
-                <div className='section'>
+                <div className='section-homepage'>
                     <div className='section-container'>
                         <div className='section-content'>
                             <div className='section-header'>
