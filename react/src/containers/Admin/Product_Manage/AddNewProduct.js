@@ -128,7 +128,7 @@ class AddNewProduct extends Component {
                     </Modal.Header>
                     <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Group className="mb-3">
                             <div className='product-title'>
                                 <Form.Label>Mã sản phẩm:</Form.Label>
                                 <Form.Control
@@ -156,6 +156,20 @@ class AddNewProduct extends Component {
                                             <option value="3">Áo</option>
                                             <option value="3">Quần</option>
                                         </select>
+
+                                        {/* nếu có data thì cái select chắc là như này:
+                                        <Select 
+                                            value = {this.state.selectedOption}
+                                            options = {this.state.listCatalog}
+                                            placeholder = {'--Danh mục--'}
+                                            name = {"selectedOption"}
+                                        /> 
+                                        
+                                        trong state:
+                                        selectedOption: '',
+                                        listCatalog: [],
+                                        
+                                        */}
                                     </span> 
                                 </div>
                             </div>
