@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 
@@ -13,6 +16,23 @@ import { Multiselect } from "multiselect-react-dropdown";
 import '../ModalAdmin.scss';
 import './AddNewProduct.scss';
 
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+
+import 'react-markdown-editor-lite/lib/index.css';
+
+import Select from 'react-select';
+
+const options = [
+  { value: '1', label: 'Sản phẩm mới' },
+  { value: '2', label: 'Siêu Sale' },
+  { value: '3', label: 'Áo' },
+  { value: '4', label: 'Quần' },
+];
+
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+
 
 class AddNewProduct extends Component {
 
@@ -20,34 +40,66 @@ class AddNewProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
-          sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
-          inputList: [],
-          addNewColor: false,
-          selectedColors: [],
-          selectedSize: [],
-          previewImgURL: [],
-          isOpen: false,
-          photoIndex: '',
+            isSaveSuccessful: false,
+            colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
+            sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
+            
+            id_product: '',
+            product_name: '',
+
+
+            selectedCatalog: '',
+
+            inputList: [],
+            addNewColor: false,
+            selectedColors: [],
+
+            selectedSize: [],
+
+            previewImgURL: [],
+            isOpen: false,
+            photoIndex: '',
+
+            contentMarkdown: '',
+            contentHTML: '',
+
+            discount: '',
+
+            price: '',
         };
     }
 
+    handleChangeIDProduct = (event) => {
+        this.setState({
+            id_product: event.target.value,
+        })
+    }
+
+    handleChangeProductName = (event) => {
+        this.setState({
+            product_name: event.target.value,
+        })
+    }
+
+    // Chọn màu
     handleColorSelect = (selectedList, selectedItem) => {
         this.setState({
-          selectedColors: selectedList,
+            selectedColors: selectedList,
+        }, () => {
+            console.log("Selected Colors:", this.state.selectedColors);
         });
-    
-        console.log("Selected Colors:", selectedList);
     };
 
+    // Chọn size
     handleSizeSelect = (selectedList, selectedItem) => {
         this.setState({
-          selectedSize: selectedList,
+            selectedSize: selectedList,
+        }, () => {
+            console.log("Selected Size:", this.state.selectedSize);
         });
-    
-        console.log("Selected Size:", selectedList);
     };
 
+    // thay đổi gì trong ô thêm màu thì in ra console
     handleInputChange = (e, index) => {
         const { name, value } = e.target;
         const { inputList } = this.state;
@@ -56,9 +108,10 @@ class AddNewProduct extends Component {
         this.setState({
           inputList: list,
         });
-        console.log("inputList", inputList)
+        // console.log("inputList", inputList[0].color_product)
     };
 
+    // xóa 1 ô thêm màu
     handleRemoveClick = (index) => {
         const { inputList } = this.state;
         const list = [...inputList];
@@ -76,6 +129,7 @@ class AddNewProduct extends Component {
         console.log(this.state.inputList.length)
     };
 
+    // thêm 1 input để thêm màu
     handleAddClick = () => {    
         const { inputList } = this.state;
         this.setState({
@@ -86,6 +140,7 @@ class AddNewProduct extends Component {
         });
     };
 
+    // bắt sự kiện thay đổi ảnh
     handleOnChangeIMG = (event) => {
         let data = event.target.files;
         // let file = data[0];
@@ -95,22 +150,87 @@ class AddNewProduct extends Component {
         this.setState(prevState => ({
             previewImgURL: prevState.previewImgURL.concat(objectUrls),
         }));
-
-        // if (files) {
-        //     // let objectUrl = URL.createObjectURL(file);
-        //     let objectUrls = files.map(file => URL.createObjectURL(file));
-        //     this.setState({
-        //         previewImgURL: objectUrls
-        //     })
-        // }
     }
 
+    // dùng để lưu vị trí ảnh muốn phóng to. Ctrl F tìm kiếm Lightbox để xem thêm
     openPreviewIMG = (index) => {
         this.setState({
             isOpen: true,
             photoIndex: index,
         })
     }
+
+    // xóa ảnh đã chọn. Di chuột vào ảnh sẽ hiện ra icon, nhấn xóa
+    deletePreviewIMG = (index, e) => {
+        e.stopPropagation();
+        const updatedPreviewImgURL = [...this.state.previewImgURL];
+        updatedPreviewImgURL.splice(index, 1);
+
+        this.setState({
+            isOpen: false,
+            photoIndex: '',
+            previewImgURL: updatedPreviewImgURL, 
+        });
+
+        alert("Xóa");
+    }
+
+    // in ra console những thứ trong markdown
+    handleEditorChange = ({ html, text }) => {
+        this.setState({
+            contentMarkdown: text,
+            contentHTML: html,
+        })
+    }
+
+    handleSave = () => {
+        const { inputList, selectedColors,id_product,product_name,selectedCatalog,
+            previewImgURL,selectedSize,discount,price} = this.state;
+        const colorsToAdd = inputList.map(item => item.color_product);
+        const allColors = selectedColors.concat(colorsToAdd);
+
+        if (!id_product || !product_name || !selectedCatalog || !previewImgURL || !selectedColors
+            || !selectedSize || !discount || !price) {
+                toast.error('Chưa nhập đủ thông tin', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 4000,
+                })
+        }
+        else {
+            this.setState({
+                selectedColors: allColors,
+                isSaveSuccessful: true,
+            }, () => {
+                console.log("ID:", this.state.id_product,
+                            "Tên:", this.state.product_name,
+                            "Danh mục:", this.state.selectedCatalog.label,
+                            "Mardown:", this.state.contentMarkdown,
+                            "HTML:", this.state.contentHTML,
+                            "Ảnh:", this.state.previewImgURL,
+                            "Màu:", this.state.selectedColors,
+                            "Size:", this.state.selectedSize,
+                            "Giảm giá:", this.state.discount,
+                            "Giá bán:", this.state.price);
+            });
+        }
+    }
+
+    handleChange = (selectedCatalog) => {
+        this.setState({ selectedCatalog });
+    }
+
+    handleChangeDiscount = (event) => {
+        this.setState({
+            discount: event.target.value,
+        })
+    }
+
+    handleChangePrice = (event) => {
+        this.setState({
+            price: event.target.value,
+        })
+    }
+
 
 
     render() {
@@ -122,7 +242,7 @@ class AddNewProduct extends Component {
                     Launch demo modal
                 </Button> */}
 
-                <Modal className='modal-window' show={show} size='xl' onHide={handleClose}>
+                <Modal className='modal-window' show={show} size='lg' onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Thêm mới sản phẩm</Modal.Title>
                     </Modal.Header>
@@ -134,6 +254,7 @@ class AddNewProduct extends Component {
                                 <Form.Control
                                     type="text"
                                     placeholder="Mã sản phẩm"
+                                    onChange={(event) => this.handleChangeIDProduct(event)}
                                     autoFocus
                                 />
                             </div>
@@ -142,35 +263,31 @@ class AddNewProduct extends Component {
                                 <Form.Control
                                     type="text"
                                     placeholder="Tên sản phẩm"
+                                    onChange={(event) => this.handleChangeProductName(event)}
                                     autoFocus
+
                                 />
                             </div>
                             <div className='product-title'>
                                 <Form.Label>Danh mục:</Form.Label>
                                 <div className='select-input'>
-                                    <span className='dropdown'>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>--Danh mục--</option>
-                                            <option value="1">Sản phẩm mới</option>
-                                            <option value="2">Siêu Sale</option>
-                                            <option value="3">Áo</option>
-                                            <option value="3">Quần</option>
-                                        </select>
-
-                                        {/* nếu có data thì cái select chắc là như này:
-                                        <Select 
-                                            value = {this.state.selectedOption}
-                                            options = {this.state.listCatalog}
-                                            placeholder = {'--Danh mục--'}
-                                            name = {"selectedOption"}
-                                        /> 
-                                        
-                                        trong state:
-                                        selectedOption: '',
-                                        listCatalog: [],
-                                        
-                                        */}
-                                    </span> 
+                                    <Select 
+                                        value = {this.state.selectedCatalog}
+                                        onChange={this.handleChange}
+                                        // options = {this.state.listCatalog}
+                                        options={options}
+                                        placeholder = {'--Danh mục--'}
+                                        name = {"selectedCatalog"}
+                                        // className="form-select"
+                                    /> 
+                                </div>
+                            </div>
+                            <div className='product-description-edit'>
+                                <Form.Label>Mô tả sản phẩm:</Form.Label>
+                                <div className='product-title'>
+                                    <MdEditor style={{ height: '500px' }} 
+                                              renderHTML={text => mdParser.render(text)} 
+                                              onChange={({ html, text }) => this.handleEditorChange({ html, text })} />
                                 </div>
                             </div>
                             <div className='product-title'>
@@ -185,7 +302,14 @@ class AddNewProduct extends Component {
                                                     className='preview-img-item'
                                                     style={{ backgroundImage: `url(${url})` }}
                                                     onClick={() => this.openPreviewIMG(index)}
-                                                ></div>
+                                                >
+                                                    <div className="img-overlay">
+                                                        <i class="far fa-times-circle" 
+                                                            onChange={(event) => this.handleOnChangeIMG(event)}
+                                                            onClick={(e) => this.deletePreviewIMG(index,e)}>
+                                                        </i>
+                                                    </div>
+                                                </div>
                                             ))}
                                         </div>
                                         <input id='add-img' 
@@ -199,7 +323,7 @@ class AddNewProduct extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className='product-color-size'>
+                            <div className='product-color'>
                                 <Form.Label>Màu sắc:</Form.Label>
                                 <div className='product-title'>
                                     <div className='select-color-product'>
@@ -210,9 +334,9 @@ class AddNewProduct extends Component {
                                                 placeholder='Chọn màu'
                                                 showArrow
                                                 options={this.state.colorArray}
+                                                selectedValues={this.state.selectedColors}
                                                 onSelect={this.handleColorSelect}
                                                 onRemove={this.handleColorSelect}
-                                                selectedValues={this.state.selectedColors}
                                                 isObject={false}
                                             />
                                         </div>
@@ -243,7 +367,7 @@ class AddNewProduct extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className='product-color-size'>
+                            <div className='product-size'>
                                 <Form.Label>Size:</Form.Label>
                                 <div className='product-title'>
                                     <div className='select-color-product'>
@@ -268,6 +392,7 @@ class AddNewProduct extends Component {
                                 <Form.Control
                                     type="text"
                                     placeholder="% Giảm giá"
+                                    onChange={(event) => this.handleChangeDiscount(event)}
                                     autoFocus
                                 />
                             </div>
@@ -276,6 +401,7 @@ class AddNewProduct extends Component {
                                 <Form.Control
                                     type="text"
                                     placeholder="Giá bán (VND)"
+                                    onChange={(event) => this.handleChangePrice(event)}
                                     autoFocus
                                 />
                             </div>
@@ -286,7 +412,12 @@ class AddNewProduct extends Component {
                     <Button variant="secondary" onClick={handleClose}>
                         Thoát
                     </Button>
-                    <Button variant="primary" onClick={handleConfirm}>
+                    <Button variant="primary" onClick={async () => {
+                        await this.handleSave()
+                        if (this.state.isSaveSuccessful){
+                            handleConfirm();
+                        }
+                    }}>
                         Lưu
                     </Button>
                     </Modal.Footer>
