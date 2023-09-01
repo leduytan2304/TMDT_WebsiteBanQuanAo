@@ -7,12 +7,10 @@ import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-import Discount from './Discount/Discount'
 import axios from 'axios';
 import './Cart.scss';
-
 import sp from '../../../assets/Ao/ao-2.png';
-import discount from '../../../assets/Users/discount.png'
+
 
 // hàm chuyển thành giá trị tiền tệ
 const VND = new Intl.NumberFormat('vi-VN', {
@@ -36,7 +34,7 @@ class Cart extends Component {
             images:[],
             ImageLink:[],
             Size:[],
-            ColorName:[],
+            ColorName:[]
             
         };
     }
@@ -176,8 +174,7 @@ class Cart extends Component {
         })
         .catch(error => console.log(error));
   };
-
-    // mở đóng cửa sổ voucher
+       
     handleClose = () => {
         this.setState({ show: false });
     };
@@ -185,6 +182,7 @@ class Cart extends Component {
     handleShow = () => {
         this.setState({ show: true });
     };  
+    
 
     //hàm cập nhật khi có thay đổi
     componentDidUpdate(prevProps, prevState) {
@@ -421,37 +419,52 @@ class Cart extends Component {
                                 </div>
                                 
                                 <div align="center">
-                                    
-                                    <div className="discount row" onClick={this.handleShow}>
-                                        <div class="col-7" id="dc1" align="left">
-                                            Giảm giá:
-                                        </div>
-                                        <div class="col" align="right" id="dc1">
-                                            <b>- {VND.format(this.state.discount)}</b>
-                                        </div>
-                                        
-                                        <div class="row discount-use">
-                                            <div class="col-7" align="left">
-                                                - Khách hàng Đồng
+                                    <Button className="discount" variant="primary" onClick={this.handleShow}>
+                                        <div class="row">
+                                            <div class="col-7" id="dc1" align="left">
+                                                Giảm giá:
                                             </div>
-                                            <div class="col" align="right">
-                                                - {VND.format(12345)}
+                                            <div class="col" align="right" id="dc1">
+                                                <b>- {VND.format(this.state.discount)}</b>
                                             </div>
                                         </div>
-                                    </div>
-
+                                    </Button>
                                     
                                     <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
                                         <Modal.Header  style={{margin: '10px'}}> 
                                             <Modal.Title>
-                                                <b>Chọn voucher</b>
+                                                Chọn voucher
                                             </Modal.Title>
                                         </Modal.Header>
 
                                         <Modal.Body>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" placeholder="Username" />
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="btn voucher-btn">ÁP DỤNG</button>
+                                            </div>
+                                        </div>
 
-                                            <Discount />
+                                        <hr
+                                            style={{
+                                            color: '#00000020',
+                                            width: '450px',
+                                            height: '1.5px',
+                                            margin: '0 auto',
+                                            opacity: '1',
+                                            marginTop: '20px',
+                                            marginBottom: '20px'
+                                            }}
+                                        />
 
+                                        <div class="row">
+                                            <div class="col-2">
+
+                                            </div>
+                                            
+                                        </div>
                                         </Modal.Body>
 
                                         <Modal.Footer>

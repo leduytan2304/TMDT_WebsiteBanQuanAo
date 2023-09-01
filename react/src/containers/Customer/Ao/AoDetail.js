@@ -124,8 +124,6 @@ class AoDetail extends Component {
                                 </div>
                             </div>
 
-                            
-
                         </Slider>
                     </div>
                     <div className='col-md-6 product-detail-desc'>
