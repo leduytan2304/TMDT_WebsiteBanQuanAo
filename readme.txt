@@ -1,5 +1,7 @@
 - Form thêm sản phẩm mới: (tạm thời xong)
 
+- Sửa class section trong mấy cái page như áo, quần, sản phẩm mới,...
+
 - Để làm chức năng thêm sản phẩm mới, có thể xem video 65 66 67 của ông Hỏi Dân IT
 
 - Cài thêm thư viện mới:
