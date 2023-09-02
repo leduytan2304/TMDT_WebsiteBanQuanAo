@@ -1,0 +1,130 @@
+@@ -1,129 +0,0 @@
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(137, 137, 137, 0.403); 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(137, 137, 137, 0.821); 
+}
+
+.voucher-window{
+    h3{
+        font-size: 18px;
+        margin-top: 15px;
+    }
+
+    .voucher-list{
+        overflow: auto;
+        height: 275px;
+        
+    }
+    .voucher{
+        box-shadow: 2px 2px 5px #b9b9b9;
+        margin: 10px;
+        display: flex;
+        align-items: center; 
+        .col-2{
+            width: 20%;
+        }
+        h4{
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0;
+            margin-bottom: 2px;
+        }
+        p{
+            margin: 0;
+            font-size: 10px;
+        }
+        img{
+            margin: 5px;
+            width: 100%;
+            border-radius: 3px;
+        }
+    }
+
+    .point{
+        h3{
+            width: auto;
+            padding: 0px 5px;
+            margin: 0;
+            margin-bottom: 5px;
+        }
+        .colored{
+            width: auto;
+            padding: 0px 5px;
+            p{
+                margin: 0;
+                background-color: #e6b026b0;
+                width: 50px;   
+                position: relative;
+                text-align: center;
+                color: rgb(255, 123, 0);
+            }
+
+        }
+        i{
+            width: auto;
+            padding: 0px 5px;
+            margin-top: 3px;
+            cursor: pointer;
+        }
+    }
+    
+    @keyframes fadeIn{
+        0% {opacity: 0}
+        100% {opacity: 1;}
+    }
+
+    .fade-in{
+        animation: fadeIn 0.2s;
+        opacity: 1;
+    }
+
+    @keyframes fadeOut{
+        0% {opacity: 1}
+        100% {opacity: 0;}
+    }
+
+    .fade-out{
+        animation: fadeOut 0.2s;
+        opacity: 0;
+    }
+
+    .hide{
+        opacity: 0;
+    }
+
+    .detail-box {
+        margin-top: 3px;
+        width: 280px;
+        height: auto;
+        left: 180px;
+        z-index: 1;
+        display: flex;
+        position: absolute;
+        border: solid 1.5px #e3e3e3;
+        background-color: #fff;
+    }
+
+    .cash{
+        p{
+            margin: 0;
+            margin-left: 5px;
+            margin-top: 10px;
+            width: auto;
+            display: inline-block;
+        }
+        #cash-number{
+            color: #5FE530;
+        }
+    }
+}
