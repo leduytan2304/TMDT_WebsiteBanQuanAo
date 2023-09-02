@@ -1,0 +1,53 @@
+.admin-product-img, .slider-customize {
+    position: relative;
+    cursor: pointer;
+
+    .img-overlay {
+        position: absolute;
+        top: -6px;
+        left: -5px;
+        width: 105%;
+        height: 105%;
+        background-color: rgba(188, 174, 174, 0.5);
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 100;
+    }
+
+    .fa-times-circle {
+        display: none;
+        position: relative;
+        color: #e21111;
+        font-size: 17px;
+        width: 17px;
+        background-color: #fff;
+    }
+
+    &:hover {
+        .img-overlay {
+            display: block;
+            opacity: 1; /* Hiển thị và làm mờ lớp mờ khi hover */
+        }
+        .fa-times-circle {
+            display: block;
+
+            &:hover {
+                color: #ff0000;
+            }
+        }
+    }
+}
+
+.slider-customize {
+    .img-overlay {
+        position: absolute;
+        top: -1px !important;
+        height: 101% !important;
+    }
+    &:hover {
+        .fa-times-circle {
+            display: inline-block !important;
+        }
+    }
+}

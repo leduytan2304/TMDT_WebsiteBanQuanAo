@@ -43,7 +43,7 @@ class AddNewProduct extends Component {
             isSaveSuccessful: false,
             colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
             sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
-            
+
             id_product: '',
             product_name: '',
 
@@ -110,7 +110,6 @@ class AddNewProduct extends Component {
         this.setState({
           inputList: list,
         });
-        // console.log("inputList", inputList[0].color_product)
     };
 
     // xóa 1 ô thêm màu
@@ -192,8 +191,8 @@ class AddNewProduct extends Component {
         const colorsToAdd = inputList.map(item => item.color_product);
         const allColors = selectedColors.concat(colorsToAdd);
 
-        if (!id_product || !product_name || !selectedCatalog || !previewImgURL || !selectedColors
-            || !selectedSize || !discount || !price) {
+        if (!id_product || !product_name || !selectedCatalog || previewImgURL.length === 0 || selectedColors.length === 0
+            || selectedSize.length === 0 || !discount || !price) {
                 toast.error('Chưa nhập đủ thông tin', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 4000,
@@ -219,7 +218,7 @@ class AddNewProduct extends Component {
     }
 
     // bắt sự kiện chọn danh mục
-    handleChangeCatalog = (selectedCatalog) => {
+    handleChangeCatalog  = (selectedCatalog) => {
         this.setState({ selectedCatalog });
     }
 
@@ -236,7 +235,6 @@ class AddNewProduct extends Component {
             price: event.target.value,
         })
     }
-
 
 
     render() {
@@ -271,7 +269,6 @@ class AddNewProduct extends Component {
                                     placeholder="Tên sản phẩm"
                                     onChange={(event) => this.handleChangeProductName(event)}
                                     autoFocus
-
                                 />
                             </div>
                             <div className='product-title'>

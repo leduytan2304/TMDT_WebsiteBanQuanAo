@@ -36,7 +36,7 @@ class QuanPage extends Component {
         return (
             <div>
                 <HomeHeader />
-                <div className='section sieusale-frame'>
+                <div className='section-homepage sieusale-frame'>
                     <div className='section-container'>
                         <div className='section-content'>
                             <div className='section-header header-position'>

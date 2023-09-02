@@ -7,12 +7,10 @@ import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-import Discount from './Discount/Discount'
 import axios from 'axios';
 import './Cart.scss';
-
 import sp from '../../../assets/Ao/ao-2.png';
-import discount from '../../../assets/Users/discount.png'
+
 
 // hàm chuyển thành giá trị tiền tệ
 const VND = new Intl.NumberFormat('vi-VN', {
@@ -53,11 +51,13 @@ class Cart extends Component {
     
     handleIncreaseItemToCart = () => {
         const lastSegment = window.location.pathname.split("/").pop();
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
-            fetch('http://localhost:8000/api/cart_payment/addProduct/' +'U0025' , { // thay đổi user sau
+        console.log('UserID: ',UserID);
+            fetch(`http://localhost:8000/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
                 method: 'POST',
                 body: JSON.stringify({
-                  userID: 'U0025', // thay đổi user sau
+                  userID: UserID, // thay đổi user sau
                   productID: this.state.ProductID,
                   size: this.state.selectedSize,
                   number: this.state.quantityNum,
@@ -72,11 +72,13 @@ class Cart extends Component {
         
     handlecreaseItemToCart = () => {
             const lastSegment = window.location.pathname.split("/").pop();
-    
-                fetch('http://localhost:8000/api/cart_payment/addProduct/' +'U0025' , { // thay đổi user sau
+            const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+
+            console.log('UserID: ',UserID);
+                fetch(`http://localhost:8000/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
                     method: 'POST',
                     body: JSON.stringify({
-                      userID: 'U0025', // thay đổi user sau
+                      userID: UserID, // thay đổi user sau
                       productID: this.state.ProductID,
                       size: this.state.selectedSize,
                       number: this.state.quantityNum,
@@ -94,8 +96,10 @@ class Cart extends Component {
 
     componentDidMount() { 
         let sum = 0;
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
-        axios.get(`http://localhost:8000/api/cart/U0025`)
+        console.log('UserID: ',UserID);
+        axios.get(`http://localhost:8000/api/cart/${UserID}`)
         .then(res => {
             const images = res.data;
             this.setState({ images });
@@ -172,8 +176,7 @@ class Cart extends Component {
         })
         .catch(error => console.log(error));
   };
-
-    // mở đóng cửa sổ voucher
+       
     handleClose = () => {
         this.setState({ show: false });
     };
@@ -181,6 +184,7 @@ class Cart extends Component {
     handleShow = () => {
         this.setState({ show: true });
     };  
+    
 
     //hàm cập nhật khi có thay đổi
     componentDidUpdate(prevProps, prevState) {
@@ -207,14 +211,16 @@ class Cart extends Component {
         this.setState(prevState => {
             const newQuantityNum = [...prevState.quantityNum];
             let currentValue = newQuantityNum[index];
-    
+            const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+
+            console.log('UserID: ',UserID);
             if (change === '-' && currentValue > 0) {
                 currentValue --;
 
-                fetch('http://localhost:8000/api/cart_payment/removeProduct/' +'U0025' , { // thay đổi user sau
+                fetch(`http://localhost:8000/api/cart_payment/removeProduct/${UserID}` , { // thay đổi user sau
                 method: 'PUT',
                 body: JSON.stringify({
-                  userID: 'U0025',
+                  userID: UserID,
                   productID: this.state.ProductID[index],
                   size: this.state.Size[index],
                   number: this.state.quantityNum[index],
@@ -228,10 +234,10 @@ class Cart extends Component {
             } else if (change === '+' && currentValue < 100) {
                 currentValue ++;
                 
-                fetch('http://localhost:8000/api/cart_payment/addProduct/' +'U0025' , { // thay đổi user sau
+                fetch(`http://localhost:8000/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
                 method: 'POST',
                 body: JSON.stringify({
-                  userID: 'U0025',
+                    userID: UserID,
                   productID: this.state.ProductID[index],
                   size: this.state.Size[index],
                   number: this.state.quantityNum[index],
@@ -253,10 +259,12 @@ class Cart extends Component {
         });
     }
     removeItem = (index,componentDidMount) =>{
-        fetch('http://localhost:8000/api/cart_payment/deleteProduct/' +'U0025' , { // thay đổi user sau
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        console.log('UserID: ',UserID);
+        fetch(`http://localhost:8000/api/cart_payment/deleteProduct/${UserID}`  , { // thay đổi user sau
                 method: 'PUT',
                 body: JSON.stringify({
-                  userID: 'U0025',
+                  userID: UserID,
                   productID: this.state.ProductID[index],
                   size: this.state.Size[index],
                   number: this.state.quantityNum[index],
@@ -413,37 +421,52 @@ class Cart extends Component {
                                 </div>
                                 
                                 <div align="center">
-                                    
-                                    <div className="discount row" onClick={this.handleShow}>
-                                        <div class="col-7" id="dc1" align="left">
-                                            Giảm giá:
-                                        </div>
-                                        <div class="col" align="right" id="dc1">
-                                            <b>- {VND.format(this.state.discount)}</b>
-                                        </div>
-                                        
-                                        <div class="row discount-use">
-                                            <div class="col-7" align="left">
-                                                - Khách hàng Đồng
+                                    <Button className="discount" variant="primary" onClick={this.handleShow}>
+                                        <div class="row">
+                                            <div class="col-7" id="dc1" align="left">
+                                                Giảm giá:
                                             </div>
-                                            <div class="col" align="right">
-                                                - {VND.format(12345)}
+                                            <div class="col" align="right" id="dc1">
+                                                <b>- {VND.format(this.state.discount)}</b>
                                             </div>
                                         </div>
-                                    </div>
-
+                                    </Button>
                                     
                                     <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
                                         <Modal.Header  style={{margin: '10px'}}> 
                                             <Modal.Title>
-                                                <b>Chọn voucher</b>
+                                                Chọn voucher
                                             </Modal.Title>
                                         </Modal.Header>
 
                                         <Modal.Body>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" placeholder="Username" />
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="btn voucher-btn">ÁP DỤNG</button>
+                                            </div>
+                                        </div>
 
-                                            <Discount />
+                                        <hr
+                                            style={{
+                                            color: '#00000020',
+                                            width: '450px',
+                                            height: '1.5px',
+                                            margin: '0 auto',
+                                            opacity: '1',
+                                            marginTop: '20px',
+                                            marginBottom: '20px'
+                                            }}
+                                        />
 
+                                        <div class="row">
+                                            <div class="col-2">
+
+                                            </div>
+                                            
+                                        </div>
                                         </Modal.Body>
 
                                         <Modal.Footer>

@@ -1,7 +1,8 @@
 import { db } from "../connect.js";
 
 export const getTotalPriceShopingCart = (req ,res)=>{
-    const q = "SELECT ShoppingCartID FROM ShoppingCart where UserID = 'U0025';"; // thay đổi user sau
+     const userID = req.params.userID;
+    const q = 'SELECT ShoppingCartID FROM ShoppingCart SC where SC.UserID = "' + userID + '"'; // thay đổi user sau
     db.query(q, (err, data) => {
       if (err) 
       return res.status(500).json(err);
@@ -105,8 +106,6 @@ export const deleteProductFromCart = (req ,res)=>{
   const values = [
     req.body
   ]
-
-
   
   const q = 'SELECT ProductVariantID FROM ProductVariant where ProductID = "' + req.body.productID + '" and ProductSizeID = "' + req.body.size  + '" '; // sửa lại từng user riêng
   console.log(req.body);
@@ -137,6 +136,96 @@ export const deleteProductFromCart = (req ,res)=>{
 }
 
 
+export const completedPayment = (req ,res)=>{
+  // tìm productVariant
+
+  const values = [
+    req.body
+  ]
+
+  const q = 'SELECT ProductVariantID FROM ProductVariant where ProductID = "' + req.body.productID + '" and ProductSizeID = "' + req.body.size  + '" '; // sửa lại từng user riêng
+  console.log(req.body);
+  // const secondQuery = "select uf_CalShoppingcartTotalCost('" + q + "')";
+  db.query(q, (err, result1) => {
+    if (err) 
+
+    return res.status(500).json(err);
+    
+    else {
+
+      console.log(result1);
+      const addProduct = 'call sp_EditShoppingCart("' + result1[0].ProductVariantID +'","0","' + req.body.userID +'")';
+      console.log('query2: ', addProduct);
+      db.query(addProduct, (err, result2) => {
+      if (err) return res.status(500).json(err);
+      console.log(result2);
+      return res.status(200).json(result2);
+      
+    });
+    }
+    /// xóa món đồ khỏi giỏ hàng
+ 
+    
+    
+    
+  });
+}
+
+
+export const createOrder = (req ,res)=>{
+  // tạo đơn đặt hàng
+  const values = [
+    req.body
+  ]
+  //console.log(req.body);
+  const q = 'CALL sp_CreateOrder("' +req.body.userID +'","' + req.body.delivery_option +'","' + req.body.user_address +'","' +req.body.receiver_name +'","' +req.body.receiver_number +'","' + req.body.payment_method_name +'","' + req.body.customer_payment_details + '",NOW(),"'+req.body.payment_status+'",NULL,0); '; // sửa lại từng user riêng
+  console.log('Query: ',q);
+  // const secondQuery = "select uf_CalShoppingcartTotalCost('" + q + "')";
+  db.query(q, (err, result1) => {
+    if (err) 
+
+    return res.status(500).json(err);
+    
+    else {
+      
+    //   console.log(result1);
+    //   const addProduct = 'call sp_EditShoppingCart("' + result1[0].ProductVariantID +'","0","' + req.body.userID +'")';
+    //   console.log('query2: ', addProduct);
+    //   db.query(addProduct, (err, result2) => {
+    //   if (err) return res.status(500).json(err);
+      console.log(result1);
+      return res.status(200).json(result1);
+      
+    // });
+    }
+    /// xóa món đồ khỏi giỏ hàng
+ 
+    
+    
+    
+  });
+}
+
+
+
+export const getUserAddress = (req ,res)=>{
+  // tìm productVariant
+  const userID = req.params.userID;
+  const q = 'SELECT UserID,ReceiverName, ReceiverPhoneNumber, UserAddress FROM CustomerAddress CA where CA.UserID = "' + userID +'" and CA.DefaultAddress = 1;'
+  db.query(q, (err, data) => {
+    if (err) 
+    return res.status(500).json(err);
+    
+    else {
+    
+          console.log(data);
+          return res.status(200).json(data);
+    }
+  });
+    //lấy địa chỉ của khách hàng
+ 
+    
+}
 
 
 export const testing = (req ,res)=>{

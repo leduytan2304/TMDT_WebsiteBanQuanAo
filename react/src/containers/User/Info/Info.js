@@ -20,7 +20,15 @@ class Info extends Component {
         this.state = {
             persons: [],
             orders: [],
-            personsEdit: [],
+            personsEdit: [{
+                Firstname: '',
+                Lastname: '',
+                Dob: '',
+                Tel: '',
+                Email: '',
+                Gender: ''
+            }],
+
             show: false,
         }
     }
@@ -117,48 +125,27 @@ class Info extends Component {
         }
     }
 
-    componentDidMount() {
-        const dataFetchedFlag = JSON.parse(localStorage.getItem('persist:user')).isLoggedIn;
     
-        if (dataFetchedFlag === 'true') {
-          this.loadInfo();
-          this.loadOrder();
-        } else {
-          setTimeout(() => {
-            this.loadInfo();
-            this.loadOrder();
-          }, 500);
-        }
-      }
-
-    
-    async loadInfo() {
+    componentDidMount(){
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        await axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
+        axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data[0];
         const personsEdit = res.data[0];
-        this.setState({ persons, personsEdit});
+        console.log(persons)
+        this.setState({ persons, personsEdit });
         })
         .catch(error => console.log(error));
-    }
 
-    async loadOrder() {
-        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        await axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
+        axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
         .then(res => {
         const orders = res.data;
-        this.setState({ orders, load: true });
+        this.setState({ orders });
         })
         .catch(error => console.log(error));
     };
 
     render() {
-        const { persons } = this.state;
-        if (persons.length === 0) {
-            return <div className="loading">Loading...</div>;
-        }
-
         return (
             <div>
                 <HomeHeader />
@@ -264,7 +251,7 @@ class Info extends Component {
 
                                     <Form.Group className="mb-3">
                                         <Form.Label>Họ</Form.Label>
-                                        <Form.Control type="text" value={this.state.personsEdit.Lastname}
+                                        <Form.Control type="text" value={this.state.personsEdit['Lastname']}
                                         onChange={this.handleOnChangeLastName}
                                         />
                                     </Form.Group>

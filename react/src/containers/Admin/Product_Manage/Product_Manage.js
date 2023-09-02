@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-import Slider from 'react-slick';
-// Import css files:
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 import '../admin.scss';
+import '../Delete_Product.scss';
 import HomeFooter from '../../HomePage/HomeFooter';
 
 import AddNewProduct from './AddNewProduct';
+import DetailProductAdmin from './DetailProductAdmin';
+
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+
+import '../ModalAdmin.scss';
 
 class Product_Manage extends Component {
 
@@ -18,6 +22,17 @@ class Product_Manage extends Component {
         super(props);
         this.state = {
             showAddNewProduct: false,
+            showDetailProduct: false,
+            showDeleteProduct: false,
+            selectedProduct: null,
+            selectedDeleteProduct: null,
+            products: new Array(10).fill(null).map((_, index) => ({
+                id: index,
+                name: 'Product ' + index,
+                price: '190,000₫',
+                discountedPrice: '179,000₫',
+                discount: '-6%',
+            })),
         }
     }
 
@@ -35,14 +50,52 @@ class Product_Manage extends Component {
     }
 
 
+    handleCloseDetailProduct = () => {
+        this.setState({ showDetailProduct: false});
+    }
+
+    handleConfirmDetailProduct = () => {
+        this.setState({ showDetailProduct: false});
+    }
+
+    handleShowDetailProduct = (id) => {
+        this.setState({
+            showDetailProduct: true,
+            selectedProduct: id,
+        })
+    }
+
+
+    handleCloseDeleteProduct = () => {
+        this.setState({ showDeleteProduct: false});
+    }
+
+    handleShowDeleteProduct = (id, e) => {
+        e.stopPropagation();
+        this.setState({
+            showDeleteProduct: true,
+            selectedDeleteProduct: id,
+        });
+    }
+
+    deleteProduct = (id, e) => {
+        e.stopPropagation();
+        console.log("Xóa vị trí: ", id)
+        const updatedProductList = this.state.products.filter((product) => product.id !== id);;
+
+        this.setState({
+            showDeleteProduct: false,
+            showDetailProduct: false,
+            selectedProduct: null,
+            products: updatedProductList, 
+        }, () => {
+            console.log("Danh sách sản phẩm mới: ", this.state.products);
+        });
+    }
+
+
     render() {
 
-        let settings = {
-            dots: false,
-            infinite: false,
-            slidesToShow: 4,
-            slidesToScroll: 1
-        };
 
         return (
             <div>
@@ -54,184 +107,63 @@ class Product_Manage extends Component {
                                 <i className="fas fa-plus-circle" onClick={() => this.handleShowAddNewProduct()}></i>
                             </div>
                             <div className='product-manage-frame'>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
+                                {this.state.products.map((product) => (
+                                    <div className='admin-product' 
+                                         key={product.id}
+                                         onClick={() => this.handleShowDetailProduct(product.id)}>
+                                        <div className='admin-product-img'>
+                                            <div className="img-overlay">
+                                                <i class="far fa-times-circle" 
+                                                   onClick={(e) => this.handleShowDeleteProduct(product.id, e)}>
+                                                </i>
                                             </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
+                                            <div className='bg-image'>
+                                                <div className='product-discount'>
+                                                    <span>{product.discount}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
+                                            <div className='product-detail text-center'>
+                                                <div className='product-name'>{product.name}</div>
+                                                <div className='product-price'>
+                                                    <span>{product.discountedPrice}</span>
+                                                    <del>{product.price}</del>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='admin-product'>
-                                    <div className='admin-product-img'>
-                                        {/* <img src= {sieusaleImg} />  */}
-                                        <div className='bg-image'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
 
                             {this.state.showAddNewProduct && (
                             <AddNewProduct show = {this.state.showAddNewProduct} 
-                                        handleClose = {this.handleCloseAddNewProduct} 
-                                        handleConfirm = {this.handleConfirmAddNewProduct}
-                                        handleShow = {this.handleShowAddNewProduct}/>
+                                            handleClose = {this.handleCloseAddNewProduct} 
+                                            handleConfirm = {this.handleConfirmAddNewProduct}
+                                            handleShow = {this.handleShowAddNewProduct}/>
                             )} 
+                            {this.state.showDetailProduct && (
+                            <DetailProductAdmin show = {this.state.showDetailProduct}   
+                                                name = {this.state.selectedProduct}
+                                                handleClose = {this.handleCloseDetailProduct} 
+                                                handleConfirm = {this.handleConfirmDetailProduct}
+                                                handleShow = {this.handleShowDetailProduct}/>
+                            )}
+                            {this.state.showDeleteProduct && (
+                                <Modal show={this.state.showDeleteProduct} onHide={this.handleCloseDeleteProduct}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Xóa sản phẩm</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>Bạn muốn xóa sản phẩm {this.state.selectedDeleteProduct} ??</Modal.Body>
+                                    <Modal.Footer>
+                                    <Button variant="secondary" onClick={this.handleCloseDeleteProduct}>
+                                        Thoát
+                                    </Button>
+                                    <Button variant="primary" 
+                                            onClick={(e) => this.deleteProduct(this.state.selectedDeleteProduct,e)}>
+                                        Xác nhận
+                                    </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            )}
                         </div>
                     </div>
                     <HomeFooter />
