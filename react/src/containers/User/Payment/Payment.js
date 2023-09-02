@@ -34,18 +34,20 @@ class Payment extends Component {
             Size:[],
             sum: '0',
             discount: '0',
-            show: 'false',
             price: '0',
             totalMoney: [],
+            show: null,
         };
     }
     
     handleClose = () => {
         this.setState({ show: false });
+        console.log(this.state.show);
     };
 
     handleShow = () => {
         this.setState({ show: true });
+        console.log(this.state.show);
     };  
     
     paymentOptionChange = (event) => {

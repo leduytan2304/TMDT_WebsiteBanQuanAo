@@ -35,11 +35,7 @@
         a{
             text-decoration: none;
         }
-        .signout{
-            width: 70%;
-            margin-top: 30px;
-        }
-
+        
         .bill{
             
             border: 1px solid #d3d3d3;
@@ -123,6 +119,9 @@
             margin-left: 5px;
             box-shadow: 1px 1px 1px #e4e3e3;
             &:hover{
+                background-color: #d60000;
+            }
+            &:active{
                 background-color: #d60000;
             }
         }

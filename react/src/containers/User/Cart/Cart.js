@@ -37,6 +37,7 @@ class Cart extends Component {
             ImageLink:[],
             Size:[],
             ColorName:[],
+            show: null,
             
         };
     }
@@ -68,6 +69,7 @@ class Cart extends Component {
                 .then((response) => response.json())
                 .then((json) => console.log(json));
         }
+        
     handlecreaseItemToCart = () => {
             const lastSegment = window.location.pathname.split("/").pop();
     

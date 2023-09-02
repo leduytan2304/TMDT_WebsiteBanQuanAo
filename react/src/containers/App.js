@@ -24,7 +24,6 @@ import UserPage from './User/Info/Info';
 import AddressPage from './User/Address/Address';
 import CartPage from './User/Cart/Cart';
 import PaymentPage from './User/Payment/Payment';
-import ShippingPage from './User/Shipping/Shipping';
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
 import SearchResult from './Customer/Search/SearchResult';
@@ -72,7 +71,6 @@ class App extends Component {
                                     <Route path={path.ADDRESS} component={AddressPage} />
                                     <Route path={path.CART} component={CartPage} />
                                     <Route path={path.PAYMENT} component={PaymentPage} />
-                                    <Route path={path.SHIPPIMG} component={ShippingPage} />
                                     {/* <Route path="/users/:id" component={SieuSalePage} /> */}
                                     {/* <Route path={path.DETAIL_PRODUCT} component={DetailProduct} /> */}
 

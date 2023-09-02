@@ -57,7 +57,7 @@ input[type=number]::-webkit-outer-spin-button {
             text-decoration: none;
         }
         .signout{
-            width: 70%;
+            width: 100px;
             margin-top: 30px;
         }
 
@@ -228,6 +228,9 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: 1px 1px 1px #e4e3e3;
     &:hover{
         background-color: #d60000;
+    }
+    &:active{
+        background-color: #d60000 !important;
     }
 }
 .btn-return{

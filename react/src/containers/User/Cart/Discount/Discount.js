@@ -14,7 +14,7 @@ const VND = new Intl.NumberFormat('vi-VN', {
     currency: 'VND',
   });
 
-class Cart extends Component {
+class Discount extends Component {
    
     constructor(props) {
         super(props);
@@ -189,4 +189,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Discount);
