@@ -6,7 +6,7 @@ import { Button, Modal,Form } from 'react-bootstrap';
 import axios from 'axios';
 import './Discount.scss';
 
-import discount from '../../../../assets/Users/discount.png'
+import discount from '../../../../assets/Users/Discount.png'
 
 // hàm chuyển thành giá trị tiền tệ
 const VND = new Intl.NumberFormat('vi-VN', {

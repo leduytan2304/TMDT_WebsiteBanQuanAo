@@ -7,6 +7,8 @@ import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
+import Discount from '../Cart/Discount/Discount'
+
 import axios from 'axios';
 import './Cart.scss';
 import sp from '../../../assets/Ao/ao-2.png';
@@ -421,52 +423,35 @@ class Cart extends Component {
                                 </div>
                                 
                                 <div align="center">
-                                    <Button className="discount" variant="primary" onClick={this.handleShow}>
-                                        <div class="row">
-                                            <div class="col-7" id="dc1" align="left">
-                                                Giảm giá:
+                                    <div className="discount row" onClick={this.handleShow}>
+                                        <div class="col-7" id="dc1" align="left">
+                                            Giảm giá:
+                                        </div>
+                                        <div class="col" align="right" id="dc1">
+                                            <b>- {VND.format(this.state.discount)}</b>
+                                        </div>
+                                        
+                                        <div class="row discount-use">
+                                            <div class="col-7" align="left">
+                                                - Khách hàng Đồng
                                             </div>
-                                            <div class="col" align="right" id="dc1">
-                                                <b>- {VND.format(this.state.discount)}</b>
+                                            <div class="col" align="right">
+                                                - {VND.format(12345)}
                                             </div>
                                         </div>
-                                    </Button>
-                                    
+                                    </div>
+
                                     <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
                                         <Modal.Header  style={{margin: '10px'}}> 
                                             <Modal.Title>
-                                                Chọn voucher
+                                                <b>Chọn voucher</b>
                                             </Modal.Title>
                                         </Modal.Header>
 
                                         <Modal.Body>
-                                        <div class="row">
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" placeholder="Username" />
-                                            </div>
-                                            <div class="col">
-                                                <button type="submit" class="btn voucher-btn">ÁP DỤNG</button>
-                                            </div>
-                                        </div>
 
-                                        <hr
-                                            style={{
-                                            color: '#00000020',
-                                            width: '450px',
-                                            height: '1.5px',
-                                            margin: '0 auto',
-                                            opacity: '1',
-                                            marginTop: '20px',
-                                            marginBottom: '20px'
-                                            }}
-                                        />
+                                            <Discount />
 
-                                        <div class="row">
-                                            <div class="col-2">
-
-                                            </div>
-                                            
-                                        </div>
                                         </Modal.Body>
 
                                         <Modal.Footer>
