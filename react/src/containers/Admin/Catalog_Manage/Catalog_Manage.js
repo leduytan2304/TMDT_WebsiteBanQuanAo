@@ -164,8 +164,7 @@ class Catalog_Manage extends Component {
     deleteProduct = (id, e) => {
         e.stopPropagation();
         console.log("Xóa vị trí: ", id)
-        const updatedProductList = [...this.state.products];
-        updatedProductList.splice(id, 1);
+        const updatedProductList = this.state.products.filter((product) => product.id !== id);;
 
         this.setState({
             showDeleteProduct: false,

@@ -47,6 +47,7 @@ export const register = (req, res) => {
       "false",
       3,
     ];
+    
 
     console.log(values);
 

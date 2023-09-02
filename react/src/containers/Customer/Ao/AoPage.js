@@ -11,19 +11,70 @@ import axios from 'axios';
 
 
 class AoPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            images: [],
+            data: [],
+            sortType: ''
+        };
+      }
 
-    componentDidMount(){
-        axios.get(`http://localhost:8000/api/image/ao`)
+    fetchData() {
+        axios.get('http://localhost:8000/api/image/ao')
           .then(res => {
             const images = res.data;
-            this.setState({ images });
+            this.setState({ images }, () => {
+              this.sortArray(this.state.sortType);
+            });
           })
           .catch(error => console.log(error));
+      }
+    
+    sortArray(type) {
+        const {images} = this.state;
+
+        const types = {
+            priceAsc: 'ProductPrice',
+            priceDesc: 'ProductPrice',
+            alphabetAsc: 'ProductName',
+            alphabetDesc: 'ProductName',
+        };
+
+        const sortProperty = types[type];
+        const sorted = [...images]
+
+        if (type === 'priceAsc' || type === 'alphabetAsc'){
+            sorted.sort((a, b) => {
+                if (sortProperty === 'ProductName') {
+                    return a[sortProperty].localeCompare(b[sortProperty]);
+                    } else {
+                    return a[sortProperty] - b[sortProperty];
+                    }
+                });
+
+        } else if (type === 'priceDesc' || type === 'alphabetDesc'){
+            sorted.sort((a, b) => {
+                if (sortProperty === 'ProductName') {
+                    return b[sortProperty].localeCompare(a[sortProperty]);
+                    } else {
+                    return b[sortProperty] - a[sortProperty];
+                    }
+                });
+            }
+        this.setState({ data: sorted });
+    }
+    
+    handleSelectChange = (e) => {
+        const selectedValue = e.target.value;
+        this.setState({ sortType: selectedValue }, () => {
+            this.sortArray(selectedValue); 
+        });
     };
 
-    state = {
-        images: []
-      }
+    componentDidMount() {
+        this.fetchData(); 
+    }
 
     handleViewDetailCloth = (ProductID) => {
         // console.log("ID sản phẩm",params.slug);
@@ -33,6 +84,7 @@ class AoPage extends Component {
     };
 
     render() {
+        console.log(this.state.images)
         return (
             <div>
                 <HomeHeader />
@@ -43,12 +95,12 @@ class AoPage extends Component {
                                 <span className='title-section'>Áo</span>
                                 <div className='col-3 browse-tags'>
                                 <span className='dropdown'>
-                                    <select className='sort'>
+                                    <select onChange={this.handleSelectChange} value={this.state.sortType} className='sort'>
                                         <option value="manual">Sản phẩm nổi bật</option>
-                                        <option value="price-ascending" data-filter = "&sortby = (price:product=asc)">Giá: Tăng dần</option>
-                                        <option value="price-descending" data-filter = "&sortby = (price:product=desc)">Giá: Giảm dần</option>
-                                        <option value="title-ascending" data-filter = "&sortby = (title:product=asc)">Tên: A-Z</option>
-                                        <option value="title-descending" data-filter = "sortby = (price:product=desc)">Tên: Z-A</option>
+                                        <option value="priceAsc" >Giá: Tăng dần</option>
+                                        <option value="priceDesc" >Giá: Giảm dần</option>
+                                        <option value="alphabetAsc" >Tên: A-Z</option>
+                                        <option value="alphabetDesc" >Tên: Z-A</option>
                                         <option value="created-descending" data-filter = "sortby = (updated_at:product=asc)">Mới nhất</option>
                                         <option value="created-ascending" data-filter = "sortby = (updated_at:product=desc)">Cũ nhất</option>
                                         <option value="best-selling" data-filter = "sortby = (sold_quantity:product=desc)">Bán chạy nhất</option>
@@ -69,19 +121,19 @@ class AoPage extends Component {
                                         
                                     ))} */}
 
-                                    {this.state.images.map(image => (
-                                        <div className='col-3 product' onClick={() => this.handleViewDetailCloth(image.ProductID)}>
+                                    {this.state.data.map(dataa => (
+                                        <div className='col-3 product' onClick={() => this.handleViewDetailCloth(dataa.ProductID)}>
                                             <a href=''>
                                                 <div className='ao-product img-setting'>
-                                                    <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
+                                                    <img key={dataa.ImageID} src={dataa.ImageLink}  alt={`Image ${dataa.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                                     <div className='product-discount'>
                                                         <span>-6%</span>
                                                     </div>
                                                 </div>
                                                 <div className='product-detail text-center'>
-                                                    <div className='product-name'>{image.ProductName} </div>
+                                                    <div className='product-name'>{dataa.ProductName} </div>
                                                     <div className='product-price'>
-                                                        <span>{image.ProductPrice}</span>
+                                                        <span>{dataa.ProductPrice}</span>
                                                         <del>190,000₫</del>
                                                     </div>
                                                 </div>

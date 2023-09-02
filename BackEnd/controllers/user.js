@@ -1,6 +1,7 @@
 import { db } from "../connect.js";
 
 export const getUserInfo = (req ,res)=>{
+  
     const q = "Call sp_ViewProfile(?)";
 
     db.query(q, req.params.userID, (err, data) => {

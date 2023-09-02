@@ -106,8 +106,6 @@ export const deleteProductFromCart = (req ,res)=>{
   const values = [
     req.body
   ]
-
-
   
   const q = 'SELECT ProductVariantID FROM ProductVariant where ProductID = "' + req.body.productID + '" and ProductSizeID = "' + req.body.size  + '" '; // sửa lại từng user riêng
   console.log(req.body);
