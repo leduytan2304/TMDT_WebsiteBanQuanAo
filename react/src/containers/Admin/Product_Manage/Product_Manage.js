@@ -142,7 +142,7 @@ class Product_Manage extends Component {
                             )} 
                             {this.state.showDetailProduct && (
                             <DetailProductAdmin show = {this.state.showDetailProduct}   
-                                                name = {this.state.selectedProduct}
+                                                id = {this.state.selectedProduct}
                                                 handleClose = {this.handleCloseDetailProduct} 
                                                 handleConfirm = {this.handleConfirmDetailProduct}
                                                 handleShow = {this.handleShowDetailProduct}/>

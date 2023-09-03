@@ -144,7 +144,6 @@ class AddNewProduct extends Component {
     // bắt sự kiện thay đổi ảnh
     handleOnChangeIMG = (event) => {
         let data = event.target.files;
-        // let file = data[0];
         let files = Array.from(data);
 
         let objectUrls = files.map(file => URL.createObjectURL(file));
@@ -173,7 +172,6 @@ class AddNewProduct extends Component {
             previewImgURL: updatedPreviewImgURL, 
         });
 
-        alert("Xóa");
     }
 
     // in ra console những thứ trong markdown
@@ -309,8 +307,8 @@ class AddNewProduct extends Component {
                                                 >
                                                     <div className="img-overlay">
                                                         <i class="far fa-times-circle" 
-                                                            onChange={(event) => this.handleOnChangeIMG(event)}
-                                                            onClick={(e) => this.deletePreviewIMG(index,e)}>
+                                                            onClick={(e) => this.deletePreviewIMG(index,e)}
+                                                            >
                                                         </i>
                                                     </div>
                                                 </div>
