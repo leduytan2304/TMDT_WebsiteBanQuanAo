@@ -186,19 +186,6 @@ class Catalog_Manage extends Component {
             // ... Add more categories
         ];
 
-        // const products = {
-        //     1: [
-        //         { id: 101, name: 'Sản phẩm 1' },
-        //         { id: 102, name: 'Sản phẩm 2' },
-        //         // ... Sản phẩm cho Danh mục 1
-        //     ],
-        //     2: [
-        //         { id: 201, name: 'Sản phẩm 3' },
-        //         { id: 202, name: 'Sản phẩm 4' },
-        //         // ... Sản phẩm cho Danh mục 2
-        //     ],
-        //     // ... Add more products for other categories
-        // };
 
         const { selectedCategoryID } = this.state;
 
@@ -303,7 +290,7 @@ class Catalog_Manage extends Component {
                         )} 
                         {this.state.showDetailProduct && (
                             <DetailProductAdmin show = {this.state.showDetailProduct}   
-                                                name = {this.state.selectedProduct}
+                                                id = {this.state.selectedProduct}
                                                 handleClose = {this.handleCloseDetailProduct} 
                                                 handleConfirm = {this.handleConfirmDetailProduct}
                                                 handleShow = {this.handleShowDetailProduct}/>
