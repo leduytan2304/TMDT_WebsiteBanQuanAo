@@ -103,21 +103,21 @@ class Payment extends Component {
     fetchUserID = () => {
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
             // gửi thông tin khách hàng đi
+            console.log("user: ",UserID );
             fetch(`http://localhost:8888/order/create_payment_url` , { // thay đổi user sau
             method: 'POST',
             body: JSON.stringify({
               userID: UserID 
             }),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
+            headers:{'Content-Type': 'application/json'}
           })
             .then((response) => {
               console.log('post success')
               response.json()
           })
-            .then((json) => console.log(json));
-            
+            .then((json) => console.log(json))
+           .catch((TypeError)=>console.log(TypeError))
+
         };
         componentDidMount() { 
             let sum = 0;
@@ -129,9 +129,6 @@ class Payment extends Component {
               this.setState({address : data});
               console.log('Name: ',this.state.address[0] );
             })
-            
-           
-    
             axios.get(`http://localhost:8000/api/cart/${UserID}`)
             .then(res => {
                 const images = res.data;
@@ -204,8 +201,10 @@ class Payment extends Component {
                 this.setState({price: this.state.sum-discount});
                 const button_payment = document.getElementById('Payment');
                 button_payment.addEventListener('click', event => {
-                 //this.handleCreateOrder();           
-                    this.fetchUserID();
+                 //this.handleCreateOrder();   
+                 console.log('ok');
+                 this.fetchUserID();
+                 window.open("http://localhost:8888/order/create_payment_url");
                 });
             })
             .catch(error => console.log(error));
@@ -264,16 +263,16 @@ class Payment extends Component {
                                         TRỞ VỀ
                                     </button>
                                 </NavLink>
-                            <a href="http://localhost:8888/order/create_payment_url">
+                            {/* <a href="http://localhost:8888/order/create_payment_url">
                                 <button type="button" id="Payment" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrder()}  > 
                                         THANH TOÁN
                                     </button>
                                    
-                                    </a>
-{/*                 
+                                    </a> */}
+                
                                 <button type="button" id="Payment" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrder()}  > 
                                         THANH TOÁN
-                                    </button> */}
+                                    </button>
                                    
  {/* // hàm không đc gọi ở đây */}
                             </div>

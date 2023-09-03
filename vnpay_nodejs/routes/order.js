@@ -12,11 +12,15 @@ const { response } = require('../app');
 router.get('/', function(req, res, next){
     res.render('orderlist', { title: 'Danh sách đơn hàng' })
 });
+
+
+
 router.post('/create_payment_url', function (req, res, next) {
-    console.log('req.body, post',req.body);
-     
-     process.env.TZ = 'Asia/Ho_Chi_Minh';
-     
+    global.user = req.body.userID;
+
+    console.log('req.body, post',req.body.userID);
+   
+    process.env.TZ = 'Asia/Ho_Chi_Minh';
      let date = new Date();
      let createDate = moment(date).format('YYYYMMDDHHmmss');
      
@@ -69,11 +73,16 @@ router.post('/create_payment_url', function (req, res, next) {
  
      res.redirect(vnpUrl)
  });
-router.get('/create_payment_url',async function  (req, res, next) {
+
+
+ router.get('/create_payment_url',async function  (req, res, next) {
+    
+    req.app.get('/create_payment_url');
     var totalMoney  =[];
-    const UserID =  req.body.userID;
+    const UserID =  user;
+    global.MainUser = UserID;
     console.log('req.body, get: ',UserID);
-    await axios.get(`http://localhost:8000/api/cart_payment/`)
+    await axios.get(`http://localhost:8000/api/cart_payment/${UserID}`)
     .then(res => {
       totalMoney.push(res.data)
       console.log('totalMoney1: ',totalMoney);
@@ -131,13 +140,48 @@ router.get('/vnpay_return', function (req, res, next) {
 
     if(secureHash === signed){
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+            // lấy thông tin khách hàng 
+            console.log('UserName receive: ', MainUser);
+            axios.get(`http://localhost:8000/api/cart_payment/userAdress/${MainUser}`)
+            .then(res => {
+              const data = res.data 
+              console.log('Name: ', data[0].ReceiverName);
 
+              fetch(`http://localhost:8000/api/cart_payment/createOrder/${MainUser}` , { // thay đổi user sau
+              method: 'POST',
+              body: JSON.stringify({
+                userID: MainUser ,
+                delivery_option: "Giao hàng",
+                user_address: data[0].UserAddress,
+                receiver_name: data[0].ReceiverName,
+                receiver_number: data[0].ReceiverPhoneNumber,
+                payment_method_name: "Chuyển khoản",
+                customer_payment_details: "Thanh toán thông qua ...",
+                payment_transaction_time:"NOW()",
+                 payment_status: "Đã thanh toán",
+                 voucher_id : null,
+                 point_redeem : 0,
+              }),
+              headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+              },
+            })
+              .then((response) => {
+                 const data = res.data 
+                console.log('post success')
+                response.json()
+            })
+              .then((json) => console.log(json));
 
-
+            })
+           
+              
 
         res.render('success', {code: vnp_Params['vnp_ResponseCode']})
+        console.log("thanh toan ok");
     } else{
         res.render('success', {code: '97'})
+        console.log("thanh toan ok2");
     }
 });
 
