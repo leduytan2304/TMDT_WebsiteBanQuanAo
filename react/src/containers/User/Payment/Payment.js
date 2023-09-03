@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { Button, Modal,Form } from 'react-bootstrap';
+import axios from 'axios';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-import PaymentMethod from './Payment_method/Payment_method';
 
 import cod from '../../../assets/Users/cod.png';
 import vnpay from '../../../assets/Users/vnpay.png';
 
+import Discount from '../Cart/Discount/Discount'
+
 import './Payment.scss';
-import axios from 'axios';
 const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
@@ -35,71 +36,29 @@ class Payment extends Component {
             discount: '0',
             price: '0',
             totalMoney: [],
-            address: []
+            show: null,
         };
     }
-    handleCreateOrder = () => {
-        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        // lấy thông tin khách hàng 
-            console.log('real: ',UserID);
+    
+    handleClose = () => {
+        this.setState({ show: false });
+        console.log(this.state.show);
+    };
 
-
-            // khong fetch ddc
-          fetch(`http://localhost:8000/api/cart_payment/createOrder/${UserID}` , { // thay đổi user sau
-          method: 'POST',
-          body: JSON.stringify({
-            userID: UserID ,
-            delivery_option: "Giao hàng",
-            user_address: this.state.address[0].UserAddress,
-            receiver_name: this.state.address[0].ReceiverName,
-            receiver_number: this.state.address[0].ReceiverPhoneNumber,
-            payment_method_name: "Chuyển khoản",
-            customer_payment_details: "Thanh toán thông qua ...",
-            payment_transaction_time:"NOW()",
-             payment_status: "Đã thanh toán",
-             voucher_id : null,
-             point_redeem : 0,
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-        })
-          .then((response) => {response.json()
-        })
-          .then((json) => console.log(json));
-
-        //   {
-        //     "userID": "U0025" ,
-        //     "delivery_option": "Giao hàng",
-        //     "user_address": "123 Trần Hưng Đạo",
-        //     "receiver_name": "LDT",
-        //     "receiver_number": "123456",
-        //     "payment_method_name": "Chuyển khoản",
-        //     "customer_payment_details": "Thanh toán thông qua ...",
-        //     "payment_transaction_time":"NOW()",
-        //      "payment_status": "Đã thanh toán",
-        //      "voucher_id" : null,
-        //      "point_redeem": 0
-        //   }
-
-          
-      console.log('post success')
-            
-        };
+    handleShow = () => {
+        this.setState({ show: true });
+        console.log(this.state.show);
+    };  
+    
+    paymentOptionChange = (event) => {
+        this.setState({
+            payment_method: event.target.value,
+        });
+    }
     componentDidMount() { 
         let sum = 0;
-        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        console.log('UserID: ',UserID);
-        axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
-        .then(res => {
-          const data = res.data 
-          this.setState({address : data});
-          console.log('Name: ',this.state.address[0] );
-        })
-        
-       
 
-        axios.get(`http://localhost:8000/api/cart/${UserID}`)
+        axios.get(`http://localhost:8000/api/cart/U0025`)
         .then(res => {
             const images = res.data;
             this.setState({ images });
@@ -119,8 +78,6 @@ class Payment extends Component {
                     // console.log(sum);
                     return temp;  
             });
-            
-            
 
             const unitSum = images[0].map((image) => {
                 const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
@@ -132,6 +89,7 @@ class Payment extends Component {
 
             const unitPrice = images[0].map((image) => {
                 const temp = parseFloat(image.ProductPrice);
+                    
                     sum += temp;
                     // console.log(sum);
                     return temp;  
@@ -155,7 +113,6 @@ class Payment extends Component {
             this.setState({Size: size})
             this.setState({ColorName: colorName})
             this.setState({ProductID: productID})
-            
 
             // hàm khởi tạo cho sum ( thành tiền )
             let sumtemp = 0;
@@ -172,7 +129,7 @@ class Payment extends Component {
         })
         .catch(error => console.log(error));
   };
- 
+
     render() {
 
         return (
@@ -223,17 +180,13 @@ class Payment extends Component {
                                         TRỞ VỀ
                                     </button>
                                 </NavLink>
-
-                                 
-                               
-                               
-                                <button type="button" class="btn btn-danger btn-payment" onclick = {() => this.handleCreateOrder()} >
+ 
+                                <a href="http://localhost:8888/order/create_payment_url">
+                                <button type="button" class="btn btn-danger btn-payment" >
                                         THANH TOÁN
                                     </button>
-                               
-                                    
-                                
-                                
+                                </a>
+
                             </div>
                         </div>
 
@@ -292,27 +245,49 @@ class Payment extends Component {
                                     </div>
                                 </div>
 
-                                {this.state.shipping_method === 'ship' ? (
-                                <div class="row sum">
-                                    <div class="col-8">
-                                        Phí vận chuyển:
-                                    </div>
-                                    <div class="col" align="right">
-                                        <b>{VND.format(35000)}</b>
-                                    </div>
-                                </div>
-                                ) : (
-                                    <div>
-                                    </div>
-                                )}
-
-                                <div class="row discout">
-                                    <div class="col-8" id="dc1">
+                                <div align="center">
+                                    
+                                    <div className="discount row" onClick={this.handleShow}>
+                                        <div class="col-7" id="dc1" align="left">
                                             Giảm giá:
+                                        </div>
+                                        <div class="col" align="right" id="dc1">
+                                            <b>- {VND.format(this.state.discount)}</b>
+                                        </div>
+                                        
+                                        <div class="row discount-use">
+                                            <div class="col-7" align="left">
+                                                - Khách hàng Đồng
+                                            </div>
+                                            <div class="col" align="right">
+                                                - {VND.format(12345)}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col" align="right" id="dc1">
-                                        <b>- {VND.format(this.state.discount)}</b>
-                                    </div>
+
+                                    <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                        <Modal.Header  style={{margin: '10px'}}> 
+                                            <Modal.Title>
+                                                <b>Chọn voucher</b>
+                                            </Modal.Title>
+                                        </Modal.Header>
+
+                                        <Modal.Body>
+
+                                            <Discount />
+
+                                        </Modal.Body>
+
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={this.handleClose} className="btn-return">
+                                                Trở về
+                                            </Button>
+                                            <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                                OK
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                    
                                 </div>
 
                                 <div class="row final-price">

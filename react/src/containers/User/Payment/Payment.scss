@@ -35,11 +35,7 @@
         a{
             text-decoration: none;
         }
-        .signout{
-            width: 70%;
-            margin-top: 30px;
-        }
-
+        
         .bill{
             
             border: 1px solid #d3d3d3;
@@ -112,6 +108,33 @@
             }
             input{
                 margin-top: 15px;
+            }
+        }
+        .btn-payment{
+            margin: 0;
+            width: 150px;
+            height: 35px;
+            background-color: #FF0000;
+            border-radius: 0;
+            margin-left: 5px;
+            box-shadow: 1px 1px 1px #e4e3e3;
+            &:hover{
+                background-color: #d60000;
+            }
+            &:active{
+                background-color: #d60000;
+            }
+        }
+        .btn-return{
+            width: 150px;
+            height: 35px;
+            box-shadow: 1px 1px 1px #e4e3e3;
+            border-radius: 0;
+            background-color: #fff;
+            color: #000;
+            border: 1.5px solid #e4e3e3;
+            &:hover{
+                background-color: #e4e3e3;
             }
         }
     }
