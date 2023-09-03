@@ -66,14 +66,14 @@ class DetailProductAdmin extends Component {
         };
     }
 
-    
+    // bắt sự kiện thay đổi trong input tên sản phẩm
     handleChangeProductName = (event) => {
         this.setState({
             product_name: event.target.value,
         })
     }
 
-    
+    // bắt sự kiện chọn danh mục
     handleChangeCatalog  = (selectedOption) => {
         this.setState({ selectedCatalog: selectedOption.value 
         }, () => {
@@ -81,7 +81,7 @@ class DetailProductAdmin extends Component {
         });
     }
 
-    
+    // in ra console những thứ trong markdown
     handleEditorChange = ({ html, text }) => {
         this.setState({
             contentMarkdown: text,
@@ -89,7 +89,7 @@ class DetailProductAdmin extends Component {
         })
     }
 
-    
+    // bắt sự kiện thay đổi ảnh
     handleOnChangeIMG = (event) => {
         let data = event.target.files;
         // let file = data[0];
@@ -101,7 +101,7 @@ class DetailProductAdmin extends Component {
         }));
     }
 
-    
+    // xóa ảnh đã chọn. Di chuột vào ảnh sẽ hiện ra icon, nhấn xóa
     deletePreviewIMG = (index, e) => {
         e.stopPropagation();
         const updatedPreviewImgURL = [...this.state.previewImgURL];
@@ -116,7 +116,7 @@ class DetailProductAdmin extends Component {
         alert("Xóa");
     }
 
-    
+    // dùng để lưu vị trí ảnh muốn phóng to. Ctrl F tìm kiếm Lightbox để xem thêm
     openPreviewIMG = (index) => {
         this.setState({
             isOpen: true,
@@ -124,7 +124,7 @@ class DetailProductAdmin extends Component {
         })
     }
 
-    
+    // Chọn màu
     handleColorSelect = (selectedList, selectedItem) => {
         this.setState({
             selectedColors: selectedList,
@@ -133,7 +133,7 @@ class DetailProductAdmin extends Component {
         });
     };
 
-    
+    // thay đổi gì trong ô thêm màu thì in ra console
     handleInputChange = (e, index) => {
         const { name, value } = e.target;
         const { inputList } = this.state;
@@ -144,7 +144,7 @@ class DetailProductAdmin extends Component {
         });
     };
 
-    
+    // xóa 1 ô thêm màu
     handleRemoveClick = (index) => {
         const { inputList } = this.state;
         const list = [...inputList];
@@ -162,7 +162,7 @@ class DetailProductAdmin extends Component {
         console.log(this.state.inputList.length)
     };
 
-    
+    // thêm 1 input để thêm màu
     handleAddClick = () => {    
         const { inputList } = this.state;
         this.setState({
@@ -173,7 +173,7 @@ class DetailProductAdmin extends Component {
         });
     };
 
-   
+    // Chọn size
     handleSizeSelect = (selectedList, selectedItem) => {
         this.setState({
             selectedSize: selectedList,
@@ -182,21 +182,21 @@ class DetailProductAdmin extends Component {
         });
     };
 
-    
+    // bắt sự kiện thay đổi trong input giám giá
     handleChangeDiscount = (event) => {
         this.setState({
             discount: event.target.value,
         })
     }
 
-    
+    // bắt sự kiện thay đổi trong input giá bán
     handleChangePrice = (event) => {
         this.setState({
             price: event.target.value,
         })
     }
 
-    
+    // lưu các thông tin vào state
     handleSave = (id) => {
         const { inputList, selectedColors,id_product,product_name,selectedCatalog,
             previewImgURL,selectedSize,discount,price} = this.state;
