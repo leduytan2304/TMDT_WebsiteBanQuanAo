@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 // import { Route, Switch, Link} from 'react-router-dom';
 // import { ConnectedRouter as Router } from 'connected-react-router';
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { history } from '../redux'
 import { ToastContainer } from 'react-toastify';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
@@ -49,25 +49,29 @@ class App extends Component {
     }
 
     render() {
+        const isAdmin = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.isAdmin;
+        console.log(isAdmin)
         return (
             <Fragment>
                 <Router history={history}>
                     <div className="main-container">
-
                         <div className="content-container">
                             <CustomScrollbars style = {{height: '100vh', width: '100%'}}>
                                 <Switch>
+                                    { isAdmin && <Route path={path.ADMIN} component={Admin} /> }
+                                    <Redirect from="/admin" to="/home" />
+    
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
-                                    <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
-                                    <Route path={path.REGISTER} component={userIsNotAuthenticated(Register)} />
-                                    <Route path={path.ADMIN} component={userIsNotAuthenticated(Admin)} />
+                                    <Route path={path.LOGIN} component={userIsAuthenticated(Login)} />
+                                    <Route path={path.REGISTER} component={userIsAuthenticated(Register)} />
+
                                     <Route path={path.SIEUSALE} component={SieuSalePage} />
                                     <Route path={path.SANPHAMMOI} component={SanPhamMoiPage} />
                                     <Route path={path.AO} component={AoPage} />
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.SEARCH} component={SearchResult} />
-                                    <Route path={path.INFO} component={UserPage} />
+                                    <Route path={path.INFO} component={userIsNotAuthenticated(UserPage)} />
                                     <Route path={path.ADDRESS} component={AddressPage} />
                                     <Route path={path.CART} component={CartPage} />
                                     <Route path={path.PAYMENT} component={PaymentPage} />

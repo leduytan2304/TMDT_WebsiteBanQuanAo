@@ -30,7 +30,7 @@ export const addProductToCart = (req ,res)=>{
 
   
   const q = 'SELECT ProductVariantID FROM ProductVariant where ProductID = "' + req.body.productID + '" and ProductSizeID = "' + req.body.size  + '" '; // sửa lại từng user riêng
-  console.log(req.body);
+  console.log("Test",req.body);
   // const secondQuery = "select uf_CalShoppingcartTotalCost('" + q + "')";
   db.query(q, (err, result1) => {
     if (err) 
@@ -38,9 +38,10 @@ export const addProductToCart = (req ,res)=>{
     return res.status(500).json(err);
     
     else {
-      console.log(result1);
+      console.log("Test",result1);
       const addProduct = 'call sp_AddProductIntoShoppingCart("' + result1[0].ProductVariantID +'","1","' + req.body.userID +'")';
       console.log('query2: ', addProduct);
+
       db.query(addProduct, (err, result2) => {
       if (err) return res.status(500).json(err);
       // console.log("Query: "+getProductVariant);
