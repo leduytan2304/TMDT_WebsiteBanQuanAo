@@ -228,6 +228,41 @@ export const getUserAddress = (req ,res)=>{
 }
 
 
+
+export const refundMoney = (req ,res)=>{
+  var q = 'call sp_AddProductBackToCart("' +req.body.cartID+ '","'+ req.body.userID+ '")'
+  var q2 = 'update sql12643980.Order set OrderStatus = "Đã Hoàn Tiền" where OrderID = "' +req.body.cartID +'";'
+  console.log(q);
+  db.query(q, (err, result1) => {
+    if (err) 
+
+    return res.status(500).json(err);
+    
+    else {
+
+      console.log(result1);
+      console.log('query2: ', q2);
+      db.query(q2, (err, result2) => {
+      if (err) 
+          return res.status(500).json(err);
+        else{
+          console.log(result2);
+          return res.status(200).json(result2);
+        }
+       
+      
+    });
+    }
+    /// xóa món đồ khỏi giỏ hàng refund
+ 
+    
+    
+    
+  });
+    //lấy địa chỉ của khách hàng
+}
+
+
 export const testing = (req ,res)=>{
   const currentUrl = req.params.userID;
   // console.log('url ' + currentUrl);
@@ -255,8 +290,6 @@ export const testing = (req ,res)=>{
     //   if (err) return res.status(500).json(err);
     //   console.log(result);
     // });
-      
-      
     
   }
 

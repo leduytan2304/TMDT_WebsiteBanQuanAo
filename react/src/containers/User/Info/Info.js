@@ -7,7 +7,6 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-
 import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
 import { handleEditProfileApi } from '../../../services/userService';
@@ -124,6 +123,24 @@ class Info extends Component {
             console.log("Lỗi", e.response)
         }
     }
+    refundMoney = (CartID) =>{
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        console.log('UserID: ',UserID);
+        fetch(`http://localhost:8000/api/cart_payment/refund/${UserID}`  , { // thay đổi user sau
+                method: 'POST',
+                body: JSON.stringify({
+                  userID: UserID,
+                  cartID: CartID
+                 
+                }),
+                headers: {
+                  'Content-type': 'application/json; charset=UTF-8',
+                },
+              })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
+
+    }
 
     
     componentDidMount(){
@@ -134,6 +151,12 @@ class Info extends Component {
         const personsEdit = res.data[0];
         console.log(persons)
         this.setState({ persons, personsEdit });
+        const button_payment = document.getElementById('refund');
+        button_payment.addEventListener('click', event => {
+         //this.handleCreateOrder();   
+         console.log('ok');
+         this.refundMoney();
+        });
         })
         .catch(error => console.log(error));
 
@@ -143,6 +166,8 @@ class Info extends Component {
         this.setState({ orders });
         })
         .catch(error => console.log(error));
+
+        
     };
 
     render() {
@@ -210,7 +235,6 @@ class Info extends Component {
                                 </>
                                 {/* ))} */}
                             </div>
-                            
                         </div>
 
                         {/* {this.state.persons.map(person => ( */}
@@ -351,8 +375,14 @@ class Info extends Component {
                                         <td>{order.Orderdate}</td>
                                         <td>{order.TotalCost}</td>
                                         <td>{order.OrderStatus}</td>
+
+                                        <button id='refund' onClick={()=> this.refundMoney(order.OrderID)} >Hoàn Tiền</button>
+
                                     </tr>
+                                    
                                     ))}
+
+
                                 </tbody>
                                 
                             </table>

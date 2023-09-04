@@ -16,9 +16,9 @@ router.get('/', function(req, res, next){
 
 
 router.post('/create_payment_url', function (req, res, next) {
-    global.user = req.body.userID;
+    global.User = req.body.userID;
 
-    console.log('req.body, post',req.body.userID);
+    console.log('req.body, post',User);
    
     process.env.TZ = 'Asia/Ho_Chi_Minh';
      let date = new Date();
@@ -70,8 +70,10 @@ router.post('/create_payment_url', function (req, res, next) {
      let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex"); 
      vnp_Params['vnp_SecureHash'] = signed;
      vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
- 
+     console.log(vnp_Params);
      res.redirect(vnpUrl)
+     console.log(vnp_Params);
+
  });
 
 
@@ -79,7 +81,7 @@ router.post('/create_payment_url', function (req, res, next) {
     
     req.app.get('/create_payment_url');
     var totalMoney  =[];
-    const UserID =  user;
+    const UserID =  User;
     global.MainUser = UserID;
     console.log('req.body, get: ',UserID);
     await axios.get(`http://localhost:8000/api/cart_payment/${UserID}`)
@@ -177,8 +179,9 @@ router.get('/vnpay_return', function (req, res, next) {
            
               
 
-        res.render('success', {code: vnp_Params['vnp_ResponseCode']})
-        console.log("thanh toan ok");
+        res.render('success', {code: vnp_Params['vnp_ResponseCode'], vnp_Params_response: JSON.stringify(vnp_Params)})
+        // console.log(vnp_ResponseCode);
+        console.log(vnp_Params);
     } else{
         res.render('success', {code: '97'})
         console.log("thanh toan ok2");
@@ -318,7 +321,6 @@ router.post('/refund', function (req, res, next) {
     let vnp_Amount = req.body.amount *100;
     let vnp_TransactionType = req.body.transType;
     let vnp_CreateBy = req.body.user;
-            
     let currCode = 'VND';
     
     let vnp_RequestId = moment(date).format('HHmmss');
@@ -357,13 +359,14 @@ router.post('/refund', function (req, res, next) {
         'vnp_SecureHash': vnp_SecureHash
     };
     
+    
     request({
         url: vnp_Api,
         method: "POST",
         json: true,   
         body: dataObj
             }, function (error, response, body){
-                console.log(response);
+                 console.log(response);
             });
     
 });
