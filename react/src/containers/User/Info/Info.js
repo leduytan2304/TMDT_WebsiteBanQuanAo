@@ -275,7 +275,7 @@ class Info extends Component {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Gới tính</Form.Label>
+                                        <Form.Label>Giới tính</Form.Label>
                                         <Form.Control type="gender" value={this.state.personsEdit['Gender']}
                                         onChange={this.handleOnChangeGender}/>
                                     </Form.Group>
