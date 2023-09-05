@@ -41,6 +41,8 @@ class DetailProductAdmin extends Component {
             id_product: '',
             product_name: 'Áo khoác',
 
+            product_material: 'Vải',
+
 
             selectedCatalog: '3',
 
@@ -65,6 +67,13 @@ class DetailProductAdmin extends Component {
     handleChangeProductName = (event) => {
         this.setState({
             product_name: event.target.value,
+        })
+    }
+
+    
+    handleChangeProductMaterial = (event) => {
+        this.setState({
+            product_material: event.target.value,
         })
     }
 
@@ -166,11 +175,11 @@ class DetailProductAdmin extends Component {
     // lưu các thông tin vào state
     handleSave = (id) => {
         const { inputList, selectedColors,id_product,product_name,selectedCatalog,
-                img_link ,selectedSize,discount,price} = this.state;
+                img_link ,selectedSize,discount,price, product_material} = this.state;
         const colorsToAdd = inputList.map(item => item.color_product);
         const allColors = selectedColors.concat(colorsToAdd);
 
-        if (!product_name || !selectedCatalog || !img_link || selectedColors.length === 0
+        if (!product_name || !product_material || !selectedCatalog || !img_link || selectedColors.length === 0
             || selectedSize.length === 0 || !discount || !price) {
                 toast.error('Chưa nhập đủ thông tin', {
                     position: toast.POSITION.BOTTOM_RIGHT,
@@ -185,6 +194,7 @@ class DetailProductAdmin extends Component {
             }, () => {
                 console.log("ID:", this.state.id_product,
                             "Tên:", this.state.product_name,
+                            "Chất liệu:", this.state.product_material,
                             "Danh mục:", options.find(option => option.value === this.state.selectedCatalog),
                             "Mardown:", this.state.contentMarkdown,
                             "HTML:", this.state.contentHTML,
@@ -233,6 +243,16 @@ class DetailProductAdmin extends Component {
                                     onChange={(event) => this.handleChangeProductName(event)}
                                     autoFocus
                                     value= {this.state.product_name}
+                                />
+                            </div>
+                            <div className='product-title'>
+                                <Form.Label>Chất liệu:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Chất liệu"
+                                    onChange={(event) => this.handleChangeProductMaterial(event)}
+                                    autoFocus
+                                    value= {this.state.product_material}
                                 />
                             </div>
                             <div className='product-title'>

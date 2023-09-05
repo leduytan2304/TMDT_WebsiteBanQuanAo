@@ -37,13 +37,14 @@ class AddNewProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isSaveSuccessful: false,
+            isSaveSuccessful1: false,
+            isSaveSuccessful2: false,
             colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
             sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
 
-            id_product: '',
             product_name: '',
 
+            product_material: '',
 
             selectedCatalog: '',
 
@@ -65,17 +66,18 @@ class AddNewProduct extends Component {
         };
     }
 
-    // bắt sự kiện thay đôi trong input mã sản phẩm
-    handleChangeIDProduct = (event) => {
-        this.setState({
-            id_product: event.target.value,
-        })
-    }
 
     // bắt sự kiện thay đổi trong input tên sản phẩm
     handleChangeProductName = (event) => {
         this.setState({
             product_name: event.target.value,
+        })
+    }
+
+    
+    handleChangeProductMaterial = (event) => {
+        this.setState({
+            product_material: event.target.value,
         })
     }
 
@@ -153,14 +155,12 @@ class AddNewProduct extends Component {
     }
 
     // lưu các thông tin vào state
-    handleSave = () => {
+    handleSave1 = () => {
         const { inputList, selectedColors,id_product,product_name,selectedCatalog,
-            img_link,selectedSize,discount,price} = this.state;
-        const colorsToAdd = inputList.map(item => item.color_product);
-        const allColors = selectedColors.concat(colorsToAdd);
+            img_link ,selectedSize,discount,price, product_material} = this.state;
 
-        if (!id_product || !product_name || !selectedCatalog || !img_link || selectedColors.length === 0
-            || selectedSize.length === 0 || !discount || !price) {
+        if (!product_name || !product_material || !selectedCatalog || !img_link || selectedColors.length === 0
+                || selectedSize.length === 0 || !discount || !price) {
                 toast.error('Chưa nhập đủ thông tin', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 4000,
@@ -168,21 +168,36 @@ class AddNewProduct extends Component {
         }
         else {
             this.setState({
-                selectedColors: allColors,
-                isSaveSuccessful: true,
+                isSaveSuccessful1: true,
             }, () => {
-                console.log("ID:", this.state.id_product,
+                console.log(
                             "Tên:", this.state.product_name,
-                            "Danh mục:", this.state.selectedCatalog.label,
+                            "Chất liệu:", this.state.product_material,
                             "Mardown:", this.state.contentMarkdown,
                             "HTML:", this.state.contentHTML,
-                            "Ảnh:", this.state.img_link,
-                            "Màu:", this.state.selectedColors,
-                            "Size:", this.state.selectedSize,
                             "Giảm giá:", this.state.discount,
                             "Giá bán:", this.state.price);
             });
         }
+    }
+    
+    handleSave2 = () => {
+        const { inputList, selectedColors,product_name,selectedCatalog,
+            img_link,selectedSize,discount,price} = this.state;
+        const colorsToAdd = inputList.map(item => item.color_product);
+        const allColors = selectedColors.concat(colorsToAdd);
+
+        this.setState({
+            selectedColors: allColors,
+            isSaveSuccessful2: true,
+        }, () => {
+            console.log(
+                        
+                        "Danh mục:", this.state.selectedCatalog.label,
+                        "Ảnh:", this.state.img_link,
+                        "Màu:", this.state.selectedColors,
+                        "Size:", this.state.selectedSize);
+        });
     }
 
     // bắt sự kiện chọn danh mục
@@ -222,20 +237,20 @@ class AddNewProduct extends Component {
                     <Form>
                         <Form.Group className="mb-3">
                             <div className='product-title'>
-                                <Form.Label>Mã sản phẩm:</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Mã sản phẩm"
-                                    onChange={(event) => this.handleChangeIDProduct(event)}
-                                    autoFocus
-                                />
-                            </div>
-                            <div className='product-title'>
                                 <Form.Label>Tên sản phẩm:</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Tên sản phẩm"
                                     onChange={(event) => this.handleChangeProductName(event)}
+                                    autoFocus
+                                />
+                            </div>
+                            <div className='product-title'>
+                                <Form.Label>Chất liệu:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Chất liệu"
+                                    onChange={(event) => this.handleChangeProductMaterial(event)}
                                     autoFocus
                                 />
                             </div>
@@ -361,8 +376,13 @@ class AddNewProduct extends Component {
                         Thoát
                     </Button>
                     <Button variant="primary" onClick={async () => {
-                        await this.handleSave()
-                        if (this.state.isSaveSuccessful){
+                        await this.handleSave1()
+
+                        if (this.state.isSaveSuccessful1){
+                            this.handleSave2()
+                        }
+
+                        if (this.state.isSaveSuccessful2){
                             handleConfirm();
                         }
                     }}>
