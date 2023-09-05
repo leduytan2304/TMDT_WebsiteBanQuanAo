@@ -47,19 +47,20 @@ class Order_Manage extends Component {
         }
     }
 
-    componentDidMount() {
-    }
 
+    // Xem chi tiết đơn hàng: chưa xong
     handleViewDetailOrder = (id) => {
         console.log("Đơn hàng: ", id);
         alert("Xem chi tiết đơn hàng");
     }
 
+    // Chấp nhận đơn hàng: chưa xong
     handleAcceptOrder = (id) => {
         console.log("Chấp nhận đơn hàng: ", id);
         alert("Chấp nhận đơn hàng");
     }
 
+    // Từ chối đơn hàng: chưa xong
     handleRefuseOrder = (id) => {
         console.log("Từ chối đơn hàng: ", id);
         alert("Từ chối đơn hàng");
