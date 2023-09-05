@@ -70,7 +70,7 @@ class DetailProductAdmin extends Component {
         })
     }
 
-    
+    // bắt sự kiện thay đổi trong input chất liệu
     handleChangeProductMaterial = (event) => {
         this.setState({
             product_material: event.target.value,
