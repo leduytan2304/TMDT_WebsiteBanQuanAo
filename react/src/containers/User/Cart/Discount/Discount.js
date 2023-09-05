@@ -19,6 +19,7 @@ class Discount extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            point: [],
             showDetail: null,
             inputValue: '',
             cash: ''
@@ -28,8 +29,9 @@ class Discount extends Component {
 
     // thay đổi tiền đổi từ điểm
     handleInputChange = (event) => {
+        const {point} = this.state;
         const inputValue = event.target.value;
-        if (inputValue > 123){
+        if (inputValue > point['currentPoint']){
             return;
         }
         this.setState({ inputValue });
@@ -43,6 +45,20 @@ class Discount extends Component {
             return;
         }
         this.setState({showDetail: !this.state.showDetail});
+    }
+
+    loadRewardPoint() {
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        axios.get(`http://localhost:8000/api/user/rewardpoint/${personsObject}`)
+        .then(res => {
+        const point = res.data[0];
+        this.setState({ point });
+        })
+        .catch(error => console.log(error));
+    };
+
+    componentDidMount(){
+        this.loadRewardPoint();
     }
 
 
@@ -122,6 +138,7 @@ class Discount extends Component {
                             </p>
                         </div>
                     </div>
+
                 </div>
                 
                 <div class="row point">
@@ -129,7 +146,7 @@ class Discount extends Component {
                         Đổi điểm
                     </h3>
                     <div class="colored">
-                        <p>123</p>
+                        <p>{this.state.point['currentPoint']}</p>
                     </div>
 
                     <i onClick={this.toggleDetail} class="far fa-question-circle"></i>

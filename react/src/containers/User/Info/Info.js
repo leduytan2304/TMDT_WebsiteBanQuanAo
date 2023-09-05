@@ -11,7 +11,6 @@ import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
 import { handleEditProfileApi } from '../../../services/userService';
 
-const defaultValue = 'Default Value';
 
 class Info extends Component {
     constructor(props) {
@@ -19,15 +18,7 @@ class Info extends Component {
         this.state = {
             persons: [],
             orders: [],
-            personsEdit: [{
-                Firstname: '',
-                Lastname: '',
-                Dob: '',
-                Tel: '',
-                Email: '',
-                Gender: ''
-            }],
-
+            personsEdit: [],
             show: false,
         }
     }
@@ -143,8 +134,23 @@ class Info extends Component {
     }
 
     
-    componentDidMount(){
+    componentDidMount() {
+        const dataFetchedFlag = JSON.parse(localStorage.getItem('persist:user')).isLoggedIn;
+
+        if (dataFetchedFlag === 'true') {
+          this.loadInfo();
+          this.loadOrder();
+        } else {
+          setTimeout(() => {
+            this.loadInfo();
+            this.loadOrder();
+          }, 500);
+        }
+    }
+
+    loadInfo () {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        
         axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data[0];
@@ -152,25 +158,32 @@ class Info extends Component {
         console.log(persons)
         this.setState({ persons, personsEdit });
         const button_payment = document.getElementById('refund');
+        
         button_payment.addEventListener('click', event => {
          //this.handleCreateOrder();   
          console.log('ok');
          this.refundMoney();
         });
+        
         })
         .catch(error => console.log(error));
+    }
 
+    loadOrder() {
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
         .then(res => {
         const orders = res.data;
-        this.setState({ orders });
+        this.setState({ orders, load: true });
         })
         .catch(error => console.log(error));
-
-        
     };
 
     render() {
+        const { persons } = this.state;
+        if (persons.length === 0) {
+            return <div className="loading">Loading...</div>;
+        }
         return (
             <div>
                 <HomeHeader />
@@ -335,8 +348,8 @@ class Info extends Component {
                                                 <Form.Control type="text"/>
                                             </Col>
                                         </Row>
-                                    </Form.Group> */}
-                                    
+                                    </Form.Group>
+                                     */}
                                 </Form>
                             </Modal.Body>
 
@@ -372,7 +385,7 @@ class Info extends Component {
                                     <tr >
                                         <th key={index} scope="row">{index + 1}</th>
                                         <td>{order.OrderID}</td>
-                                        <td>{order.Orderdate}</td>
+                                        <td>{order.Date}</td>
                                         <td>{order.TotalCost}</td>
                                         <td>{order.OrderStatus}</td>
 
