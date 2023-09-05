@@ -59,20 +59,7 @@ class Login extends Component {
             console.log("Lỗi", e.response)
         }
     }
-    componentDidMount() { 
-
-        axios.get(`http://localhost:8000/api/user/getUserId/${this.state.email}`)
-        .then(res => {
-            const images = res.data;
-            this.setState({ images });
-            const productID =images[0].map((image) => {
-                const temp =(image.ProductID);
-                    // console.log(sum);
-                    return temp;  
-            })})
-    }
     
-
     handleShowHidePassword = () => {
         this.setState({
             isShowPassword: !this.state.isShowPassword

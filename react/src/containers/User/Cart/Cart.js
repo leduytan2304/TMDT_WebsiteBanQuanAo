@@ -7,7 +7,7 @@ import { Button, Modal,Form } from 'react-bootstrap';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-import Discount from '../Cart/Discount/Discount'
+import Discount from '../Cart/Discount/Discount';
 
 import axios from 'axios';
 import './Cart.scss';
@@ -323,6 +323,9 @@ class Cart extends Component {
                                 Danh sách địa chỉ
                             </div>
                             </NavLink>
+
+                          
+
                             <button type="button" class="btn btn-secondary signout" align="center">
                                 Đăng xuất
                             </button>

@@ -56,6 +56,10 @@ class AoDetail extends Component {
         const lastSegment = window.location.pathname.split("/").pop();
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
+
+
+
+        
             fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
                 method: 'POST',
                 body: JSON.stringify({
