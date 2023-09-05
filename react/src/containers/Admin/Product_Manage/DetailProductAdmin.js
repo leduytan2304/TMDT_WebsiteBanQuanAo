@@ -8,9 +8,6 @@ import Form from 'react-bootstrap/Form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
-
 import { Multiselect } from "multiselect-react-dropdown";
 
 import '../ModalAdmin.scss';
@@ -53,9 +50,7 @@ class DetailProductAdmin extends Component {
 
             selectedSize: ["S", "M", "L", "XL"],
 
-            previewImgURL: [],
-            isOpen: false,
-            photoIndex: '',
+            img_link: 'Link ảnh',
 
             contentMarkdown: '',
             contentHTML: '',
@@ -89,38 +84,10 @@ class DetailProductAdmin extends Component {
         })
     }
 
-    // bắt sự kiện thay đổi ảnh
-    handleOnChangeIMG = (event) => {
-        let data = event.target.files;
-        // let file = data[0];
-        let files = Array.from(data);
-
-        let objectUrls = files.map(file => URL.createObjectURL(file));
-        this.setState(prevState => ({
-            previewImgURL: prevState.previewImgURL.concat(objectUrls),
-        }));
-    }
-
-    // xóa ảnh đã chọn. Di chuột vào ảnh sẽ hiện ra icon, nhấn xóa
-    deletePreviewIMG = (index, e) => {
-        e.stopPropagation();
-        const updatedPreviewImgURL = [...this.state.previewImgURL];
-        updatedPreviewImgURL.splice(index, 1);
-
+    // bắt sự kiện thay đổi trong input hình ảnh
+    handleChangeIMG = (event) => {
         this.setState({
-            isOpen: false,
-            photoIndex: '',
-            previewImgURL: updatedPreviewImgURL, 
-        });
-
-        alert("Xóa");
-    }
-
-    // dùng để lưu vị trí ảnh muốn phóng to. Ctrl F tìm kiếm Lightbox để xem thêm
-    openPreviewIMG = (index) => {
-        this.setState({
-            isOpen: true,
-            photoIndex: index,
+            img_link: event.target.value,
         })
     }
 
@@ -199,11 +166,11 @@ class DetailProductAdmin extends Component {
     // lưu các thông tin vào state
     handleSave = (id) => {
         const { inputList, selectedColors,id_product,product_name,selectedCatalog,
-            previewImgURL,selectedSize,discount,price} = this.state;
+                img_link ,selectedSize,discount,price} = this.state;
         const colorsToAdd = inputList.map(item => item.color_product);
         const allColors = selectedColors.concat(colorsToAdd);
 
-        if (!product_name || !selectedCatalog || previewImgURL.length === 0 || selectedColors.length === 0
+        if (!product_name || !selectedCatalog || !img_link || selectedColors.length === 0
             || selectedSize.length === 0 || !discount || !price) {
                 toast.error('Chưa nhập đủ thông tin', {
                     position: toast.POSITION.BOTTOM_RIGHT,
@@ -221,7 +188,7 @@ class DetailProductAdmin extends Component {
                             "Danh mục:", options.find(option => option.value === this.state.selectedCatalog),
                             "Mardown:", this.state.contentMarkdown,
                             "HTML:", this.state.contentHTML,
-                            "Ảnh:", this.state.previewImgURL,
+                            "Ảnh:", this.state.img_link,
                             "Màu:", this.state.selectedColors,
                             "Size:", this.state.selectedSize,
                             "Giảm giá:", this.state.discount,
@@ -294,38 +261,13 @@ class DetailProductAdmin extends Component {
                             </div>
                             <div className='product-title'>
                                 <Form.Label>Hình ảnh:</Form.Label>
-                                <div className='select-input'>
-                                
-                                    <div className='input-img'>
-                                        <div className='preview-img'>
-                                            {/* thấy chatGPT nói là tải ảnh từ database lên rồi lưu vào previewImgURL trước
-                                            sau đấy để cho mấy dòng tiếp theo làm :V */}
-                                            {this.state.previewImgURL.map((url, index) => (
-                                                <div
-                                                    key={index}
-                                                    className='preview-img-item'
-                                                    style={{ backgroundImage: `url(${url})` }}
-                                                    onClick={() => this.openPreviewIMG(index)}
-                                                >
-                                                    <div className="img-overlay">
-                                                        <i class="far fa-times-circle" 
-                                                            onChange={(event) => this.handleOnChangeIMG(event)}
-                                                            onClick={(e) => this.deletePreviewIMG(index,e)}>
-                                                        </i>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <input id='add-img' 
-                                               type='file' 
-                                               hidden 
-                                               onChange={(event) => this.handleOnChangeIMG(event)}
-                                               multiple/>
-                                        <Form.Label className='label-upload' htmlFor='add-img'>Tải ảnh lên 
-                                            <i className='fas fa-upload'></i>
-                                        </Form.Label>
-                                    </div>
-                                </div>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Ảnh"
+                                    onChange={(event) => this.handleChangeIMG(event)}
+                                    autoFocus
+                                    value= {this.state.img_link}
+                                />
                             </div>
                             <div className='product-color'>
                                 <Form.Label>Màu sắc:</Form.Label>
@@ -406,7 +348,7 @@ class DetailProductAdmin extends Component {
                                 <Form.Control
                                     type="text"
                                     placeholder="200.000₫"
-                                    // onChange={(event) => this.handleChangePrice(event)}
+                                    onChange={(event) => this.handleChangePrice(event)}
                                     autoFocus
                                     value= {this.state.price}
                                 />
@@ -428,12 +370,6 @@ class DetailProductAdmin extends Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                {this.state.isOpen &&
-                    <Lightbox
-                        mainSrc={this.state.previewImgURL[this.state.photoIndex]}
-                        onCloseRequest={() => this.setState({ isOpen: false })}
-                    />
-                }
             </>
         );
     }
