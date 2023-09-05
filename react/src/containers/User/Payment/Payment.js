@@ -10,6 +10,7 @@ import HomeFooter from '../../HomePage/HomeFooter';
 
 import cod from '../../../assets/Users/cod.png';
 import vnpay from '../../../assets/Users/vnpay.png';
+import paypal from '../../../assets/Users/paypal.png';
 
 import Discount from '../Cart/Discount/Discount'
 
@@ -119,6 +120,7 @@ class Payment extends Component {
            .catch((TypeError)=>console.log(TypeError))
 
         };
+        
         componentDidMount() { 
             let sum = 0;
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
@@ -206,8 +208,21 @@ class Payment extends Component {
                  this.fetchUserID();
                  window.open("http://localhost:8888/order/create_payment_url");
                 });
+
+
+                const button_payment_paypal = document.getElementById('PaymentPAYPAL');
+                 button_payment_paypal.addEventListener('click', event => {
+                    //this.handleCreateOrder();   
+                    console.log('ok');
+                    // this.fetchUserID();
+                    window.open("http://localhost:9999");
+                 });
             })
             .catch(error => console.log(error));
+ 
+
+
+
       }
     
 
@@ -256,6 +271,18 @@ class Payment extends Component {
                                         <input id="pm2" name="methud" type="radio" value="vnpay" checked={this.state.payment_method === 'vnpay'} onChange={this.paymentOptionChange}/> 
                                     </div>
                                 </label>
+
+                                <label class="payment-method row" for="pm2">
+                                    <div class="col-1">
+                                        <img src={paypal}></img>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Thanh toán qua PAYPAL</h3>
+                                    </div>
+                                    <div class="col-1" align="right">
+                                        <input id="pm2" name="methud" type="radio" value="vnpay" checked={this.state.payment_method === 'vnpay'} onChange={this.paymentOptionChange}/> 
+                                    </div>
+                                </label>
                             </form>
                             <div class="button" align="right">
                                 <NavLink to="/user/cart">
@@ -263,17 +290,16 @@ class Payment extends Component {
                                         TRỞ VỀ
                                     </button>
                                 </NavLink>
-                            {/* <a href="http://localhost:8888/order/create_payment_url">
                                 <button type="button" id="Payment" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrder()}  > 
                                         THANH TOÁN
                                     </button>
-                                   
-                                    </a> */}
-                
-                                <button type="button" id="Payment" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrder()}  > 
-                                        THANH TOÁN
+                                    <button type="button" id="PaymentPAYPAL" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrderPaypal()}  > 
+                                        PAYPAL
                                     </button>
-                                   
+                                    
+                                  
+                                    
+                                    
  {/* // hàm không đc gọi ở đây */}
                             </div>
                            
@@ -396,7 +422,6 @@ class Payment extends Component {
             </div>
         );
     }
-
 }
 
 const mapStateToProps = state => {
