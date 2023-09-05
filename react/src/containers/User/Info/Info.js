@@ -11,7 +11,6 @@ import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
 import { handleEditProfileApi } from '../../../services/userService';
 
-const defaultValue = 'Default Value';
 
 class Info extends Component {
     constructor(props) {
@@ -147,33 +146,30 @@ class Info extends Component {
             this.loadOrder();
           }, 500);
         }
-      }
+    }
 
-      loadInfo() {
+    loadInfo () {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         
         axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data[0];
         const personsEdit = res.data[0];
-<<<<<<< Updated upstream
         console.log(persons)
         this.setState({ persons, personsEdit });
         const button_payment = document.getElementById('refund');
+        
         button_payment.addEventListener('click', event => {
          //this.handleCreateOrder();   
          console.log('ok');
          this.refundMoney();
         });
-=======
         
-        this.setState({ persons, personsEdit});
->>>>>>> Stashed changes
         })
         .catch(error => console.log(error));
-      }
+    }
 
-      loadOrder() {
+    loadOrder() {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
         .then(res => {
@@ -181,8 +177,6 @@ class Info extends Component {
         this.setState({ orders, load: true });
         })
         .catch(error => console.log(error));
-
-        
     };
 
     render() {
@@ -354,8 +348,8 @@ class Info extends Component {
                                                 <Form.Control type="text"/>
                                             </Col>
                                         </Row>
-                                    </Form.Group> */}
-                                    
+                                    </Form.Group>
+                                     */}
                                 </Form>
                             </Modal.Body>
 
@@ -391,7 +385,7 @@ class Info extends Component {
                                     <tr >
                                         <th key={index} scope="row">{index + 1}</th>
                                         <td>{order.OrderID}</td>
-                                        <td>{order.Orderdate}</td>
+                                        <td>{order.Date}</td>
                                         <td>{order.TotalCost}</td>
                                         <td>{order.OrderStatus}</td>
 

@@ -50,7 +50,6 @@ class App extends Component {
 
     render() {
         const isAdmin = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.isAdmin;
-        console.log(isAdmin)
         return (
             <Fragment>
                 <Router history={history}>
