@@ -129,6 +129,7 @@ export const testing = (req ,res)=>{
       console.log(result[0].ProductVariantID);
       //cau truy van goi store pro sp_AddProductIntoShoppingCart
       var updateCart = "call sp_AddProductIntoShoppingCart('" + result[0].ProductVariantID + "','" + values[0].number + "', '"+ values[0].userID + "')";
+      console.log(updateCart);
       db.query(updateCart, function(err, result) {
         if (err) throw err;
         // console.log('final result ', result[0][0].Result);

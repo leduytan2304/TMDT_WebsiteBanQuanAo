@@ -147,7 +147,7 @@ router.get('/vnpay_return', function (req, res, next) {
             axios.get(`http://localhost:8000/api/cart_payment/userAdress/${MainUser}`)
             .then(res => {
               const data = res.data 
-              console.log('Name: ', data[0].ReceiverName);
+              console.log('Name data: ', data[0].ReceiverName);
 
               fetch(`http://localhost:8000/api/cart_payment/createOrder/${MainUser}` , { // thay đổi user sau
               method: 'POST',

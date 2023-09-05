@@ -177,22 +177,13 @@ export const createOrder = (req ,res)=>{
   const values = [
     req.body
   ]
-  //console.log(req.body);
   const q = 'CALL sp_CreateOrder("' +req.body.userID +'","' + req.body.delivery_option +'","' + req.body.user_address +'","' +req.body.receiver_name +'","' +req.body.receiver_number +'","' + req.body.payment_method_name +'","' + req.body.customer_payment_details + '",NOW(),"'+req.body.payment_status+'",NULL,0); '; // sửa lại từng user riêng
   console.log('Query: ',q);
-  // const secondQuery = "select uf_CalShoppingcartTotalCost('" + q + "')";
   db.query(q, (err, result1) => {
     if (err) 
-
     return res.status(500).json(err);
-    
     else {
-      
-    //   console.log(result1);
-    //   const addProduct = 'call sp_EditShoppingCart("' + result1[0].ProductVariantID +'","0","' + req.body.userID +'")';
-    //   console.log('query2: ', addProduct);
-    //   db.query(addProduct, (err, result2) => {
-    //   if (err) return res.status(500).json(err);
+
       console.log(result1);
       return res.status(200).json(result1);
       
