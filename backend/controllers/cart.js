@@ -30,7 +30,7 @@ export const addProductToCart = (req ,res)=>{
 
   
   const q = 'SELECT ProductVariantID FROM ProductVariant where ProductID = "' + req.body.productID + '" and ProductSizeID = "' + req.body.size  + '" '; // sửa lại từng user riêng
-  console.log(req.body);
+  console.log("Test",req.body);
   // const secondQuery = "select uf_CalShoppingcartTotalCost('" + q + "')";
   db.query(q, (err, result1) => {
     if (err) 
@@ -38,9 +38,10 @@ export const addProductToCart = (req ,res)=>{
     return res.status(500).json(err);
     
     else {
-      console.log(result1);
+      console.log("Test",result1);
       const addProduct = 'call sp_AddProductIntoShoppingCart("' + result1[0].ProductVariantID +'","1","' + req.body.userID +'")';
       console.log('query2: ', addProduct);
+
       db.query(addProduct, (err, result2) => {
       if (err) return res.status(500).json(err);
       // console.log("Query: "+getProductVariant);
@@ -177,22 +178,13 @@ export const createOrder = (req ,res)=>{
   const values = [
     req.body
   ]
-  //console.log(req.body);
   const q = 'CALL sp_CreateOrder("' +req.body.userID +'","' + req.body.delivery_option +'","' + req.body.user_address +'","' +req.body.receiver_name +'","' +req.body.receiver_number +'","' + req.body.payment_method_name +'","' + req.body.customer_payment_details + '",NOW(),"'+req.body.payment_status+'",NULL,0); '; // sửa lại từng user riêng
   console.log('Query: ',q);
-  // const secondQuery = "select uf_CalShoppingcartTotalCost('" + q + "')";
   db.query(q, (err, result1) => {
     if (err) 
-
     return res.status(500).json(err);
-    
     else {
-      
-    //   console.log(result1);
-    //   const addProduct = 'call sp_EditShoppingCart("' + result1[0].ProductVariantID +'","0","' + req.body.userID +'")';
-    //   console.log('query2: ', addProduct);
-    //   db.query(addProduct, (err, result2) => {
-    //   if (err) return res.status(500).json(err);
+
       console.log(result1);
       return res.status(200).json(result1);
       
@@ -228,6 +220,41 @@ export const getUserAddress = (req ,res)=>{
 }
 
 
+
+export const refundMoney = (req ,res)=>{
+  var q = 'call sp_AddProductBackToCart("' +req.body.cartID+ '","'+ req.body.userID+ '")'
+  var q2 = 'update sql12643980.Order set OrderStatus = "Đã Hoàn Tiền" where OrderID = "' +req.body.cartID +'";'
+  console.log(q);
+  db.query(q, (err, result1) => {
+    if (err) 
+
+    return res.status(500).json(err);
+    
+    else {
+
+      console.log(result1);
+      console.log('query2: ', q2);
+      db.query(q2, (err, result2) => {
+      if (err) 
+          return res.status(500).json(err);
+        else{
+          console.log(result2);
+          return res.status(200).json(result2);
+        }
+       
+      
+    });
+    }
+    /// xóa món đồ khỏi giỏ hàng refund
+ 
+    
+    
+    
+  });
+    //lấy địa chỉ của khách hàng
+}
+
+
 export const testing = (req ,res)=>{
   const currentUrl = req.params.userID;
   // console.log('url ' + currentUrl);
@@ -255,8 +282,6 @@ export const testing = (req ,res)=>{
     //   if (err) return res.status(500).json(err);
     //   console.log(result);
     // });
-      
-      
     
   }
 

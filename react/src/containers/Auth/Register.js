@@ -20,7 +20,10 @@ class Register extends Component {
             email: '',
             password: '',
             repassword: '',
-            name: '',
+            gender: '',
+            dob: '',
+            fname: '',
+            lname: '',
             phone: '',
             isShowPassword: false,
             errMessage: ''
@@ -33,9 +36,27 @@ class Register extends Component {
         })
     }
 
-    handleOnChangeUsername = (event) => {
+    handleOnChangeDob = (event) => {
         this.setState({
-            name: event.target.value
+            dob: event.target.value
+        })
+    }
+
+    handleOnChangeGender = (event) => {
+        this.setState({
+            gender: event.target.value
+        })
+    }
+
+    handleOnChangeUserFname = (event) => {
+        this.setState({
+            fname: event.target.value
+        })
+    }
+
+    handleOnChangeUserLname = (event) => {
+        this.setState({
+            lname: event.target.value
         })
     }
 
@@ -67,7 +88,7 @@ class Register extends Component {
                 return;
             }
             else {
-            let dataApi = await handleRegisterApi(this.state.email, this.state.name, this.state.phone, this.state.password);
+            let dataApi = await handleRegisterApi(this.state.email, this.state.fname, this.state.lname, this.state.gender, this.state.dob,this.state.phone, this.state.password);
             if (dataApi == 0){
                 this.setState({
                     errMessage: "Haha"
@@ -121,13 +142,41 @@ class Register extends Component {
                         </div>
 
                         <div className= 'col-12 form-group login-input'>
-                            <label>Họ tên:</label>
+                            <label>Họ:</label>
                             <input type='text' 
                             className='form-control' 
-                            placeholder='Họ tên'
-                            onChange={(event) => this.handleOnChangeUsername(event)}
+                            placeholder='Họ'
+                            onChange={(event) => this.handleOnChangeUserLname(event)}
                             />
                         </div>
+
+                        <div className= 'col-12 form-group login-input'>
+                            <label>Tên:</label>
+                            <input type='text' 
+                            className='form-control' 
+                            placeholder='Tên'
+                            onChange={(event) => this.handleOnChangeUserFname(event)}
+                            />
+                        </div>
+
+                        <div className= 'col-12 form-group login-input'>
+                            <label>Giới tính:</label>
+                            <input type='text' 
+                            className='form-control' 
+                            placeholder='Giới tính'
+                            onChange={(event) => this.handleOnChangeGender(event)}
+                            />
+                        </div>
+
+                        <div className= 'col-12 form-group login-input'>
+                            <label>Ngày sinh</label>
+                            <input type='text' 
+                            className='form-control' 
+                            placeholder='Ngày sinh'
+                            onChange={(event) => this.handleOnChangeDob(event)}
+                            />
+                        </div>
+
                         <div className= 'col-12 form-group login-input'>
                             <label>Số điện thoại:</label>
                             <input type='text' 
@@ -136,6 +185,7 @@ class Register extends Component {
                             onChange={(event) => this.handleOnChangePhone(event)}
                             />
                         </div>
+
                         <div className= 'col-12 form-group login-input'>
                             <label>Mật khẩu:</label>
                             <div className='hide-show-password'>

@@ -56,20 +56,20 @@ class AoDetail extends Component {
         const lastSegment = window.location.pathname.split("/").pop();
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
-            fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
-                method: 'POST',
-                body: JSON.stringify({
-                  userID: UserID,
-                  productID: lastSegment,
-                  size: this.state.selectedSize,
-                  number: this.state.quantityNum,
-                }),
-                headers: {
-                  'Content-type': 'application/json; charset=UTF-8',
-                },
-              })
-                .then((response) => response.json())
-                .then((json) => console.log(json));
+        fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
+            method: 'POST',
+            body: JSON.stringify({
+                userID: UserID,
+                productID: lastSegment,
+                size: this.state.selectedSize,
+                number: this.state.quantityNum,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
         }
 
     handleBuyProduct = () => {
