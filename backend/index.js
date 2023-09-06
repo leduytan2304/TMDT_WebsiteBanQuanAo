@@ -4,6 +4,7 @@ import detailProduct from "./routes/detailProduct.js"
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import cartRoutes from "./routes/cart.js";
+import adminRoutes from "./routes/admin.js";
 
 // import payment from "./routes/payment.js"
 import cors from "cors";
@@ -30,7 +31,8 @@ app.use("/api/chi-tiet-do",detailProduct);
 // app.use("/api/testing",testaa)
 // app.use("/api/payment",payment)
 // app.use("/api/chi-tiet-quan",detailProduct)
-app.use("/api/user", userRoutes)
+app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/cart_payment", cartRoutes); // API thanh toán giỏ hàng , // lưu ý chưa cá nhân hóa cho từng user đc
 app.use("/api", authRoutes); // API để login/register
 

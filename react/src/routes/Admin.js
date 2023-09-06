@@ -7,6 +7,7 @@ import Product_Manage from '../containers/Admin/Product_Manage/Product_Manage';
 import Customer_Manage from '../containers/Admin/Customer_Manage/Customer_Manage';
 import Order_Manage from '../containers/Admin/Order_Manage/Order_Manage';
 import Sales_Statistics from '../containers/Admin/Sales_Statistics/Sales_Statistics';
+import CustomerDetail from '../containers/Admin/Customer_Manage/Customer_Info/Customer_Info';
 import Header from '../containers/Header/Header';
 
 class Admin extends Component {
@@ -24,6 +25,7 @@ class Admin extends Component {
                             <Route path="/admin/customer-manage" component={Customer_Manage} />
                             <Route path="/admin/order-manage" component={Order_Manage} />
                             <Route path="/admin/sales-statistics" component={Sales_Statistics} />
+                            <Route path="/admin/user_info/id-user" component={CustomerDetail} />
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

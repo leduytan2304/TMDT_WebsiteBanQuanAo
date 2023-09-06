@@ -27,6 +27,8 @@ import PaymentPage from './User/Payment/Payment';
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
 import SearchResult from './Customer/Search/SearchResult';
+import SuccessPage from './User/Payment/Success/Success';
+
 
 class App extends Component {
 
@@ -77,6 +79,7 @@ class App extends Component {
                                     <Route path={path.ADDRESS} component={AddressPage} />
                                     <Route path={path.CART} component={CartPage} />
                                     <Route path={path.PAYMENT} component={PaymentPage} />
+                                    <Route path={path.SUCCESS} component={SuccessPage} />
                                     {/* <Route path="/users/:id" component={SieuSalePage} /> */}
                                     {/* <Route path={path.DETAIL_PRODUCT} component={DetailProduct} /> */}
 

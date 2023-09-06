@@ -19,6 +19,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
 import Select from 'react-select';
+import { addProductApi } from '../../../services/adminService';
 
 const options = [
   { value: '1', label: 'Sản phẩm mới' },
@@ -41,9 +42,9 @@ class AddNewProduct extends Component {
             colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
             sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
 
-            id_product: '',
             product_name: '',
 
+            product_material: '',
 
             selectedCatalog: '',
 
@@ -65,12 +66,6 @@ class AddNewProduct extends Component {
         };
     }
 
-    // bắt sự kiện thay đôi trong input mã sản phẩm
-    handleChangeIDProduct = (event) => {
-        this.setState({
-            id_product: event.target.value,
-        })
-    }
 
     // bắt sự kiện thay đổi trong input tên sản phẩm
     handleChangeProductName = (event) => {
@@ -79,12 +74,21 @@ class AddNewProduct extends Component {
         })
     }
 
+    // bắt sự kiện thay đổi trong input chất liệu
+    handleChangeProductMaterial = (event) => {
+        this.setState({
+            product_material: event.target.value,
+        })
+    }
+
     // Chọn màu
     handleColorSelect = (selectedList, selectedItem) => {
         this.setState({
             selectedColors: selectedList,
         }, () => {
-            console.log("Selected Colors:", this.state.selectedColors);
+            const colorArr = this.state.selectedColors;
+            const colorString = colorArr.join(',');
+            console.log("Selected Colors test:", colorString);
         });
     };
 
@@ -93,7 +97,9 @@ class AddNewProduct extends Component {
         this.setState({
             selectedSize: selectedList,
         }, () => {
-            console.log("Selected Size:", this.state.selectedSize);
+            const sizeArr = this.state.selectedSize;
+            const sizeString = sizeArr.join(',');
+            console.log("Selected Size:", sizeString);
         });
     };
 
@@ -152,38 +158,60 @@ class AddNewProduct extends Component {
         })
     }
 
-    // lưu các thông tin vào state
-    handleSave = () => {
-        const { inputList, selectedColors,id_product,product_name,selectedCatalog,
-            img_link,selectedSize,discount,price} = this.state;
-        const colorsToAdd = inputList.map(item => item.color_product);
-        const allColors = selectedColors.concat(colorsToAdd);
-
-        if (!id_product || !product_name || !selectedCatalog || !img_link || selectedColors.length === 0
-            || selectedSize.length === 0 || !discount || !price) {
+    handleAddProduct = async () => {
+        const { selectedColors,  product_name,selectedCatalog,
+            img_link ,selectedSize,discount,price, product_material} = this.state;
+        try {
+            if (!product_name || !product_material || !selectedCatalog || !img_link || selectedColors.length === 0
+                || selectedSize.length === 0 || !discount || !price) {
                 toast.error('Chưa nhập đủ thông tin', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 4000,
                 })
+            }
+            else {
+                const sizeArr = this.state.selectedSize;
+                const sizeString = sizeArr.join(',');
+
+                const colorArr = this.state.selectedColors;
+                const colorString = colorArr.join(',');
+                
+                let dataApi = await addProductApi(this.state.product_name, this.state.contentMarkdown, this.state.selectedCatalog.label, 
+                    this.state.price, this.state.product_material,this.state.discount, this.state.img_link, colorString, sizeString);
+
+                if (dataApi == 0){
+                    this.setState({
+                        errMessage: "Haha"
+                    })
+                    console.log("Err code", dataApi)
+                }
+                
+                if (dataApi !== 0) {
+                    toast.success('Add thành công', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 4000,
+                    })
+                    this.setState({
+                        isSaveSuccessful: true,
+                    })
+                    console.log("Add thành công 1");
+                    
+                }
+                return;
+            }
         }
-        else {
-            this.setState({
-                selectedColors: allColors,
-                isSaveSuccessful: true,
-            }, () => {
-                console.log("ID:", this.state.id_product,
-                            "Tên:", this.state.product_name,
-                            "Danh mục:", this.state.selectedCatalog.label,
-                            "Mardown:", this.state.contentMarkdown,
-                            "HTML:", this.state.contentHTML,
-                            "Ảnh:", this.state.img_link,
-                            "Màu:", this.state.selectedColors,
-                            "Size:", this.state.selectedSize,
-                            "Giảm giá:", this.state.discount,
-                            "Giá bán:", this.state.price);
-            });
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            console.log("Lỗi", e.response)
         }
     }
+    
 
     // bắt sự kiện chọn danh mục
     handleChangeCatalog  = (selectedCatalog) => {
@@ -222,20 +250,20 @@ class AddNewProduct extends Component {
                     <Form>
                         <Form.Group className="mb-3">
                             <div className='product-title'>
-                                <Form.Label>Mã sản phẩm:</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Mã sản phẩm"
-                                    onChange={(event) => this.handleChangeIDProduct(event)}
-                                    autoFocus
-                                />
-                            </div>
-                            <div className='product-title'>
                                 <Form.Label>Tên sản phẩm:</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Tên sản phẩm"
                                     onChange={(event) => this.handleChangeProductName(event)}
+                                    autoFocus
+                                />
+                            </div>
+                            <div className='product-title'>
+                                <Form.Label>Chất liệu:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Chất liệu"
+                                    onChange={(event) => this.handleChangeProductMaterial(event)}
                                     autoFocus
                                 />
                             </div>
@@ -361,7 +389,8 @@ class AddNewProduct extends Component {
                         Thoát
                     </Button>
                     <Button variant="primary" onClick={async () => {
-                        await this.handleSave()
+                        await this.handleAddProduct()
+
                         if (this.state.isSaveSuccessful){
                             handleConfirm();
                         }

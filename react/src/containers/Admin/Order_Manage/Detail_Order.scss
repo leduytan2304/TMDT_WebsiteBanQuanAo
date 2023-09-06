@@ -1,0 +1,66 @@
+.modal-title {
+    span {
+        color: #3d3de9;
+        font-weight: 600;
+    }
+}
+
+.mb-3 {
+    .order-detail-title {
+        display: flex;
+        justify-content: space-between;
+        font-size: 15px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid black;
+        margin-bottom: 20px;
+        margin-top: 10px;
+
+        .left-title {
+            margin-left: 10px;
+        }
+
+        .right-content {
+            width: 70%;
+            color: black;
+            font-weight: 500;
+        }
+
+        .order-status {
+            font-weight: 600;
+        }
+
+    }
+
+    .detail-cart {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        flex-direction: column;
+
+        .table-cart {
+            max-height: 330px;
+            overflow-y: auto;
+            margin: 20px 0;
+
+            .table {
+
+                thead {
+                    position: sticky;
+                    top: -1px;
+                    z-index: 100;
+                    border: 1px solid gray;
+                }
+
+                .sum-product {
+                    position: sticky;
+                    bottom: -1px;
+                    z-index: 100;
+
+                    .sum-count, .sum-price {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+    }
+}

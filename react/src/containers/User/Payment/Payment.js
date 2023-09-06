@@ -86,19 +86,6 @@ class Payment extends Component {
         })
           .then((json) => console.log(json));
 
-        //   {
-        //     "userID": "U0025" ,
-        //     "delivery_option": "Giao hàng",
-        //     "user_address": "123 Trần Hưng Đạo",
-        //     "receiver_name": "LDT",
-        //     "receiver_number": "123456",
-        //     "payment_method_name": "Chuyển khoản",
-        //     "customer_payment_details": "Thanh toán thông qua ...",
-        //     "payment_transaction_time":"NOW()",
-        //      "payment_status": "Đã thanh toán",
-        //      "voucher_id" : null,
-        //      "point_redeem": 0
-        //   }
     }
           
     fetchUserID = () => {
@@ -150,12 +137,14 @@ class Payment extends Component {
             let sum = 0;
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
             console.log('UserID: ',UserID);
+
             axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
             .then(res => {
               const data = res.data 
               this.setState({address : data});
               console.log('Name: ',this.state.address[0] );
             })
+
             axios.get(`http://localhost:8000/api/cart/${UserID}`)
             .then(res => {
                 const images = res.data;
@@ -178,7 +167,6 @@ class Payment extends Component {
                 });
                 
                 
-    
                 const unitSum = images[0].map((image) => {
                     const temp = parseFloat(image.ProductPrice) * parseInt(image.ProductQuantity);
                         
@@ -225,7 +213,8 @@ class Payment extends Component {
     
                 // khởi tạo cho price ( tổng tiền )
                 const discount = this.state.discount;
-                this.setState({price: this.state.sum-discount});
+
+                this.setState({price: this.state.sum+35000-discount});
                 const button_payment = document.getElementById('Payment');
                 button_payment.addEventListener('click', event => {
                  //this.handleCreateOrder();   
@@ -255,7 +244,6 @@ class Payment extends Component {
      
 
     render() {
-
         return (
             <div>
             <HomeHeader />

@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
+import HomeHeader from '../../../HomePage/HomeHeader';
+import HomeFooter from '../../../HomePage/HomeFooter';
 
 import './Success.scss';
 import axios from 'axios';
@@ -12,7 +14,7 @@ const VND = new Intl.NumberFormat('vi-VN', {
     currency: 'VND',
   });
 
-class Cart extends Component {
+class Success extends Component {
 
     constructor(props) {
         super(props);
@@ -54,7 +56,22 @@ class Cart extends Component {
 
         return (
             <div>
-                
+                <HomeHeader />
+                <div className='address-page'>
+                    <h1>Thanh Toán</h1>
+                    <hr
+                        style={{
+                        color: 'black',
+                        width: '150px',
+                        height: '1.5px',
+                        margin: '0 auto',
+                        opacity: '1'
+                        }}
+                    />
+                    
+                    
+                </div>
+                <HomeFooter />
             </div>
         );
     }
@@ -72,4 +89,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Success);

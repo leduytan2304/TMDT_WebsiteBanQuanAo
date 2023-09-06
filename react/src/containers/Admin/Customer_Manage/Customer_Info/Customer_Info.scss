@@ -1,0 +1,79 @@
+.user-info{
+    height: auto;
+    align-items: center;
+    margin: 50px 20vw 50px 20vw;
+    padding: 20px;
+    border: 1.5px solid #e5e5e5;
+
+    h1{
+        font-size:25px;
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    .private-info{
+        margin-top: 10px;
+        margin-left: 10px;
+        font-size: 16px;
+        line-height: 2;
+        .info-type{
+            font-weight: bold;
+        }
+    } 
+
+    .avatar-img{
+        margin-right: 10px;
+        img{
+        max-width: 100px;
+        }
+    }
+    .point{
+        margin-right: 10px;
+        width: 100px;
+        padding: 0px;
+        margin-top: 20px;
+        background-color: #e6b026b0;
+        p{
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold; 
+            width: 100px;   
+            position: relative;
+            text-align: center;
+            color: #ff0000;
+        }
+    }
+
+    .purchase-history{
+        margin-top: 50px;
+        .table-group-divider {
+            max-height: 200px;
+          }
+    }
+
+    #refund{
+        background-color: #e6d626;
+        font-size: 12px;
+        &:hover{
+            background-color: #ffea00;
+        }
+      }
+    
+      tr{
+        text-align: center;
+        vertical-align: 0;
+      }
+
+      .btn-return{
+        width: 100px;
+        height: 35px;
+        box-shadow: 1px 1px 1px #e4e3e3;
+        border-radius: 0;
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #e4e3e3;
+        &:hover{
+            background-color: #e4e3e3;
+        }
+    }
+}
