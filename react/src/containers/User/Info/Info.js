@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
+import * as actions from "../../../store/actions";
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -411,7 +412,7 @@ class Info extends Component {
                                             <td>{order.Date}</td>
                                             <td>{VND.format(order.TotalCost)}</td>
                                             <td>{order.OrderStatus}</td>
-                                            {order.OrderStatus == 'Đã Hoàn Thành' || order.OrderStatus == 'Đã Hoàn Tiền' || order.OrderStatus == 'Đã hủy' ?(
+                                            {order.OrderStatus == 'Hoàn thành' || order.OrderStatus == 'Đã Hoàn Tiền' || order.OrderStatus == 'Đã hủy' ?(
                                                 <td>
                                                     <button type="button" class="btn" id='refund' disabled >
                                                         Hoàn Tiền
@@ -445,12 +446,14 @@ class Info extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        processLogout: () => dispatch(actions.processLogout()),
+        // setSearchQuery: (searchQuery) => dispatch(actions.setSearchQuery(searchQuery))
     };
 };
 

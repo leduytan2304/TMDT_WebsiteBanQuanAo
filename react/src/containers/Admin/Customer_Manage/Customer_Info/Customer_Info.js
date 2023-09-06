@@ -149,7 +149,6 @@ class Customer_Info extends Component {
                                 <th scope="col">Ngày mua</th>
                                 <th scope="col">Tổng tiền</th>
                                 <th scope="col">Trạng thái</th>
-                                <th scope="col"></th>
                             </tr>
                         </thead>
                         
@@ -161,19 +160,6 @@ class Customer_Info extends Component {
                                     <td>{order.Date}</td>
                                     <td>{VND.format(order.TotalCost)}</td>
                                     <td>{order.OrderStatus}</td>
-                                    {order.OrderStatus === 'Đã Hoàn Thành' || order.OrderStatus === 'Đã Hoàn Tiền' ?(
-                                        <td>
-                                            <button type="button" class="btn" id='refund' disabled >
-                                                Hoàn Tiền
-                                            </button>
-                                        </td>
-                                    ) : (
-                                        <td>
-                                        <button type="button" class="btn" id='refund' onClick={()=> this.refundMoney(order.OrderID)} >
-                                            Hoàn Tiền
-                                        </button>
-                                    </td>
-                                    )}
                                 </tr>
                                 ))}
                             </tbody>
