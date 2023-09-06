@@ -138,7 +138,7 @@ class Product_Manage extends Component {
                                             <div className='bg-image'>
                                             <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                                 <div className='product-discount'>
-                                                    <span>6</span>
+                                                    <span>-6%</span>
                                                 </div>
                                             </div>
 
@@ -146,8 +146,8 @@ class Product_Manage extends Component {
                                                 
                                                 <div className='product-name'>{image.ProductName}</div>
                                                 <div className='product-price'>
-                                                    <span>0</span>
-                                                    <del>{image.ProductPrice}</del>
+                                                    <span>{image.ProductPrice}</span>
+                                                    <del>199.000đ</del>
                                                 </div>
                                             </div>
                                         {/* </div> */}

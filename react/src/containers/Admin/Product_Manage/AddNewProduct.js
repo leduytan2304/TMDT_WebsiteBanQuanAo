@@ -86,7 +86,9 @@ class AddNewProduct extends Component {
         this.setState({
             selectedColors: selectedList,
         }, () => {
-            console.log("Selected Colors:", this.state.selectedColors);
+            const colorArr = this.state.selectedColors;
+            const colorString = colorArr.join(',');
+            console.log("Selected Colors test:", colorString);
         });
     };
 
@@ -95,7 +97,9 @@ class AddNewProduct extends Component {
         this.setState({
             selectedSize: selectedList,
         }, () => {
-            console.log("Selected Size:", this.state.selectedSize);
+            const sizeArr = this.state.selectedSize;
+            const sizeString = sizeArr.join(',');
+            console.log("Selected Size:", sizeString);
         });
     };
 
@@ -164,29 +168,37 @@ class AddNewProduct extends Component {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 4000,
                 })
-        }
+            }
             else {
-            let dataApi = await addProductApi(this.state.product_name, this.state.contentMarkdown, this.state.selectedCatalog.label, 
-                 this.state.price, this.state.product_material,this.state.discount, this.state.img_link, this.state.selectedSize, this.state.selectedColors);
-            if (dataApi == 0){
-                this.setState({
-                    errMessage: "Haha"
-                })
-                console.log("Err code", dataApi)
-            }
-            if (dataApi !== 0) {
-                toast.success('Add thành công', {
-                    position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 4000,
-                })
-                this.setState({
-                    isSaveSuccessful: true,
-                })
-                console.log("Add thành công 1");
+                const sizeArr = this.state.selectedSize;
+                const sizeString = sizeArr.join(',');
+
+                const colorArr = this.state.selectedColors;
+                const colorString = colorArr.join(',');
                 
+                let dataApi = await addProductApi(this.state.product_name, this.state.contentMarkdown, this.state.selectedCatalog.label, 
+                    this.state.price, this.state.product_material,this.state.discount, this.state.img_link, colorString, sizeString);
+
+                if (dataApi == 0){
+                    this.setState({
+                        errMessage: "Haha"
+                    })
+                    console.log("Err code", dataApi)
+                }
+                
+                if (dataApi !== 0) {
+                    toast.success('Add thành công', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 4000,
+                    })
+                    this.setState({
+                        isSaveSuccessful: true,
+                    })
+                    console.log("Add thành công 1");
+                    
+                }
+                return;
             }
-            return;
-        }
         }
         catch(e){
             if(e.response){

@@ -36,13 +36,13 @@ export const addNewProduct = (req,res)=>{
           if (err) return res.status(500).json(err);
           
           else {
-            const q3 = "Call sp_AddProductVariant(?, @result)";
+            const q3 = "Call sp_AddProductVariantList(?, @result)";
             const value3 = [
               id,
               req.body.size,
               req.body.color
             ]
-    
+            
             db.query(q3, [value3], (err, data3) => {
               if (err) return res.status(500).json(err);
               
