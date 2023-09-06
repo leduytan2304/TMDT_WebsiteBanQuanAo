@@ -3,6 +3,6 @@ import {addNewProduct} from "../controllers/admin.js";
 
 const router = express.Router()
 
-router.post("/addproduct/:userID", addNewProduct);
+router.post("/addproduct", addNewProduct);
 
 export default router

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-
 import '../admin.scss';
 import '../Delete_Product.scss';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -15,6 +14,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 import '../ModalAdmin.scss';
+import axios from 'axios';
 
 class Product_Manage extends Component {
 
@@ -33,8 +33,19 @@ class Product_Manage extends Component {
                 discountedPrice: '179,000₫',
                 discount: '-6%',
             })),
+            images: [],
         }
     }
+
+    componentDidMount(req,res,url){
+        
+        axios.get(`http://localhost:8000/api/image/do`)
+          .then(res => {
+            const images = res.data;
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+    };
 
     handleCloseAddNewProduct = () => {
         this.setState({ showAddNewProduct: false});
@@ -42,7 +53,6 @@ class Product_Manage extends Component {
 
     handleConfirmAddNewProduct = () => {
         this.setState({ showAddNewProduct: false});
-        alert('Thêm sản phẩm')
     }
 
     handleShowAddNewProduct = () => {
@@ -102,36 +112,48 @@ class Product_Manage extends Component {
                 <React.Fragment>
                     <div className='admin-container'>
                         <div className='admin-content'>
+
                             <div className='admin-header'>
                                 <span>Sản phẩm: </span>
                                 <i className="fas fa-plus-circle" onClick={() => this.handleShowAddNewProduct()}></i>
                             </div>
+
                             <div className='product-manage-frame'>
-                                {this.state.products.map((product) => (
+
+                                {this.state.images.map(image => (
                                     <div className='admin-product' 
-                                         key={product.id}
-                                         onClick={() => this.handleShowDetailProduct(product.id)}>
-                                        <div className='admin-product-img'>
+                                         key={image.ImageID}
+                                         onClick={() => this.handleShowDetailProduct(image.ImageID)}>
+                                            
+                                        {/* <div className='admin-product-img'> */}
+
+                                        {/* <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} /> */}
+
                                             <div className="img-overlay">
                                                 <i class="far fa-times-circle" 
-                                                   onClick={(e) => this.handleShowDeleteProduct(product.id, e)}>
+                                                   onClick={(e) => this.handleShowDeleteProduct(image.ImageID, e)}>
                                                 </i>
                                             </div>
+
                                             <div className='bg-image'>
+                                            <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                                 <div className='product-discount'>
-                                                    <span>{product.discount}</span>
+                                                    <span>6</span>
                                                 </div>
                                             </div>
+
                                             <div className='product-detail text-center'>
-                                                <div className='product-name'>{product.name}</div>
+                                                
+                                                <div className='product-name'>{image.ProductName}</div>
                                                 <div className='product-price'>
-                                                    <span>{product.discountedPrice}</span>
-                                                    <del>{product.price}</del>
+                                                    <span>0</span>
+                                                    <del>{image.ProductPrice}</del>
                                                 </div>
                                             </div>
-                                        </div>
+                                        {/* </div> */}
                                     </div>
                                 ))}
+
                             </div>
 
                             {this.state.showAddNewProduct && (
