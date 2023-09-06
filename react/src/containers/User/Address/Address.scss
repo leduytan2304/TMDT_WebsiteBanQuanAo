@@ -38,15 +38,6 @@
         form{
             width: 100%;
             line-height: 2;
-            .list-group-item{
-                width: 500px;
-            }
-            .list-group-item-light{
-                margin-bottom: 20px;
-            }
-            #title{
-                font-weight: bold;
-            }
             input{
                 margin-top: 20px;
             }
@@ -65,4 +56,33 @@
             }
         }
     }
+
+    label{
+        width: 100%;
+    }
+
+    .title-address{
+        font-weight: bolder;
+        margin: 0;
+        background-color: #adadad;
+        width: 100%;
+
+    }
+
+    .info-address{
+        background-color: #f0f0f0;
+        margin-bottom: 15px;
+        #title{
+            font-weight: bold;
+            padding-left: 20px;
+        }
+    }
+
+    i{
+        cursor: pointer;
+    }
+}
+
+.mb-3 .form-control{
+    width: 100%;
 }

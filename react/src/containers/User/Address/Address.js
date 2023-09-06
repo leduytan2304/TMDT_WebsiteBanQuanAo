@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import { Button, Modal,Form } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
 import HomeHeader from '../../HomePage/HomeHeader';
@@ -16,12 +16,15 @@ class Address extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
-            delivery_addr: 'addr1',
-            address: []
+            show: null,
+            show_e: null,
+            delivery_addr: '',
+            address: [],
+            edit_fill: '',
         };
     }   
 
+    // mở hộp thoại thêm địa chỉ
     handleClose = () => {
         this.setState({ show: false });
     };
@@ -30,6 +33,19 @@ class Address extends Component {
         this.setState({ show: true });
     };  
 
+    // mở hộp thoại chỉnh sửa địa chỉ
+    handleCloseEdit = () => {
+        this.setState({ show_e: false });
+    };
+
+    handleShowEdit = (id) => {
+        this.setState({ show_e: true });
+        this.setState({edit_fill: this.state.address.find(obj => {
+                return obj.AddressID == id;
+            })
+        })
+
+    };  
     paymentOptionChange = (event) => {
         this.setState({
             delivery_addr: event.target.value,
@@ -41,7 +57,8 @@ class Address extends Component {
         axios.get(`http://localhost:8000/api/user/address/${personsObject}`)
         .then(res => {
         const address = res.data;
-        this.setState({ address });
+        this.setState({ address, delivery_addr: address[0].AddressID });
+
         })
         .catch(error => console.log(error));
     };
@@ -90,37 +107,103 @@ class Address extends Component {
                             <div class="vertical-line"></div>
                         </div>
 
-                        <div  class="col-6"> 
+                        <div  class="col-7"> 
                             <form action="#">
                                 {this.state.address.map(addres => (
-                                <label key = {addres.AddressID} for="dc1">
+                                <label key = {addres.AddressID} for={addres.AddressID}>
 
-                                <li class="list-group-item list-group-item-dark title-address"> 
-                                    {addres.ReceiverName} 
-                                </li>
+                                    <div class="title-address row"> 
+                                        <div className="col-11">
+                                            {addres.ReceiverName} 
+                                        </div> 
+                                        <div className="col-1" align="right">
 
-                                <li class="list-group-item list-group-item-light info-address">
-                                    <div class="row">
-                                        <div class="col-2" id="title">
-                                            Địa chỉ:<br />
-                                            Sđt:
+                                            <i class="far fa-edit" value={addres.AddressID} onClick={() => this.handleShowEdit(addres.AddressID)}></i>
+
+                                            <Modal show={this.state.show_e} onHide={this.handleCloseEdit} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                                <Modal.Header  style={{margin: '10px'}}> 
+                                                    <Modal.Title>
+                                                        Sửa địa chỉ
+                                                    </Modal.Title>
+                                                </Modal.Header>
+
+                                                <Modal.Body>
+                                                <Form style={{padding: '10px'}}>
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Họ và tên</Form.Label>
+                                                        <Form.Control type="text" />
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Số điện thoại</Form.Label>
+                                                        <Form.Control type="number" />
+                                                    </Form.Group>
+
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Số nhà</Form.Label>
+                                                        <Form.Control type="text"/>
+                                                    </Form.Group>
+
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Đường</Form.Label>
+                                                        <Form.Control type="text"/>
+                                                    </Form.Group>
+
+                                                    <Form.Group className="mb-3 addr">
+                                                        <Row >
+                                                            <Col>
+                                                                <Form.Label>Phường</Form.Label>
+                                                                <Form.Control type="text"/>
+                                                            </Col>
+                                                            <Col>
+                                                                <Form.Label>Quận</Form.Label>
+                                                                <Form.Control type="text"/>
+                                                            </Col>
+                                                            <Col>
+                                                                <Form.Label>Thành phố</Form.Label>
+                                                                <Form.Control type="text"/>
+                                                            </Col>
+                                                        </Row>
+                                                    </Form.Group>
+                                                </Form>
+                                                </Modal.Body>
+
+                                                <Modal.Footer>
+                                                    <Button variant="secondary" onClick={this.handleCloseEdit} className="btn-return">
+                                                        Trở về
+                                                    </Button>
+                                                    <Button variant="primary" onClick={this.handleCloseEdit} className="btn-payment">
+                                                        OK
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
                                         </div>
-                                        <div class="col-9">
-                                        {addres.Address}  <br />
-                                        {addres.ReceiverPhoneNumber}
-                                        </div>
-                                        <div class="col-1">
-                                        <input id="dc1" type="radio" value="addr1" checked={this.state.delivery_addr === 'addr1'} onChange={this.paymentOptionChange}/> 
+
+                                    </div>
+
+                                    <div class="info-address">
+                                        <div class="row">
+                                            <div class="col-2" id="title">
+                                                Địa chỉ:<br />
+                                                Sđt:
+                                            </div>
+
+                                            <div class="col-9">
+                                                {addres.Address}  <br />
+                                                {addres.ReceiverPhoneNumber}
+                                            </div>
+
+                                            <div class="col-1">
+                                                <input id={addres.AddressID} type="radio" value={addres.AddressID} checked={this.state.delivery_addr == addres.AddressID} onChange={this.paymentOptionChange}/> 
+                                            </div>
                                         </div>
                                     </div>
-                                </li>
                                 </label>
                                ))}
                                
                             </form>
                         </div>
                         
-                        <div class="col-3">
+                        <div class="col-2">
                             <Button className="btn btn-danger add-new" variant="primary" onClick={this.handleShow}>
                                 THÊM ĐỊA CHỈ MỚI
                             </Button>
@@ -141,9 +224,32 @@ class Address extends Component {
                                         <Form.Label>Số điện thoại</Form.Label>
                                         <Form.Control type="number" />
                                     </Form.Group>
+
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Địa chỉ</Form.Label>
-                                        <Form.Control type="text" />
+                                        <Form.Label>Số nhà</Form.Label>
+                                        <Form.Control type="text"/>
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Đường</Form.Label>
+                                        <Form.Control type="text"/>
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3 addr">
+                                        <Row >
+                                            <Col>
+                                                <Form.Label>Phường</Form.Label>
+                                                <Form.Control type="text"/>
+                                            </Col>
+                                            <Col>
+                                                <Form.Label>Quận</Form.Label>
+                                                <Form.Control type="text"/>
+                                            </Col>
+                                            <Col>
+                                                <Form.Label>Thành phố</Form.Label>
+                                                <Form.Control type="text"/>
+                                            </Col>
+                                        </Row>
                                     </Form.Group>
                                 </Form>
                                 </Modal.Body>

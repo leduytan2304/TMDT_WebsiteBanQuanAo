@@ -11,6 +11,11 @@ import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
 import { handleEditProfileApi } from '../../../services/userService';
 
+const VND = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
+
 
 class Info extends Component {
     constructor(props) {
@@ -221,14 +226,15 @@ class Info extends Component {
                                 Đăng xuất
                             </button>  
                         </div>
+
                         <div class="col-1 vertical-line-container">
                             <div class="vertical-line"></div>
                         </div>
                        
-                        <div class="col-6 row private-info">
+                        <div class="col-7 row private-info">
                             
                             <div class="col-4 info-type">
-                                Họ tên: <br height="50px" /> 
+                                Họ tên: <br /> 
                                 Ngày sinh: <br />
                                 Giới tính: <br />
                                 Email: <br />
@@ -257,10 +263,11 @@ class Info extends Component {
                                 <img src= {avatar} />
                             </div>
 
-                            <div class="point-bg">
-                                <div class="point" align="center">
-                                    {this.state.persons['CurrentPoint']}
-                                </div>
+                            <div class="point">
+                             
+                                <p>
+                                {this.state.persons['CurrentPoint']}
+                                </p>
                             </div>
 
                         </div>
@@ -377,27 +384,38 @@ class Info extends Component {
                                         <th scope="col">Ngày mua</th>
                                         <th scope="col">Tổng tiền</th>
                                         <th scope="col">Trạng thái</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
-
-                                <tbody  class="table-group-divider">
-                                    {this.state.orders.map((order, index) => (
-                                    <tr >
-                                        <th key={index} scope="row">{index + 1}</th>
-                                        <td>{order.OrderID}</td>
-                                        <td>{order.Date}</td>
-                                        <td>{order.TotalCost}</td>
-                                        <td>{order.OrderStatus}</td>
-
-                                        <button id='refund' onClick={()=> this.refundMoney(order.OrderID)} >Hoàn Tiền</button>
-
-                                    </tr>
-                                    
-                                    ))}
-
-
-                                </tbody>
                                 
+                                    <tbody class="table-group-divider overflow-auto">
+                                        {this.state.orders.map((order, index) => (
+                                        <tr>
+                                            <th key={index} scope="row">{index + 1}</th>
+                                            <td>{order.OrderID}</td>
+                                            <td>{order.Date}</td>
+                                            <td>{VND.format(order.TotalCost)}</td>
+                                            <td>{order.OrderStatus}</td>
+                                            {order.OrderStatus === 'Đã Hoàn Thành' || order.OrderStatus === 'Đã Hoàn Tiền' ?(
+                                                <td>
+                                                    <button type="button" class="btn" id='refund' disabled >
+                                                        Hoàn Tiền
+                                                    </button>
+                                                </td>
+                                            ) : (
+                                                <td>
+                                                <button type="button" class="btn" id='refund' onClick={()=> this.refundMoney(order.OrderID)} >
+                                                    Hoàn Tiền
+                                                </button>
+                                            </td>
+                                            )}
+
+                                        </tr>
+                                        
+                                        ))}
+
+                                    </tbody>
+
                             </table>
                         </div>
                     </div>

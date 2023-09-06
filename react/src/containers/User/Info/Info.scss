@@ -52,6 +52,7 @@
     .edit{
         width: 150px;
         font-size: 15px;
+        margin-top: 20px;
     }
 
     .private-info{
@@ -61,24 +62,31 @@
             font-weight: bold;
         }
     } 
-    .avatar-img img{
-        width: 100px;
-    }
-    .point-bg{
-        margin-top: 30px;
-
-        background-color: #E6B026;
-        width: 100px;   
-        opacity: 50%;
-        position: relative;
+    .avatar-img{
+        img{
+        max-width: 100px;
+        }
     }
     .point{
-        
-        top: 0;
-        left: 0;
+        width: 100px;
+        padding: 0px;
+        margin-top: 20px;
+        background-color: #e6b026b0;
+        p{
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold; 
+            width: 100px;   
+            position: relative;
+            text-align: center;
+            color: #ff0000;
+        }
     }
     .purchase-history{
         margin-top: 50px;
+        .table-group-divider {
+            max-height: 200px;
+          }
     }
 }
 
@@ -112,4 +120,17 @@
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  #refund{
+    background-color: #e6d626;
+    font-size: 12px;
+    &:hover{
+        background-color: #ffea00;
+    }
+  }
+
+  tr{
+    text-align: center;
+    vertical-align: 0;
   }
