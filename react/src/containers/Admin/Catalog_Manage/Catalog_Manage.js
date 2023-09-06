@@ -231,11 +231,6 @@ class Catalog_Manage extends Component {
                                                     <div className='slider-customize' 
                                                          key={product.id}
                                                          onClick={() => this.handleShowDetailProduct(product.id)}>
-                                                        {/* <div className="img-overlay">
-                                                            <i class="far fa-times-circle" 
-                                                               onClick={(e) => this.handleShowDeleteProduct(product.id, e)}>
-                                                            </i>
-                                                        </div> */}
                                                         <div className='bg-image'>
                                                             <div className='product-discount'>
                                                                 <span>{product.discount}</span>
