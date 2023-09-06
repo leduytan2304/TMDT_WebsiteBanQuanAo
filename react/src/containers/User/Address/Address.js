@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import * as actions from "../../../store/actions";
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -287,12 +288,14 @@ class Address extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        processLogout: () => dispatch(actions.processLogout()),
+        // setSearchQuery: (searchQuery) => dispatch(actions.setSearchQuery(searchQuery))
     };
 };
 
