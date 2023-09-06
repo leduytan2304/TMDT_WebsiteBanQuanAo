@@ -64,6 +64,7 @@ class Address extends Component {
     };
 
     render() {
+        const { processLogout } = this.props;
         return (
             <div>
             <HomeHeader />
@@ -96,9 +97,18 @@ class Address extends Component {
                             </div>
                             </NavLink>
 
+                            {/* {persons.isAdmin == 1 ?(
+                            <NavLink to="./admin">
+                            <div class="option">
+                                Admin
+                            </div>
+                            </NavLink>
+                            ) : (
+                                <></>
+                            )} */}
 
 
-                            <button type="button" class="btn btn-secondary signout" align="center">
+                            <button type="button" class="btn btn-secondary signout" onClick={processLogout} align="center">
                                 Đăng xuất
                             </button>
                         </div>

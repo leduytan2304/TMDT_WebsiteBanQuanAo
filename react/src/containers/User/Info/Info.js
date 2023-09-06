@@ -159,6 +159,7 @@ class Info extends Component {
         axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data[0];
+        console.log(persons);
         const personsEdit = res.data[0];
         console.log(persons)
         this.setState({ persons, personsEdit });
@@ -172,6 +173,7 @@ class Info extends Component {
         
         })
         .catch(error => console.log(error));
+        
     }
 
     loadOrder() {
@@ -186,6 +188,8 @@ class Info extends Component {
 
     render() {
         const { persons } = this.state;
+        const { processLogout } = this.props;
+        console.log(persons);
         if (persons.length === 0) {
             return <div className="loading">Loading...</div>;
         }
@@ -222,7 +226,18 @@ class Info extends Component {
                                 Danh sách địa chỉ
                             </div>
                             </NavLink>
-                            <button type="button" class="btn btn-secondary signout" align="center">
+
+                            {persons.isAdmin == 1 ?(
+                            <NavLink to="./admin">
+                            <div class="option">
+                                Admin
+                            </div>
+                            </NavLink>
+                            ) : (
+                                <></>
+                            )}
+
+                            <button type="button" class="btn btn-secondary signout" onClick={processLogout} align="center">
                                 Đăng xuất
                             </button>  
                         </div>
@@ -396,7 +411,7 @@ class Info extends Component {
                                             <td>{order.Date}</td>
                                             <td>{VND.format(order.TotalCost)}</td>
                                             <td>{order.OrderStatus}</td>
-                                            {order.OrderStatus === 'Đã Hoàn Thành' || order.OrderStatus === 'Đã Hoàn Tiền' ?(
+                                            {order.OrderStatus == 'Đã Hoàn Thành' || order.OrderStatus == 'Đã Hoàn Tiền' || order.OrderStatus == 'Đã hủy' ?(
                                                 <td>
                                                     <button type="button" class="btn" id='refund' disabled >
                                                         Hoàn Tiền

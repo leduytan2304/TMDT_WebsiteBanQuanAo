@@ -27,7 +27,8 @@ import PaymentPage from './User/Payment/Payment';
 import AoDetail from './Customer/Ao/AoDetail';
 import QuanDetail from './Customer/Quan/QuanDetail';
 import SearchResult from './Customer/Search/SearchResult';
-import SuccessPage from './User/Payment/Success/Success'
+import SuccessPage from './User/Payment/Success/Success';
+
 
 class App extends Component {
 
