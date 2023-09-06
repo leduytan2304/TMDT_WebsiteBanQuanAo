@@ -1,3 +1,4 @@
+
 window.paypal
   .Buttons({
     async createOrder() {

@@ -107,8 +107,33 @@ class Payment extends Component {
            .catch((TypeError)=>console.log(TypeError))
 
         };
+        fetchUserIDToPaypal = () => {
+            const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+            // gửi thông tin khách hàng đi
+            console.log("userPaypal: ",UserID );
+            fetch(`http://localhost:9999` , { // thay đổi user sau
+            method: 'POST',
+            body: JSON.stringify({
+              userID: UserID 
+            }),
+            headers:{
+                'Content-Type': 'application/json',
+            // 'Access-Control-Allow-Origin': 'http://localhost:9999',
+            // 'Access-Control-Allow-Credentials': 'true'
+        }
+            
+          })
+            .then((response) => {
+              console.log('post success')
+              response.json()
+          })
+            .then((json) => console.log(json))
+           .catch((TypeError)=>console.log(TypeError))
 
-    componentDidMount() { 
+        };
+        
+        
+        componentDidMount() { 
             let sum = 0;
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
             console.log('UserID: ',UserID);
@@ -203,7 +228,8 @@ class Payment extends Component {
                  button_payment_paypal.addEventListener('click', event => {
                     //this.handleCreateOrder();   
                     console.log('ok');
-                    // this.fetchUserID();
+                    this.fetchUserIDToPaypal()
+                    console.log('fetch paypal success');
                     window.open("http://localhost:9999");
                  });
             })

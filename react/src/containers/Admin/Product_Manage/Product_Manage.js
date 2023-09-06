@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import '../admin.scss';
-import '../Delete_Product.scss';
+// import '../Delete_Product.scss';
 import HomeFooter from '../../HomePage/HomeFooter';
 
 import AddNewProduct from './AddNewProduct';
@@ -124,21 +124,11 @@ class Product_Manage extends Component {
                                     <div className='admin-product' 
                                          key={image.ImageID}
                                          onClick={() => this.handleShowDetailProduct(image.ImageID)}>
-                                            
-                                        {/* <div className='admin-product-img'> */}
-
-                                        {/* <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} /> */}
-
-                                            <div className="img-overlay">
-                                                <i class="far fa-times-circle" 
-                                                   onClick={(e) => this.handleShowDeleteProduct(image.ImageID, e)}>
-                                                </i>
-                                            </div>
 
                                             <div className='bg-image'>
-                                            <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
+                                                <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                                 <div className='product-discount'>
-                                                    <span>-6%</span>
+                                                    <span>6</span>
                                                 </div>
                                             </div>
 
@@ -146,8 +136,8 @@ class Product_Manage extends Component {
                                                 
                                                 <div className='product-name'>{image.ProductName}</div>
                                                 <div className='product-price'>
-                                                    <span>{image.ProductPrice}</span>
-                                                    <del>199.000đ</del>
+                                                    <span>0</span>
+                                                    <del>{image.ProductPrice}</del>
                                                 </div>
                                             </div>
                                         {/* </div> */}
