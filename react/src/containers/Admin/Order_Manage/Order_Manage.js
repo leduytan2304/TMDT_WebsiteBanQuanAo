@@ -6,11 +6,15 @@ import './Order_Manage.scss';
 
 import HomeFooter from '../../HomePage/HomeFooter';
 
+import Detail_Order from './Detail_Order';
+
 class Order_Manage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            openDetail: false,
+            id_order: '',
             wait_confirm: new Array(5).fill(null).map((_, index) => ({
                 id: index,
                 name: 'Order is pending confirmation: ' + index,
@@ -51,7 +55,20 @@ class Order_Manage extends Component {
     // Xem chi tiết đơn hàng: chưa xong
     handleViewDetailOrder = (id) => {
         console.log("Đơn hàng: ", id);
-        alert("Xem chi tiết đơn hàng");
+        this.setState({ 
+            openDetail: true,
+            id_order: id
+        });
+    }
+
+    handleCloseDetailOrder = () => {
+        this.setState({ 
+            openDetail: false,
+        });
+    }
+
+    handleConfirmDetailOrder = () => {
+        this.setState({ openDetail: false});
     }
 
     // Chấp nhận đơn hàng: chưa xong
@@ -227,6 +244,13 @@ class Order_Manage extends Component {
                             </tbody>
                         </table>
                     </fieldset>
+                    {this.state.openDetail && (
+                        <Detail_Order show = {this.state.openDetail} 
+                                    id = {this.state.id_order}
+                                    handleClose = {this.handleCloseDetailOrder} 
+                                    handleConfirm = {this.handleConfirmDetailOrder}
+                                    handleShow = {this.handleViewDetailOrder}/>
+                    )} 
                 </div>
                 <HomeFooter />
             </React.Fragment>
