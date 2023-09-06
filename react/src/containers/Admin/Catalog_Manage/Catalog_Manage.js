@@ -15,7 +15,7 @@ import '../ModalAdmin.scss';
 
 // import '../../HomePage/HomeFooter';
 import '../admin.scss';
-import '../Delete_Product.scss';
+// import '../Delete_Product.scss';
 import HomeFooter from '../../HomePage/HomeFooter';
 
 import AddCatalog from './AddCatalog';
@@ -231,11 +231,11 @@ class Catalog_Manage extends Component {
                                                     <div className='slider-customize' 
                                                          key={product.id}
                                                          onClick={() => this.handleShowDetailProduct(product.id)}>
-                                                        <div className="img-overlay">
+                                                        {/* <div className="img-overlay">
                                                             <i class="far fa-times-circle" 
                                                                onClick={(e) => this.handleShowDeleteProduct(product.id, e)}>
                                                             </i>
-                                                        </div>
+                                                        </div> */}
                                                         <div className='bg-image'>
                                                             <div className='product-discount'>
                                                                 <span>{product.discount}</span>

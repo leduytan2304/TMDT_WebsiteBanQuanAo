@@ -108,6 +108,10 @@
                     background-size    : contain;
                     border        : 1px solid transparent;
                 }
+
+                &:hover {
+                    opacity: 0.6;
+                }
             }
 
             .add-catalog {
@@ -176,6 +180,10 @@
 
                 .product-detail {
                     background-color: #f9f7f7;
+                }
+
+                &:hover {
+                    opacity: 0.6;
                 }
             }
         }
