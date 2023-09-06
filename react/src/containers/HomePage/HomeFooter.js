@@ -38,9 +38,6 @@ class HomeFooter extends Component {
                             <NavLink to ='/quan' className='center-content-link' href=''>
                                 <div className='center-content-text'>Quần</div>
                             </NavLink>
-                            <NavLink to ='/phu-kien' className='center-content-link' href=''>
-                                <div className='center-content-text'>Phụ kiện</div>
-                            </NavLink>
                         </div>
 
                         <div className='col-4 footer-content-child right-content'>

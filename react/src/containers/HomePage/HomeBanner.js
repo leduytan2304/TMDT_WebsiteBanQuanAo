@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { NavLink } from 'react-router-dom';
 
 import './HomeBanner.scss';
-import event from '../../assets/background-event.jpg'
+import event from '../../assets/event.png'
 
 class HomeBanner extends Component {
     render() {
 
         return (
             <div className='home-banner'>
-                <a href = 'https://highclub.vn/collections/sale'>
+                <NavLink to ='/sieu-sale' className='center-content-link' href=''>
                     <img className='home-banner-content' src = {event} />
-                </a>
+                </NavLink>
             </div>
         );
     }

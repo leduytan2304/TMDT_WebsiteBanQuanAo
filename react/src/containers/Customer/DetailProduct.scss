@@ -105,34 +105,34 @@
     }
 }
 
-.slick-dots{
-    position: relative !important;
-    bottom: 0 !important;
+// .slick-dots{
+//     position: relative !important;
+//     bottom: 0 !important;
 
-    .slick-active {
-        opacity: 1;
-    }
+//     .slick-active {
+//         opacity: 1;
+//     }
 
-    li {
-        width: 25% !important;
-        height: 100px !important;
-        opacity: 0.5;
+//     li {
+//         width: 25% !important;
+//         height: 100px !important;
+//         opacity: 0.5;
 
-        button  {
-            height             : 100% !important;
-            width              : 100% !important;
-            background         : url('../../assets/Ao/ao-2.png') !important;
-            background-position: center center !important;
-            background-repeat  : no-repeat !important;
-            background-size    : contain !important;
+//         button  {
+//             height             : 100% !important;
+//             width              : 100% !important;
+//             background         : url('../../assets/Ao/ao-2.png') !important;
+//             background-position: center center !important;
+//             background-repeat  : no-repeat !important;
+//             background-size    : contain !important;
 
-            &::before {
-                content: '' !important;
-            }
-        }
-    }
+//             &::before {
+//                 content: '' !important;
+//             }
+//         }
+//     }
     
-}
+// }
 
 
 .product-detail-desc {
