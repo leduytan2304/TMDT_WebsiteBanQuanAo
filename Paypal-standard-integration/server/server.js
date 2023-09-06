@@ -2,11 +2,10 @@ import express from "express";
 import fetch from "node-fetch";
 import "dotenv/config";
 import path from "path";
-
+import axios from 'axios';
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 9999 } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 const app = express();
-
 // host static files
 app.use(express.static("client"));
 
@@ -51,6 +50,7 @@ const createOrder = async (cart) => {
     cart,
   );
 
+  // console.log('TotalPricefinal: ',CartMoney);
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const payload = {
@@ -59,7 +59,7 @@ const createOrder = async (cart) => {
       {
         amount: {
           currency_code: "USD",
-          value: "120.00",
+          value: '151.00' ,
         },
       },
     ],
@@ -78,6 +78,37 @@ const createOrder = async (cart) => {
     method: "POST",
     body: JSON.stringify(payload),
   });
+  // var address = []
+  // await axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
+  //           .then(res => {
+  //             const data = res.data 
+  //             this.setState({address : data});
+  //             console.log('Name: ',address[0] );
+  //           })
+  // await fetch(`http://localhost:8000/api/cart_payment/createOrder/${UserID}` , { // thay đổi user sau
+  //         method: 'POST',
+  //         body: JSON.stringify({
+  //           userID: UserID ,
+  //           delivery_option: "Giao hàng",
+  //           user_address: address[0].UserAddress,
+  //           receiver_name: address[0].ReceiverName,
+  //           receiver_number: address[0].ReceiverPhoneNumber,
+  //           payment_method_name: "Chuyển khoản",
+  //           customer_payment_details: "Thanh toán thông qua PayPal",
+  //           payment_transaction_time:"NOW()",
+  //            payment_status: "Đã thanh toán",
+  //            voucher_id : null,
+  //            point_redeem : 0,
+  //         }),
+  //         headers: {
+  //           'Content-type': 'application/json; charset=UTF-8',
+  //         },
+  //       })
+  //         .then((response) => {
+  //           console.log('post success')
+  //           response.json()
+  //       })
+  //         .then((json) => console.log(json));
 
   return handleResponse(response);
 };
@@ -143,7 +174,37 @@ app.post("/api/orders/:orderID/capture", async (req, res) => {
 });
 
 // serve index.html
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
+app.post("/", async (req, res) => {
+  
+  await axios.get(`http://localhost:8000/api/cart_payment/${req.body.userID}`)
+  .then(res => {
+   const  totalMoney = []
+    totalMoney.push(res.data)
+   
+    
+    for (var key in totalMoney[0][0]) {
+      console.log("Key1: " + key);
+      console.log("Value: " + totalMoney[0][0][key]);
+      console.log("Tien Tong: " ,parseFloat(totalMoney[0][0][key]/24300).toFixed(2))
+      global.CartMoney = parseFloat(totalMoney[0][0][key]/24300).toFixed(2)
+  }
+  })
+  .catch(error => console.log(error));
+    console.log(req.body.userID);
+ 
+});
 app.get("/", (req, res) => {
+  
   res.sendFile(path.resolve("./client/checkout.html"));
 });
 
