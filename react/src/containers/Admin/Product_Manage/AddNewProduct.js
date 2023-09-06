@@ -30,12 +30,15 @@ const options = [
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
+
+
 class AddNewProduct extends Component {
+
+
     constructor(props) {
         super(props);
         this.state = {
-            isSaveSuccessful1: false,
-            isSaveSuccessful2: false,
+            isSaveSuccessful: false,
             colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
             sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
 
@@ -151,35 +154,8 @@ class AddNewProduct extends Component {
         })
     }
 
-    // lưu các thông tin vào state
-    handleSave1 = () => {
-        const { inputList, selectedColors,id_product,product_name,selectedCatalog,
-            img_link ,selectedSize,discount,price, product_material} = this.state;
-
-        if (!product_name || !product_material || !selectedCatalog || !img_link || selectedColors.length === 0
-                || selectedSize.length === 0 || !discount || !price) {
-                toast.error('Chưa nhập đủ thông tin', {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                    autoClose: 4000,
-                })
-        }
-        else {
-            this.setState({
-                isSaveSuccessful1: true,
-            }, () => {
-                console.log(
-                            "Tên:", this.state.product_name,
-                            "Chất liệu:", this.state.product_material,
-                            "Mardown:", this.state.contentMarkdown,
-                            "HTML:", this.state.contentHTML,
-                            "Giảm giá:", this.state.discount,
-                            "Giá bán:", this.state.price);
-            });
-        }
-    }
-
     handleAddProduct = async () => {
-        const { inputList, selectedColors,  product_name,selectedCatalog,
+        const { selectedColors,  product_name,selectedCatalog,
             img_link ,selectedSize,discount,price, product_material} = this.state;
         try {
             if (!product_name || !product_material || !selectedCatalog || !img_link || selectedColors.length === 0
@@ -203,6 +179,9 @@ class AddNewProduct extends Component {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 4000,
                 })
+                this.setState({
+                    isSaveSuccessful: true,
+                })
                 console.log("Add thành công 1");
                 
             }
@@ -220,28 +199,7 @@ class AddNewProduct extends Component {
             console.log("Lỗi", e.response)
         }
     }
-
-
-
     
-    handleSave2 = () => {
-        const { inputList, selectedColors,product_name,selectedCatalog,
-            img_link,selectedSize,discount,price} = this.state;
-        const colorsToAdd = inputList.map(item => item.color_product);
-        const allColors = selectedColors.concat(colorsToAdd);
-
-        this.setState({
-            selectedColors: allColors,
-            isSaveSuccessful2: true,
-        }, () => {
-            console.log(
-                        
-                        "Danh mục:", this.state.selectedCatalog.label,
-                        "Ảnh:", this.state.img_link,
-                        "Màu:", this.state.selectedColors,
-                        "Size:", this.state.selectedSize);
-        });
-    }
 
     // bắt sự kiện chọn danh mục
     handleChangeCatalog  = (selectedCatalog) => {
@@ -418,7 +376,13 @@ class AddNewProduct extends Component {
                     <Button variant="secondary" onClick={handleClose}>
                         Thoát
                     </Button>
-                    <Button variant="primary" onClick={() => { this.handleAddProduct() }} >
+                    <Button variant="primary" onClick={async () => {
+                        await this.handleAddProduct()
+
+                        if (this.state.isSaveSuccessful){
+                            handleConfirm();
+                        }
+                    }}>
                         Lưu
                     </Button>
                     </Modal.Footer>

@@ -77,6 +77,10 @@
         margin-bottom: 10px;
         border-bottom: 1px solid rgb(158, 153, 153);
 
+        .form-control {
+            width: 80%;
+        }
+
         .select-input {
             width: 80%;
 
@@ -181,9 +185,6 @@
         margin-bottom: 0;
     }
 
-    .form-control {
-        width: 80%;
-    }
 
     .form-control::placeholder {
         font-weight: 600;

@@ -53,7 +53,6 @@ class Product_Manage extends Component {
 
     handleConfirmAddNewProduct = () => {
         this.setState({ showAddNewProduct: false});
-        alert('Thêm sản phẩm')
     }
 
     handleShowAddNewProduct = () => {
@@ -126,9 +125,9 @@ class Product_Manage extends Component {
                                          key={image.ImageID}
                                          onClick={() => this.handleShowDetailProduct(image.ImageID)}>
                                             
-                                        <div className='admin-product-img'>
+                                        {/* <div className='admin-product-img'> */}
 
-                                        <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
+                                        {/* <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} /> */}
 
                                             <div className="img-overlay">
                                                 <i class="far fa-times-circle" 
@@ -137,8 +136,9 @@ class Product_Manage extends Component {
                                             </div>
 
                                             <div className='bg-image'>
+                                            <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                                 <div className='product-discount'>
-                                                    <span>{image.discount}</span>
+                                                    <span>6</span>
                                                 </div>
                                             </div>
 
@@ -150,7 +150,7 @@ class Product_Manage extends Component {
                                                     <del>{image.ProductPrice}</del>
                                                 </div>
                                             </div>
-                                        </div>
+                                        {/* </div> */}
                                     </div>
                                 ))}
 

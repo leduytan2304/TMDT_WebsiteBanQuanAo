@@ -74,7 +74,7 @@
                 margin: 5px 10px 15px;
             }
 
-            .slider-customize, .admin-product-img {
+            .slider-customize {
                 // border: 1px solid #eee;
 
                 // img {
@@ -158,8 +158,25 @@
             padding: 10px;
 
             .admin-product {
+                display: block;
                 width: 25%;
+                height: auto;
+                padding: 0 10px;
                 margin: 10px 0;
+
+                .bg-image {
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-color: #f9f7f7;
+
+                    height: auto;
+                    width: 100%;
+                }
+
+                .product-detail {
+                    background-color: #f9f7f7;
+                }
             }
         }
     }
