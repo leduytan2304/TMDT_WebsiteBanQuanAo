@@ -52,7 +52,7 @@ class Order_Manage extends Component {
     }
 
 
-    // Xem chi tiết đơn hàng: chưa xong
+    // Xem chi tiết đơn hàng
     handleViewDetailOrder = (id) => {
         console.log("Đơn hàng: ", id);
         this.setState({ 
@@ -71,13 +71,13 @@ class Order_Manage extends Component {
         this.setState({ openDetail: false});
     }
 
-    // Chấp nhận đơn hàng: chưa xong
+    // Chấp nhận đơn hàng
     handleAcceptOrder = (id) => {
         console.log("Chấp nhận đơn hàng: ", id);
         alert("Chấp nhận đơn hàng");
     }
 
-    // Từ chối đơn hàng: chưa xong
+    // Từ chối đơn hàng
     handleRefuseOrder = (id) => {
         console.log("Từ chối đơn hàng: ", id);
         alert("Từ chối đơn hàng");

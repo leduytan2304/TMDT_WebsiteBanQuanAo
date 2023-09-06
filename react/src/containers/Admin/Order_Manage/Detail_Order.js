@@ -93,14 +93,6 @@ class Detail_Order extends Component {
                                                 <td className='sum-price'>1,200,000₫</td>
                                             </tr>
                                         </tbody>
-                                        {/* <tfoot className='sum-product'>
-                                                <th scope="row">Tổng</th>
-                                                <td>
-                                                </td>
-                                                <td></td>
-                                                <td className='sum-count'>8</td>
-                                                <td className='sum-price'>1,200,000₫</td>
-                                        </tfoot> */}
                                     </table>
                                 </div>
                             </div>
