@@ -19,6 +19,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
 import Select from 'react-select';
+import { addProductApi } from '../../../services/adminService';
 
 const options = [
   { value: '1', label: 'Sản phẩm mới' },
@@ -29,11 +30,7 @@ const options = [
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-
-
 class AddNewProduct extends Component {
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -180,6 +177,52 @@ class AddNewProduct extends Component {
             });
         }
     }
+
+    handleAddProduct = async () => {
+        const { inputList, selectedColors,  product_name,selectedCatalog,
+            img_link ,selectedSize,discount,price, product_material} = this.state;
+        try {
+            if (!product_name || !product_material || !selectedCatalog || !img_link || selectedColors.length === 0
+                || selectedSize.length === 0 || !discount || !price) {
+                toast.error('Chưa nhập đủ thông tin', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 4000,
+                })
+        }
+            else {
+            let dataApi = await addProductApi(this.state.product_name, this.state.contentMarkdown, this.state.selectedCatalog.label, 
+                 this.state.price, this.state.product_material,this.state.discount, this.state.img_link, this.state.selectedSize, this.state.selectedColors);
+            if (dataApi == 0){
+                this.setState({
+                    errMessage: "Haha"
+                })
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                toast.success('Add thành công', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 4000,
+                })
+                console.log("Add thành công 1");
+                
+            }
+            return;
+        }
+        }
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            console.log("Lỗi", e.response)
+        }
+    }
+
+
+
     
     handleSave2 = () => {
         const { inputList, selectedColors,product_name,selectedCatalog,
@@ -375,17 +418,7 @@ class AddNewProduct extends Component {
                     <Button variant="secondary" onClick={handleClose}>
                         Thoát
                     </Button>
-                    <Button variant="primary" onClick={async () => {
-                        await this.handleSave1()
-
-                        if (this.state.isSaveSuccessful1){
-                            this.handleSave2()
-                        }
-
-                        if (this.state.isSaveSuccessful2){
-                            handleConfirm();
-                        }
-                    }}>
+                    <Button variant="primary" onClick={() => { this.handleAddProduct() }} >
                         Lưu
                     </Button>
                     </Modal.Footer>
