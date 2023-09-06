@@ -411,7 +411,7 @@ class Info extends Component {
                                             <td>{order.Date}</td>
                                             <td>{VND.format(order.TotalCost)}</td>
                                             <td>{order.OrderStatus}</td>
-                                            {order.OrderStatus === 'Đã Hoàn Thành' || order.OrderStatus === 'Đã Hoàn Tiền' ?(
+                                            {order.OrderStatus == 'Đã Hoàn Thành' || order.OrderStatus == 'Đã Hoàn Tiền' || order.OrderStatus == 'Đã hủy' ?(
                                                 <td>
                                                     <button type="button" class="btn" id='refund' disabled >
                                                         Hoàn Tiền
