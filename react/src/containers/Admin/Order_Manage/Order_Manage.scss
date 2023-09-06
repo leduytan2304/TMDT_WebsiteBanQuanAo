@@ -1,0 +1,89 @@
+.admin-container {
+    fieldset {
+        border: 1px solid #ddd;
+        padding: 0 15px;
+        margin: 15px 15px 25px 15px;
+        border-radius: 10px;
+        max-height: 245px;
+        overflow-y: auto;
+
+        legend {
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 5px 15px;
+            height: 30px;
+            float: none !important;
+            width: auto;
+            font-size: 15px;
+        }
+
+        .table {
+
+            thead {
+                position: sticky;
+                top: -1px;
+                z-index: 100;
+            }
+
+            .form-payment {
+                font-weight: 600;
+            }
+
+            .order-status-wait {
+                font-weight: 600;
+                color: #b5b212;
+            }
+
+            .order-status-packing {
+                font-weight: 600;
+                color: #e29318;
+            }
+
+            .order-status-completed {
+                font-weight: 600;
+                color: rgba(14, 185, 14, 0.826);
+            }
+
+            .order-status-delivery {
+                font-weight: 600;
+                color: rgba(38, 38, 201, 0.729);
+            }
+
+            .view-detail-order {
+                text-decoration: underline;
+                color: #3737f3;
+                opacity: 0.8;
+                cursor: pointer;
+
+                &:hover {
+                    color: blue;
+                    opacity: 1;
+                }
+            }
+
+            .order-action {
+                display: flex;
+                justify-content: space-evenly;
+                padding: 5px 0;
+
+                .fa-check-circle {
+                    color: rgb(21, 185, 21);
+                    cursor: pointer;
+
+                    &:hover {
+                        color: rgb(8, 247, 8);
+                    }
+                }
+
+                .fa-times-circle {
+                    color: rgb(213, 29, 29);
+                    cursor: pointer;
+
+                    &:hover {
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+}

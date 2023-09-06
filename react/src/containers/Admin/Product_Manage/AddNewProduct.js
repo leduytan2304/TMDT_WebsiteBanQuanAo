@@ -8,9 +8,6 @@ import Form from 'react-bootstrap/Form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
-
 import { Multiselect } from "multiselect-react-dropdown";
 
 import '../ModalAdmin.scss';
@@ -40,13 +37,14 @@ class AddNewProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isSaveSuccessful: false,
+            isSaveSuccessful1: false,
+            isSaveSuccessful2: false,
             colorArray: ["Đỏ", "Cam", "Vàng", "Lục", "Lam", "Chàm", "Tím"],
             sizeArray: ["XS", "S", "M", "L", "XL", "XXL"],
 
-            id_product: '',
             product_name: '',
 
+            product_material: '',
 
             selectedCatalog: '',
 
@@ -54,11 +52,10 @@ class AddNewProduct extends Component {
             addNewColor: false,
             selectedColors: [],
 
+
             selectedSize: [],
 
-            previewImgURL: [],
-            isOpen: false,
-            photoIndex: '',
+            img_link: '',
 
             contentMarkdown: '',
             contentHTML: '',
@@ -69,17 +66,18 @@ class AddNewProduct extends Component {
         };
     }
 
-    // bắt sự kiện thay đôi trong input mã sản phẩm
-    handleChangeIDProduct = (event) => {
-        this.setState({
-            id_product: event.target.value,
-        })
-    }
 
     // bắt sự kiện thay đổi trong input tên sản phẩm
     handleChangeProductName = (event) => {
         this.setState({
             product_name: event.target.value,
+        })
+    }
+
+    // bắt sự kiện thay đổi trong input chất liệu
+    handleChangeProductMaterial = (event) => {
+        this.setState({
+            product_material: event.target.value,
         })
     }
 
@@ -141,37 +139,11 @@ class AddNewProduct extends Component {
         });
     };
 
-    // bắt sự kiện thay đổi ảnh
-    handleOnChangeIMG = (event) => {
-        let data = event.target.files;
-        let files = Array.from(data);
-
-        let objectUrls = files.map(file => URL.createObjectURL(file));
-        this.setState(prevState => ({
-            previewImgURL: prevState.previewImgURL.concat(objectUrls),
-        }));
-    }
-
-    // dùng để lưu vị trí ảnh muốn phóng to. Ctrl F tìm kiếm Lightbox để xem thêm
-    openPreviewIMG = (index) => {
+    // bắt sự kiện thay đổi trong input hình ảnh
+    handleChangeIMG = (event) => {
         this.setState({
-            isOpen: true,
-            photoIndex: index,
+            img_link: event.target.value,
         })
-    }
-
-    // xóa ảnh đã chọn. Di chuột vào ảnh sẽ hiện ra icon, nhấn xóa
-    deletePreviewIMG = (index, e) => {
-        e.stopPropagation();
-        const updatedPreviewImgURL = [...this.state.previewImgURL];
-        updatedPreviewImgURL.splice(index, 1);
-
-        this.setState({
-            isOpen: false,
-            photoIndex: '',
-            previewImgURL: updatedPreviewImgURL, 
-        });
-
     }
 
     // in ra console những thứ trong markdown
@@ -183,14 +155,12 @@ class AddNewProduct extends Component {
     }
 
     // lưu các thông tin vào state
-    handleSave = () => {
+    handleSave1 = () => {
         const { inputList, selectedColors,id_product,product_name,selectedCatalog,
-            previewImgURL,selectedSize,discount,price} = this.state;
-        const colorsToAdd = inputList.map(item => item.color_product);
-        const allColors = selectedColors.concat(colorsToAdd);
+            img_link ,selectedSize,discount,price, product_material} = this.state;
 
-        if (!id_product || !product_name || !selectedCatalog || previewImgURL.length === 0 || selectedColors.length === 0
-            || selectedSize.length === 0 || !discount || !price) {
+        if (!product_name || !product_material || !selectedCatalog || !img_link || selectedColors.length === 0
+                || selectedSize.length === 0 || !discount || !price) {
                 toast.error('Chưa nhập đủ thông tin', {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 4000,
@@ -198,21 +168,36 @@ class AddNewProduct extends Component {
         }
         else {
             this.setState({
-                selectedColors: allColors,
-                isSaveSuccessful: true,
+                isSaveSuccessful1: true,
             }, () => {
-                console.log("ID:", this.state.id_product,
+                console.log(
                             "Tên:", this.state.product_name,
-                            "Danh mục:", this.state.selectedCatalog.label,
+                            "Chất liệu:", this.state.product_material,
                             "Mardown:", this.state.contentMarkdown,
                             "HTML:", this.state.contentHTML,
-                            "Ảnh:", this.state.previewImgURL,
-                            "Màu:", this.state.selectedColors,
-                            "Size:", this.state.selectedSize,
                             "Giảm giá:", this.state.discount,
                             "Giá bán:", this.state.price);
             });
         }
+    }
+    
+    handleSave2 = () => {
+        const { inputList, selectedColors,product_name,selectedCatalog,
+            img_link,selectedSize,discount,price} = this.state;
+        const colorsToAdd = inputList.map(item => item.color_product);
+        const allColors = selectedColors.concat(colorsToAdd);
+
+        this.setState({
+            selectedColors: allColors,
+            isSaveSuccessful2: true,
+        }, () => {
+            console.log(
+                        
+                        "Danh mục:", this.state.selectedCatalog.label,
+                        "Ảnh:", this.state.img_link,
+                        "Màu:", this.state.selectedColors,
+                        "Size:", this.state.selectedSize);
+        });
     }
 
     // bắt sự kiện chọn danh mục
@@ -252,20 +237,20 @@ class AddNewProduct extends Component {
                     <Form>
                         <Form.Group className="mb-3">
                             <div className='product-title'>
-                                <Form.Label>Mã sản phẩm:</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Mã sản phẩm"
-                                    onChange={(event) => this.handleChangeIDProduct(event)}
-                                    autoFocus
-                                />
-                            </div>
-                            <div className='product-title'>
                                 <Form.Label>Tên sản phẩm:</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Tên sản phẩm"
                                     onChange={(event) => this.handleChangeProductName(event)}
+                                    autoFocus
+                                />
+                            </div>
+                            <div className='product-title'>
+                                <Form.Label>Chất liệu:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Chất liệu"
+                                    onChange={(event) => this.handleChangeProductMaterial(event)}
                                     autoFocus
                                 />
                             </div>
@@ -294,36 +279,12 @@ class AddNewProduct extends Component {
                             </div>
                             <div className='product-title'>
                                 <Form.Label>Hình ảnh:</Form.Label>
-                                <div className='select-input'>
-                                
-                                    <div className='input-img'>
-                                        <div className='preview-img'>
-                                            {this.state.previewImgURL.map((url, index) => (
-                                                <div
-                                                    key={index}
-                                                    className='preview-img-item'
-                                                    style={{ backgroundImage: `url(${url})` }}
-                                                    onClick={() => this.openPreviewIMG(index)}
-                                                >
-                                                    <div className="img-overlay">
-                                                        <i class="far fa-times-circle" 
-                                                            onClick={(e) => this.deletePreviewIMG(index,e)}
-                                                            >
-                                                        </i>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <input id='add-img' 
-                                               type='file' 
-                                               hidden 
-                                               onChange={(event) => this.handleOnChangeIMG(event)}
-                                               multiple/>
-                                        <Form.Label className='label-upload' htmlFor='add-img'>Tải ảnh lên 
-                                            <i className='fas fa-upload'></i>
-                                        </Form.Label>
-                                    </div>
-                                </div>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Ảnh"
+                                    onChange={(event) => this.handleChangeIMG(event)}
+                                    autoFocus
+                                />
                             </div>
                             <div className='product-color'>
                                 <Form.Label>Màu sắc:</Form.Label>
@@ -415,8 +376,13 @@ class AddNewProduct extends Component {
                         Thoát
                     </Button>
                     <Button variant="primary" onClick={async () => {
-                        await this.handleSave()
-                        if (this.state.isSaveSuccessful){
+                        await this.handleSave1()
+
+                        if (this.state.isSaveSuccessful1){
+                            this.handleSave2()
+                        }
+
+                        if (this.state.isSaveSuccessful2){
                             handleConfirm();
                         }
                     }}>
@@ -424,12 +390,6 @@ class AddNewProduct extends Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                {this.state.isOpen &&
-                    <Lightbox
-                        mainSrc={this.state.previewImgURL[this.state.photoIndex]}
-                        onCloseRequest={() => this.setState({ isOpen: false })}
-                    />
-                }
             </>
         );
     }
