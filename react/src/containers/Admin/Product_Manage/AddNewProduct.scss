@@ -98,58 +98,58 @@
                 //     background-size    : contain;
                 // }.
 
-                .preview-img {
-                    display: flex;
-                    flex-wrap: wrap;
-                    height: 100px;
-                    margin-bottom: 10px;
-                    border: 1px solid #ddd;
+                // .preview-img {
+                //     display: flex;
+                //     flex-wrap: wrap;
+                //     height: 100px;
+                //     margin-bottom: 10px;
+                //     border: 1px solid #ddd;
 
-                    .preview-img-item {
-                        width: 100px;
-                        height: 80%;
-                        background-size: cover;
-                        background-repeat: no-repeat;
-                        margin: 10px;
-                        cursor: pointer;
-                        position: relative;
+                //     .preview-img-item {
+                //         width: 100px;
+                //         height: 80%;
+                //         background-size: cover;
+                //         background-repeat: no-repeat;
+                //         margin: 10px;
+                //         cursor: pointer;
+                //         position: relative;
 
-                        .img-overlay {
-                            position: absolute;
-                            top: -5px;
-                            left: -5px;
-                            width: 110%;
-                            height: 110%;
-                            background-color: rgba(188, 174, 174, 0.5);
-                            display: none;
-                            opacity: 0;
-                            transition: opacity 0.3s;
-                        }
+                //         .img-overlay {
+                //             position: absolute;
+                //             top: -5px;
+                //             left: -5px;
+                //             width: 110%;
+                //             height: 110%;
+                //             background-color: rgba(188, 174, 174, 0.5);
+                //             display: none;
+                //             opacity: 0;
+                //             transition: opacity 0.3s;
+                //         }
 
-                        .fa-times-circle {
-                            display: none;
-                            position: relative;
-                            color: #e21111;
-                            font-size: 17px;
-                            width: 17px;
-                            background-color: #fff;
-                        }
+                //         .fa-times-circle {
+                //             display: none;
+                //             position: relative;
+                //             color: #e21111;
+                //             font-size: 17px;
+                //             width: 17px;
+                //             background-color: #fff;
+                //         }
 
-                        &:hover {
-                            .img-overlay {
-                                display: block;
-                                opacity: 1; /* Hiển thị và làm mờ lớp mờ khi hover */
-                            }
-                            .fa-times-circle {
-                                display: block;
+                //         &:hover {
+                //             .img-overlay {
+                //                 display: block;
+                //                 opacity: 1; /* Hiển thị và làm mờ lớp mờ khi hover */
+                //             }
+                //             .fa-times-circle {
+                //                 display: block;
 
-                                &:hover {
-                                    color: #ff0000;
-                                }
-                            }
-                        }
-                    }
-                }
+                //                 &:hover {
+                //                     color: #ff0000;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
 
                 .label-upload {
                     padding: 5px;
