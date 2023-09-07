@@ -43,6 +43,10 @@
                     .product-detail {
                         background-color: #f9f7f7;
                     }
+
+                    &:hover {
+                        opacity: 0.6;
+                    }
                 }
             }
 
