@@ -70,7 +70,7 @@ class Payment extends Component {
             receiver_name: this.state.address[0].ReceiverName,
             receiver_number: this.state.address[0].ReceiverPhoneNumber,
             payment_method_name: "Chuyển khoản",
-            customer_payment_details: "Thanh toán thông qua VNPAY",
+            customer_payment_details: "Thanh toán thông qua VNPay",
             payment_transaction_time:"NOW()",
              payment_status: "Đã thanh toán",
              voucher_id : null,
@@ -95,7 +95,8 @@ class Payment extends Component {
             fetch(`http://localhost:8888/order/create_payment_url` , { // thay đổi user sau
             method: 'POST',
             body: JSON.stringify({
-              userID: UserID 
+              userID: UserID,
+              totalCartMoney: this.state.price
             }),
             headers:{'Content-Type': 'application/json'}
           })
