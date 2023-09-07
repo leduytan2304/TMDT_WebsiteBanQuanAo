@@ -63,4 +63,23 @@ export const getRewardPoint = (req ,res)=>{
   });
 }
 
+export const editUerAddress = (req ,res)=>{
+  const q = "Call sp_EditAddress(?)";
 
+  const values = [
+      req.body.userID,
+      req.body.addrID,
+      req.body.addrName,
+      req.body.address,
+      req.body.name,
+      req.body.tel,
+      req.body.isDefault
+  ]
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.status(500).json(err);
+    
+    return res.status(200).json(data[0]);
+    
+  });
+}
