@@ -115,7 +115,8 @@ class Payment extends Component {
             fetch(`http://localhost:9999` , { // thay đổi user sau
             method: 'POST',
             body: JSON.stringify({
-              userID: UserID 
+                userID: UserID,
+                totalCartMoney: this.state.price
             }),
             headers:{
                 'Content-Type': 'application/json',

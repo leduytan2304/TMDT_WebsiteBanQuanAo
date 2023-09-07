@@ -129,10 +129,62 @@ const captureOrder = async (orderID) => {
     },
   });
   const address =[];
-   axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
+  axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
   .then(res => {
-   
+    address.push(res.data)
+    console.log('address: ', address[0][0].ReceiverName);
+    
+    fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+            method: 'POST',
+            body: JSON.stringify({
+              userID: UserID ,
+              delivery_option: "Giao hàng",
+              user_address: address[0][0].UserAddress,
+              receiver_name: address[0][0].ReceiverName,
+              receiver_number: address[0][0].ReceiverPhoneNumber,
+              payment_method_name: "Chuyển khoản",
+              customer_payment_details: "Thanh toán thông qua PayPal",
+              payment_transaction_time:"NOW()",
+              payment_status: "Đã thanh toán",
+              voucher_id : null,
+              point_redeem : 0,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => {
+              console.log('post success')
+              response.json()
+          })
+            .then((json) => console.log(json));
   })
+  // await fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+  //           method: 'POST',
+  //           body: JSON.stringify({
+  //             userID: UserID ,
+  //             delivery_option: "Giao hàng",
+  //             user_address: address[0][0].UserAddress,
+  //             receiver_name: address[0][0].ReceiverName,
+  //             receiver_number: address[0][0].ReceiverPhoneNumber,
+  //             payment_method_name: "Chuyển khoản",
+  //             customer_payment_details: "Thanh toán thông qua PayPal",
+  //             payment_transaction_time:"NOW()",
+  //             payment_status: "Đã thanh toán",
+  //             voucher_id : null,
+  //             point_redeem : 0,
+  //           }),
+  //           headers: {
+  //             'Content-type': 'application/json; charset=UTF-8',
+  //           },
+  //         })
+  //           .then((response) => {
+  //             console.log('post success')
+  //             response.json()
+  //         })
+  //           .then((json) => console.log(json));
+
+
 
   return handleResponse(response);
 };
@@ -186,19 +238,9 @@ app.use((req, res, next) => {
 
 app.post("/", async (req, res) => {
   global.UserID = req.body.userID
-  await axios.get(`http://localhost:8000/api/cart_payment/${req.body.userID}`)
-  .then(res => {
-   const  totalMoney = []
-    totalMoney.push(res.data)
-    for (var key in totalMoney[0][0]) {
-      console.log("Key1: " + key);
-      console.log("Value: " + totalMoney[0][0][key]);
-      console.log("Tien Tong: " ,parseFloat(totalMoney[0][0][key]/24300).toFixed(2))
-      global.CartMoney = parseFloat(totalMoney[0][0][key]/24300).toFixed(2)
-  }
-  })
-  .catch(error => console.log(error));
-    console.log(req.body.userID);
+  console.log('UserID',UserID);
+  global.CartMoney = parseFloat(req.body.totalCartMoney/24300).toFixed(2)
+
 
  
 });

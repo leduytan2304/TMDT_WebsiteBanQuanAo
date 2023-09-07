@@ -60,7 +60,6 @@ router.post('/create_payment_url', function (req, res, next) {
      if(bankCode !== null && bankCode !== ''){
          vnp_Params['vnp_BankCode'] = bankCode;
      }
- 
      vnp_Params = sortObject(vnp_Params);
  
      let querystring = require('qs');
@@ -78,8 +77,6 @@ router.post('/create_payment_url', function (req, res, next) {
 
 
  router.get('/create_payment_url',async function  (req, res, next) {
-    
-    
     console.log('req.body, get: ',MainUser  );
     console.log('totalCartMoney: ',totalCartMoney);
         res.render('order', {title: 'Xác nhận đơn của bạn', amount: totalCartMoney})
