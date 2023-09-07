@@ -158,7 +158,7 @@ router.get('/vnpay_return', function (req, res, next) {
                 receiver_name: data[0].ReceiverName,
                 receiver_number: data[0].ReceiverPhoneNumber,
                 payment_method_name: "Chuyển khoản",
-                customer_payment_details: "Thanh toán thông qua ...",
+                customer_payment_details: "Thanh toán thông qua PayPal",
                 payment_transaction_time:"NOW()",
                  payment_status: "Đã thanh toán",
                  voucher_id : null,

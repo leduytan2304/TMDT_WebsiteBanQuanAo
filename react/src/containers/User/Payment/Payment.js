@@ -70,7 +70,7 @@ class Payment extends Component {
             receiver_name: this.state.address[0].ReceiverName,
             receiver_number: this.state.address[0].ReceiverPhoneNumber,
             payment_method_name: "Chuyển khoản",
-            customer_payment_details: "Thanh toán thông qua ...",
+            customer_payment_details: "Thanh toán thông qua VNPAY",
             payment_transaction_time:"NOW()",
              payment_status: "Đã thanh toán",
              voucher_id : null,

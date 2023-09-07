@@ -4,6 +4,7 @@ import './SieuSale.scss';
 import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
 // Import css files:
+import axios from 'axios'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SieuSalePage from '../../Customer/SieuSale/SieuSalePage';
@@ -11,7 +12,24 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 class SieuSale extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+          
+          images: []
+        };
+    }
+      componentDidMount(req,res,url){
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        console.log('UserID: ',UserID);
+        axios.get(`http://localhost:8000/api/image/do`)
+          .then(res => {
+            const images = res.data;
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+    };
+ 
     render() {
         let settings = {
             dots: false,
@@ -34,101 +52,25 @@ class SieuSale extends Component {
                     </div>
                     <div className='sieusale-body'>
                         <Slider {...settings}>
-                            <div className='sieusale-customize'>
-                                {/* <img src= {sieusaleImg} />  */}
-                                <div className='bg-image'>
-                                    <div className='product-discount'>
-                                        <span>-6%</span>
-                                    </div>
-                                </div>
-                                <div className='product-detail text-center'>
-                                    <div className='product-name'>Basic Tee - Brown/White </div>
-                                    <div className='product-price'>
-                                        <span>179,000₫</span>
-                                        <del>190,000₫</del>
-                                    </div>
-                                </div>
-                            </div>
+                        {this.state.images.map(image => (
 
                             <div className='sieusale-customize'>
-                                {/* <img src= {sieusaleImg} /> */}
-                                <div className='bg-image'>
+                                <img src= {image.ImageLink}  />
+                                <div className='bg-image' >
+                                
                                     <div className='product-discount'>
                                         <span>-6%</span>
                                     </div>
                                 </div>
                                 <div className='product-detail text-center'>
-                                    <div className='product-name'>Basic Tee - Brown/White </div>
+                                    <div className='product-name'>{image.ProductID} </div>
                                     <div className='product-price'>
-                                        <span>179,000₫</span>
-                                        <del>190,000₫</del>
+                                       
+                                        <del>{image.ProductPrice}</del>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className='sieusale-customize'>
-                                {/* <img src= {sieusaleImg} /> */}
-                                <div className='bg-image'>
-                                    <div className='product-discount'>
-                                        <span>-6%</span>
-                                    </div>
-                                </div>
-                                <div className='product-detail text-center'>
-                                    <div className='product-name'>Basic Tee - Brown/White </div>
-                                    <div className='product-price'>
-                                        <span>179,000₫</span>
-                                        <del>190,000₫</del>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='sieusale-customize'>
-                                {/* <img src= {sieusaleImg} /> */}
-                                <div className='bg-image'>
-                                    <div className='product-discount'>
-                                        <span>-6%</span>
-                                    </div>
-                                </div>
-                                <div className='product-detail text-center'>
-                                    <div className='product-name'>Basic Tee - Brown/White </div>
-                                    <div className='product-price'>
-                                        <span>179,000₫</span>
-                                        <del>190,000₫</del>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='sieusale-customize'>
-                                {/* <img src= {sieusaleImg} /> */}
-                                <div className='bg-image'>
-                                    <div className='product-discount'>
-                                        <span>-6%</span>
-                                    </div>
-                                </div>
-                                <div className='product-detail text-center'>
-                                    <div className='product-name'>Basic Tee - Brown/White </div>
-                                    <div className='product-price'>
-                                        <span>179,000₫</span>
-                                        <del>190,000₫</del>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='sieusale-customize'>
-                                {/* <img src= {sieusaleImg} /> */}
-                                <div className='bg-image'>
-                                    <div className='product-discount'>
-                                        <span>-6%</span>
-                                    </div>
-                                </div>
-                                <div className='product-detail text-center'>
-                                    <div className='product-name'>Basic Tee - Brown/White </div>
-                                    <div className='product-price'>
-                                        <span>179,000₫</span>
-                                        <del>190,000₫</del>
-                                    </div>
-                                </div>
-                            </div>
+                        ))}
                         </Slider>
                     </div>
                 </div>

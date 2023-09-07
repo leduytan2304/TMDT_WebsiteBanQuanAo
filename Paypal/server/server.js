@@ -78,14 +78,9 @@ const createOrder = async (cart) => {
     method: "POST",
     body: JSON.stringify(payload),
   });
-  // var address = []
-  // await axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
-  //           .then(res => {
-  //             const data = res.data 
-  //             this.setState({address : data});
-  //             console.log('Name: ',address[0] );
-  //           })
-  // await fetch(`http://localhost:8000/api/cart_payment/createOrder/${UserID}` , { // thay đổi user sau
+
+            
+  // await fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { // thay đổi user sau
   //         method: 'POST',
   //         body: JSON.stringify({
   //           userID: UserID ,
@@ -133,6 +128,11 @@ const captureOrder = async (orderID) => {
       // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
     },
   });
+  const address =[];
+   axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
+  .then(res => {
+   
+  })
 
   return handleResponse(response);
 };
@@ -185,13 +185,11 @@ app.use((req, res, next) => {
 });
 
 app.post("/", async (req, res) => {
-  
+  global.UserID = req.body.userID
   await axios.get(`http://localhost:8000/api/cart_payment/${req.body.userID}`)
   .then(res => {
    const  totalMoney = []
     totalMoney.push(res.data)
-   
-    
     for (var key in totalMoney[0][0]) {
       console.log("Key1: " + key);
       console.log("Value: " + totalMoney[0][0][key]);
@@ -201,6 +199,7 @@ app.post("/", async (req, res) => {
   })
   .catch(error => console.log(error));
     console.log(req.body.userID);
+
  
 });
 app.get("/", (req, res) => {

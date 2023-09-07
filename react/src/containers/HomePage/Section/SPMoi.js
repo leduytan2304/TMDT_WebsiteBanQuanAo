@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { withRouter } from "react-router-dom";
 import './ProductSection.scss';
 // import { getListProduct } from "../../../services/productApi";
-// import axios from "axios";
+import axios from "axios";
 
 
 class SPMoi extends Component {
@@ -13,7 +13,13 @@ class SPMoi extends Component {
     //     console.log("Info: ", product);
     //     this.props.history.push(`/products/${product.id}`)
     // }
-
+    constructor(props) {
+        super(props);
+        this.state = {
+          
+          images: []
+        };
+    }
     handleViewDetailProduct = () => {
         console.log("ID sản phẩm");
         this.props.history.push(`/products/:1`);
@@ -45,6 +51,16 @@ class SPMoi extends Component {
     //     }
     //     console.log(response)
     // }
+    componentDidMount(req,res,url){
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        console.log('UserID: ',UserID);
+        axios.get(`http://localhost:8000/api/image/do`)
+          .then(res => {
+            const images = res.data;
+            this.setState({ images });
+          })
+          .catch(error => console.log(error));
+    };
 
     render() {
         return (
@@ -57,133 +73,25 @@ class SPMoi extends Component {
                             </div>
                             <div className='section-body'>
                                 {/* onClick={() => this.handleViewDetailProduct(item)} */}
+                                {this.state.images.map(image => (
                                 <div className='col-3 product' onClick={() => this.handleViewDetailProduct()}>
-                                    <div className='product-img'>
+                                    <div className='product-img' >
+                                    <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '70%', height: 'auto' }} /> 
                                         <div className='product-discount'>
                                             <span>-6%</span>
                                         </div>
                                     </div>
                                     <div className='product-detail text-center'>
-                                        <div className='product-name'>Basic Tee - Brown/White </div>
+                                        <div className='product-name'>{image.ProductPrice} </div>
                                         <div className='product-price'>
                                             <span>179,000₫</span>
-                                            <del>190,000₫</del>
+                                            <del>{image.ProductPrice}</del>
                                         </div>
                                     </div>
                                 </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='product-img'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='product-img'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='product-img'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='product-img'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='product-img'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='product-img'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className='col-3 product'>
-                                    <a href=''>
-                                        <div className='product-img'>
-                                            <div className='product-discount'>
-                                                <span>-6%</span>
-                                            </div>
-                                        </div>
-                                        <div className='product-detail text-center'>
-                                            <div className='product-name'>Basic Tee - Brown/White </div>
-                                            <div className='product-price'>
-                                                <span>179,000₫</span>
-                                                <del>190,000₫</del>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
+                                 ))}
                             </div>
+                            
                             <div className='spmoi-home-footer'>
                                 <Link to ='/san-pham-moi'>
                                     <button className='btn-section'>XEM THÊM</button>
