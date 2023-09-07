@@ -13,5 +13,10 @@ const handleEditProfileApi = (userID, FirstName, LastName, Tel, Dob, Gender, Ema
     {userID: userID, FirstName: FirstName, LastName: LastName, Tel: Tel, Dob: Dob, Gender: Gender, Email: Email});
 }
 
+const handleEditAddress = (userID, addrID, addrName, address, name, tel, isDefault) => {
+    return axios.put('http://localhost:8000/api/user/address/edit', 
+    {userID: userID, addrID: addrID , addrName: addrName, address: address, name: name, tel: tel, isDefault: isDefault});
+}
 
-export {handleLoginApi, handleRegisterApi, handleEditProfileApi}
+
+export {handleLoginApi, handleRegisterApi, handleEditProfileApi, handleEditAddress}
