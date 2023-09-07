@@ -18,8 +18,15 @@ class HomeHeader extends Component {
         super(props);
         this.state = {
             search: '',
+            showCenterContent: false,
         };
     }
+
+    toggleCenterContent = () => {
+        this.setState((prevState) => ({
+          showCenterContent: !prevState.showCenterContent,
+        }));
+    };
 
     handleSearchInputChange = (event) => {
         this.setState({ search: event.target.value });
@@ -53,14 +60,14 @@ class HomeHeader extends Component {
                 <div className='home-header-container'>
                     <div className='home-header-content'>
                         <div className='left-content'>
-                            <i class="fas fa-bars"></i>
+                            <i class="fas fa-bars" onClick={this.toggleCenterContent}></i>
                             <Link to ='/home'>
                                 <img className='header-logo' src={logo} />
                             </Link>
-                            {/* <div className='header-logo'></div> */}
+                            
                         </div>
 
-                        <div className='center-content'>
+                        <div className={`center-content ${this.state.showCenterContent ? 'show' : ''}`}>
                             <NavLink to ='/sieu-sale'>
                                 <div className='child-content'>
                                     <div>
@@ -111,25 +118,16 @@ class HomeHeader extends Component {
                             </NavLink>
 
                             <NavLink to ='/user/cart'>
-                            <div className='cart-icon'>
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
+                                <div className='cart-icon'>
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
                             </NavLink>
 
-                            {/* nút đăng xuất cũ
-                            <div className="btn btn-logout" onClick={processLogout} title='Log out'>
-                                <i className="fas fa-sign-out-alt"></i>
-                            </div> */}
                             
                         </div>
                     </div>
                 </div>
 
-                {/* <div className='home-header-banner'>
-                    <a href = 'https://highclub.vn/collections/sale'>
-                        <img className='home-banner-content' src = {event} />
-                    </a>
-                </div> */}
             </React.Fragment>
         );
     }

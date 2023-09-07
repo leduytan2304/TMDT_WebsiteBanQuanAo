@@ -19,6 +19,7 @@
             align-items: center;
 
             i {
+                display: none;
                 font-size: 25px;
                 color: grey;
                 cursor: pointer;
@@ -47,6 +48,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            text-align: center;
 
             a {
                 text-decoration: none;
@@ -76,11 +78,16 @@
             justify-content: space-evenly;
             align-items: center;
 
-            i {
-                font-size: 25px;
-                cursor: pointer;
-                color: black;
+            .login-icon, .cart-icon {
+                margin: 0 10px;
+
+                i {
+                    font-size: 25px;
+                    cursor: pointer;
+                    color: black;
+                }
             }
+
 
             a {
                 color: none;
@@ -111,6 +118,100 @@
                 }
             }
         }
+
+        @media (max-width: 900px) {
+            .center-content {
+                display: none;
+                position: fixed;
+                top: 69px;
+                left: -100%; /* Di chuyển menu ra ngoài màn hình */
+                width: 23%; /* Điều chỉnh kích thước nếu cần */
+                height: 60%;
+                background-color: white; /* Điều chỉnh màu nền nếu cần */
+                transition: left 0.3s ease-in-out;
+            }
+            .left-content {
+                i {
+                    display: block;
+                }
+            }
+            .right-content {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .right-content {
+                width: 60%;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .right-content {
+                width: 70%;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .right-content {
+                width: 80%;
+            }
+        }
+
+        .center-content.show {
+            display: flex;
+            flex-direction: column;
+            left: 0;
+            justify-content: space-around;
+
+            .child-content {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    .home-header-container {
+        padding: 0 15px;
+
+        .home-header-content {
+            display: flex;
+            justify-content: start;
+
+            .left-content {
+                width: 20%;
+
+                i {
+                    font-size: 16px;
+                }
+            }
+
+            .right-content {
+                width: 80%;
+
+                .search {
+                    input {
+                        width: 140px;
+                        padding: 8px;
+                    }
+
+                    i {
+                        margin: 0;
+                    }
+                }
+
+                .login-icon, .cart-icon {
+                    margin: 0 5px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    .right-content {
+        width: 85%;
     }
 }
 

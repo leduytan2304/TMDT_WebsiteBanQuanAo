@@ -68,7 +68,7 @@ class SearchResult extends Component {
                             {this.state.images.map((image, index) => (
                                 <div className='col-3 product' onClick={() => this.handleViewDetailProductSearch(image.ProductID)}>
 
-                                    <div  className='product-img'>
+                                    <div  className='search-product'>
                                     <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />
                                         <div className='product-discount'>
                                             <span>-6%</span>

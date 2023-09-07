@@ -52,10 +52,10 @@
                 background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
             }
 
-            .forgot-password {
-                font-size: 13px;
-                text-decoration: none;
-            }
+            // .forgot-password {
+            //     font-size: 13px;
+            //     text-decoration: none;
+            // }
 
             .signin-link {
                 float: right;
@@ -105,7 +105,18 @@
         height: 450px;
     }
     .register-container {
-        height: 560px;
+        height: 655px;
+        .login-content {
+            padding: 5px !important;
+
+            .login-text {
+                padding-bottom: 5px !important;
+            }
+
+            .login-input {
+                margin: 5px 0 !important;
+            }
+        }
     }
     @media screen and (max-width: 380px) {
         .login-container {
