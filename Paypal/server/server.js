@@ -78,14 +78,9 @@ const createOrder = async (cart) => {
     method: "POST",
     body: JSON.stringify(payload),
   });
-  // var address = []
-  // await axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
-  //           .then(res => {
-  //             const data = res.data 
-  //             this.setState({address : data});
-  //             console.log('Name: ',address[0] );
-  //           })
-  // await fetch(`http://localhost:8000/api/cart_payment/createOrder/${UserID}` , { // thay đổi user sau
+
+            
+  // await fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { // thay đổi user sau
   //         method: 'POST',
   //         body: JSON.stringify({
   //           userID: UserID ,
@@ -133,6 +128,63 @@ const captureOrder = async (orderID) => {
       // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
     },
   });
+  const address =[];
+  axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
+  .then(res => {
+    address.push(res.data)
+    console.log('address: ', address[0][0].ReceiverName);
+    
+    fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+            method: 'POST',
+            body: JSON.stringify({
+              userID: UserID ,
+              delivery_option: "Giao hàng",
+              user_address: address[0][0].UserAddress,
+              receiver_name: address[0][0].ReceiverName,
+              receiver_number: address[0][0].ReceiverPhoneNumber,
+              payment_method_name: "Chuyển khoản",
+              customer_payment_details: "Thanh toán thông qua PayPal",
+              payment_transaction_time:"NOW()",
+              payment_status: "Đã thanh toán",
+              voucher_id : null,
+              point_redeem : 0,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+            .then((response) => {
+              console.log('post success')
+              response.json()
+          })
+            .then((json) => console.log(json));
+  })
+  // await fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+  //           method: 'POST',
+  //           body: JSON.stringify({
+  //             userID: UserID ,
+  //             delivery_option: "Giao hàng",
+  //             user_address: address[0][0].UserAddress,
+  //             receiver_name: address[0][0].ReceiverName,
+  //             receiver_number: address[0][0].ReceiverPhoneNumber,
+  //             payment_method_name: "Chuyển khoản",
+  //             customer_payment_details: "Thanh toán thông qua PayPal",
+  //             payment_transaction_time:"NOW()",
+  //             payment_status: "Đã thanh toán",
+  //             voucher_id : null,
+  //             point_redeem : 0,
+  //           }),
+  //           headers: {
+  //             'Content-type': 'application/json; charset=UTF-8',
+  //           },
+  //         })
+  //           .then((response) => {
+  //             console.log('post success')
+  //             response.json()
+  //         })
+  //           .then((json) => console.log(json));
+
+
 
   return handleResponse(response);
 };
@@ -185,22 +237,11 @@ app.use((req, res, next) => {
 });
 
 app.post("/", async (req, res) => {
-  
-  await axios.get(`http://localhost:8000/api/cart_payment/${req.body.userID}`)
-  .then(res => {
-   const  totalMoney = []
-    totalMoney.push(res.data)
-   
-    
-    for (var key in totalMoney[0][0]) {
-      console.log("Key1: " + key);
-      console.log("Value: " + totalMoney[0][0][key]);
-      console.log("Tien Tong: " ,parseFloat(totalMoney[0][0][key]/24300).toFixed(2))
-      global.CartMoney = parseFloat(totalMoney[0][0][key]/24300).toFixed(2)
-  }
-  })
-  .catch(error => console.log(error));
-    console.log(req.body.userID);
+  global.UserID = req.body.userID
+  console.log('UserID',UserID);
+  global.CartMoney = parseFloat(req.body.totalCartMoney/24300).toFixed(2)
+
+
  
 });
 app.get("/", (req, res) => {

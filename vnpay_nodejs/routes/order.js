@@ -16,9 +16,9 @@ router.get('/', function(req, res, next){
 
 
 router.post('/create_payment_url', function (req, res, next) {
-    global.User = req.body.userID;
-
-    console.log('req.body, post',User);
+    global.MainUser = req.body.userID;
+    global.totalCartMoney = req.body.totalCartMoney;
+    console.log('req.body, post',MainUser);
    
     process.env.TZ = 'Asia/Ho_Chi_Minh';
      let date = new Date();
@@ -60,7 +60,6 @@ router.post('/create_payment_url', function (req, res, next) {
      if(bankCode !== null && bankCode !== ''){
          vnp_Params['vnp_BankCode'] = bankCode;
      }
- 
      vnp_Params = sortObject(vnp_Params);
  
      let querystring = require('qs');
@@ -78,25 +77,9 @@ router.post('/create_payment_url', function (req, res, next) {
 
 
  router.get('/create_payment_url',async function  (req, res, next) {
-    
-    req.app.get('/create_payment_url');
-    var totalMoney  =[];
-    const UserID =  User;
-    global.MainUser = UserID;
-    console.log('req.body, get: ',UserID);
-    await axios.get(`http://localhost:8000/api/cart_payment/${UserID}`)
-    .then(res => {
-      totalMoney.push(res.data)
-      console.log('totalMoney1: ',totalMoney);
-    })
-    .catch(error => console.log(error));
-    for (var key in totalMoney[0][0]) {
-        console.log("Key1: " + key);
-        console.log("Value: " + totalMoney[0][0][key]);
-        res.render('order', {title: 'Xác nhận đơn của bạn', amount: totalMoney[0][0][key]})
-
-    }
-    
+    console.log('req.body, get: ',MainUser  );
+    console.log('totalCartMoney: ',totalCartMoney);
+        res.render('order', {title: 'Xác nhận đơn của bạn', amount: totalCartMoney})
 
     
 });
@@ -158,7 +141,7 @@ router.get('/vnpay_return', function (req, res, next) {
                 receiver_name: data[0].ReceiverName,
                 receiver_number: data[0].ReceiverPhoneNumber,
                 payment_method_name: "Chuyển khoản",
-                customer_payment_details: "Thanh toán thông qua ...",
+                customer_payment_details: "Thanh toán thông qua VNPAY",
                 payment_transaction_time:"NOW()",
                  payment_status: "Đã thanh toán",
                  voucher_id : null,

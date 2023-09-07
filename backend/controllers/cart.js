@@ -184,17 +184,30 @@ export const createOrder = (req ,res)=>{
     if (err) 
     return res.status(500).json(err);
     else {
-
       console.log(result1);
       return res.status(200).json(result1);
-      
     // });
     }
     /// xóa món đồ khỏi giỏ hàng
- 
-    
-    
-    
+  });
+}
+
+export const createOrderPayPal = (req ,res)=>{
+  // tạo đơn đặt hàng
+  const values = [
+    req.body
+  ]
+  const q = 'CALL sp_CreateOrder("' +req.body.userID +'","' + req.body.delivery_option +'","' + req.body.user_address +'","' +req.body.receiver_name +'","' +req.body.receiver_number +'","' + req.body.payment_method_name +'","' + req.body.customer_payment_details + '",NOW(),"'+req.body.payment_status+'",NULL,0); '; // sửa lại từng user riêng
+  console.log('Query: ',q);
+  db.query(q, (err, result1) => {
+    if (err) 
+    return res.status(500).json(err);
+    else {
+      console.log(result1);
+      return res.status(200).json(result1);
+    // });
+    }
+    /// xóa món đồ khỏi giỏ hàng
   });
 }
 
@@ -215,8 +228,6 @@ export const getUserAddress = (req ,res)=>{
     }
   });
     //lấy địa chỉ của khách hàng
- 
-    
 }
 
 
@@ -241,20 +252,13 @@ export const refundMoney = (req ,res)=>{
           console.log(result2);
           return res.status(200).json(result2);
         }
-       
-      
     });
     }
     /// xóa món đồ khỏi giỏ hàng refund
- 
-    
-    
     
   });
     //lấy địa chỉ của khách hàng
 }
-
-
 export const testing = (req ,res)=>{
   const currentUrl = req.params.userID;
   // console.log('url ' + currentUrl);
@@ -276,12 +280,10 @@ export const testing = (req ,res)=>{
         res.status(200).json(result)
       })
     });
-    
     // var updateCart = "call sp_AddProductIntoShoppingCart('" + result[0].ProductVariantID + "','" + values[0].number + "', '"+ values[0].userID + "')";
     // db.query(updateCart, (err, result) => {
     //   if (err) return res.status(500).json(err);
     //   console.log(result);
     // });
-    
   }
 

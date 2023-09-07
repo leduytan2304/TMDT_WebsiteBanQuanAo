@@ -8,6 +8,7 @@ import * as actions from "../../../store/actions";
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
+import { handleEditAddress } from '../../../services/userService';
 
 import './Address.scss';
 
@@ -21,7 +22,9 @@ class Address extends Component {
             show_e: null,
             delivery_addr: '',
             address: [],
+            addressEdit: [],
             edit_fill: '',
+            selectedAddress: null,
         };
     }   
 
@@ -36,21 +39,57 @@ class Address extends Component {
 
     // mở hộp thoại chỉnh sửa địa chỉ
     handleCloseEdit = () => {
-        this.setState({ show_e: false });
+        this.setState({show_e: false });
     };
 
-    handleShowEdit = (id) => {
+    handleShowEdit = (arrayIndex) => {
         this.setState({ show_e: true });
-        this.setState({edit_fill: this.state.address.find(obj => {
-                return obj.AddressID == id;
-            })
-        })
+        // this.setState({edit_fill: this.state.address.find(obj => {
+        //         return obj.AddressID == id;
+        //     })
+        // })
+       
+        const selectedAddress = this.state.address[arrayIndex];
 
+        this.setState({ editAddress: selectedAddress.Address,
+                        editAddressName: selectedAddress.AddressName,
+                        editReceiverName: selectedAddress.ReceiverName,
+                        editTel: selectedAddress.ReceiverPhoneNumber,
+                        editDefaultAddress: selectedAddress.DefaultAddress,
+                        idAddress: selectedAddress.AddressID
+        });
+        console.log("ARR index", arrayIndex)
     };  
+
     paymentOptionChange = (event) => {
         this.setState({
             delivery_addr: event.target.value,
         });
+    }
+
+    handleEdit = async () => {
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        try {
+            let dataApi = await handleEditAddress(personsObject, this.state.addressEdit['Firstname']
+            );
+            if (dataApi == 0){
+                console.log("Err code ", dataApi)
+            }
+            else if (dataApi !== 0) {
+                this.setState({show_e: false});
+                console.log("Message: ", dataApi);
+            }
+        }
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            console.log("Lỗi", e.response)
+        }
     }
 
     componentDidMount(){
@@ -58,14 +97,36 @@ class Address extends Component {
         axios.get(`http://localhost:8000/api/user/address/${personsObject}`)
         .then(res => {
         const address = res.data;
-        this.setState({ address, delivery_addr: address[0].AddressID });
-
+        this.setState({ address, delivery_addr: address[0].AddressID});
+        console.log("id",address[0].AddressID)
         })
         .catch(error => console.log(error));
     };
 
+    handleOnChangeAddress = (event, arrayIndex) => {
+        const updatedAddress = { ...this.state.address[arrayIndex] }; 
+
+        updatedAddress.Address = event.target.value;
+      
+        this.setState({ address: updatedAddress });
+    };
+
+    handleEditAddressChange = (newValue, index) => {
+
+        const updatedEditingAddress = [...this.state.address];
+
+        updatedEditingAddress[index].Address = newValue;
+
+        this.setState({ editAddress: updatedEditingAddress[index].Address });
+
+        console.log("Update",updatedEditingAddress);
+        console.log("Index", index)
+      };
+
     render() {
         const { processLogout } = this.props;
+        const { editAddress, editAddressName, editDefaultAddress, editReceiverName, editTel } = this.state;
+        // console.log("index 1", editAddress)
         return (
             <div>
             <HomeHeader />
@@ -120,8 +181,8 @@ class Address extends Component {
 
                         <div  class="col-7"> 
                             <form action="#">
-                                {this.state.address.map(addres => (
-                                <label key = {addres.AddressID} for={addres.AddressID}>
+                                {this.state.address.map((addres, index) => (
+                                <label key = {index} for={addres.AddressID}>
 
                                     <div class="title-address row"> 
                                         <div className="col-11">
@@ -129,9 +190,10 @@ class Address extends Component {
                                         </div> 
                                         <div className="col-1" align="right">
 
-                                            <i class="far fa-edit" value={addres.AddressID} onClick={() => this.handleShowEdit(addres.AddressID)}></i>
+                                            <i class="far fa-edit" onClick={() => this.handleShowEdit(index)} ></i>
 
                                             <Modal show={this.state.show_e} onHide={this.handleCloseEdit} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+
                                                 <Modal.Header  style={{margin: '10px'}}> 
                                                     <Modal.Title>
                                                         Sửa địa chỉ
@@ -141,40 +203,30 @@ class Address extends Component {
                                                 <Modal.Body>
                                                 <Form style={{padding: '10px'}}>
                                                     <Form.Group className="mb-3">
-                                                        <Form.Label>Họ và tên</Form.Label>
-                                                        <Form.Control type="text" />
+                                                        <Form.Label>Họ tên</Form.Label>
+                                                        <Form.Control type="text" value={editReceiverName}/>
                                                     </Form.Group>
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>Số điện thoại</Form.Label>
-                                                        <Form.Control type="number" />
+                                                        <Form.Control type="number" value={editTel}/>
                                                     </Form.Group>
 
                                                     <Form.Group className="mb-3">
-                                                        <Form.Label>Số nhà</Form.Label>
-                                                        <Form.Control type="text"/>
+                                                        <Form.Label>Tên địa chỉ</Form.Label>
+                                                        <Form.Control type="text" value={editAddressName}/>
                                                     </Form.Group>
 
                                                     <Form.Group className="mb-3">
-                                                        <Form.Label>Đường</Form.Label>
-                                                        <Form.Control type="text"/>
+                                                        <Form.Label>Địa chỉ</Form.Label>
+                                                        <Form.Control type="text" value={editAddress}
+                                                         onChange={ (e) => this.handleEditAddressChange(e.target.value, index)}/>
                                                     </Form.Group>
 
-                                                    <Form.Group className="mb-3 addr">
-                                                        <Row >
-                                                            <Col>
-                                                                <Form.Label>Phường</Form.Label>
-                                                                <Form.Control type="text"/>
-                                                            </Col>
-                                                            <Col>
-                                                                <Form.Label>Quận</Form.Label>
-                                                                <Form.Control type="text"/>
-                                                            </Col>
-                                                            <Col>
-                                                                <Form.Label>Thành phố</Form.Label>
-                                                                <Form.Control type="text"/>
-                                                            </Col>
-                                                        </Row>
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Là địa chỉ mặc định ?</Form.Label>
+                                                        <Form.Control type="text" value={editDefaultAddress}/>
                                                     </Form.Group>
+
                                                 </Form>
                                                 </Modal.Body>
 
@@ -186,6 +238,7 @@ class Address extends Component {
                                                         OK
                                                     </Button>
                                                 </Modal.Footer>
+
                                             </Modal>
                                         </div>
 

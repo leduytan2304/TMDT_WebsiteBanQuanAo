@@ -33,7 +33,7 @@ app.use("/api/chi-tiet-do",detailProduct);
 // app.use("/api/chi-tiet-quan",detailProduct)
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/cart_payment", cartRoutes); // API thanh toán giỏ hàng , // lưu ý chưa cá nhân hóa cho từng user đc
+app.use("/api/cart_payment", cartRoutes); // API thanh toán giỏ hàng 
 app.use("/api", authRoutes); // API để login/register
 
 
