@@ -123,7 +123,7 @@ class Info extends Component {
     refundMoney = (CartID) =>{
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         console.log('UserID: ',UserID);
-        fetch(`http://localhost:8000/api/cart_payment/refund/${UserID}`  , { // thay đổi user sau
+        fetch(`http://localhost:8000/api/cart_payment/refund/${UserID}`  , { 
                 method: 'POST',
                 body: JSON.stringify({
                   userID: UserID,

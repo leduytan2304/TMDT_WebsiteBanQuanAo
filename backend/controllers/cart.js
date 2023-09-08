@@ -235,6 +235,7 @@ export const getUserAddress = (req ,res)=>{
 export const refundMoney = (req ,res)=>{
   var q = 'call sp_AddProductBackToCart("' +req.body.cartID+ '","'+ req.body.userID+ '")'
   var q2 = 'update sql12643980.Order set OrderStatus = "Đã Hoàn Tiền" where OrderID = "' +req.body.cartID +'";'
+
   console.log(q);
   db.query(q, (err, result1) => {
     if (err) 
@@ -257,6 +258,24 @@ export const refundMoney = (req ,res)=>{
     /// xóa món đồ khỏi giỏ hàng refund
     
   });
+  var q3 = 'SELECT * FROM Order OD where OD.CustomerPaymentDetails = "Thanh toán thông qua PayPal" and UserID = "' + req.body.userID + '" and OrderID = " '+ req.body.cartID + '";'
+  console.log(q3);
+  db.query(q3, (err, result3) => {
+    if (err) 
+
+    return res.status(500).json(err);
+
+    else {
+      if( result3 != '')
+      {
+        console.log(result3);
+        
+      }
+
+    }
+  
+  });
+
     //lấy địa chỉ của khách hàng
 }
 export const testing = (req ,res)=>{

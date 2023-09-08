@@ -159,6 +159,8 @@ const captureOrder = async (orderID) => {
           })
             .then((json) => console.log(json));
   })
+
+
   // await fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
   //           method: 'POST',
   //           body: JSON.stringify({
@@ -214,6 +216,22 @@ app.post("/api/orders", async (req, res) => {
   }
 });
 
+//////
+
+app.post("/api/orders", async (req, res) => {
+  try {
+    // use the cart information passed from the front-end to calculate the order amount detals
+    const { cart } = req.body;
+    const { jsonResponse, httpStatusCode } = await createOrder(cart);
+    res.status(httpStatusCode).json(jsonResponse);
+  } catch (error) {
+    console.error("Failed to create order:", error);
+    res.status(500).json({ error: "Failed to create order." });
+  }
+});
+
+
+//////
 app.post("/api/orders/:orderID/capture", async (req, res) => {
   try {
     const { orderID } = req.params;
