@@ -20,7 +20,7 @@ class Header extends Component {
                     <Navigator menus={adminMenu} />
                 </div>
 
-                {/* nút logout */}
+                {/* nút back về trang chủ client*/}
                 <div className="btn btn-logout" title='Log out'>
                     <NavLink to ='/home' className='center-content-link' href=''>
                         <i className="fas fa-sign-out-alt"></i>
