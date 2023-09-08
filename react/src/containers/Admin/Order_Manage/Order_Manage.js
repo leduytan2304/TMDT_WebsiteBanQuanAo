@@ -8,6 +8,7 @@ import HomeFooter from '../../HomePage/HomeFooter';
 import axios from 'axios';
 
 import Detail_Order from './Detail_Order';
+import { updateStatusApi } from '../../../services/adminService';
 
 class Order_Manage extends Component {
 
@@ -50,15 +51,81 @@ class Order_Manage extends Component {
     }
 
     // Chấp nhận đơn hàng
-    handleAcceptOrder = (id) => {
-        console.log("Chấp nhận đơn hàng: ", id);
-        alert("Chấp nhận đơn hàng");
+    handleCompleteOrder = async (id) => {
+        const status = 'Hoàn thành';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Chấp nhận đơn hàng: ", id);
+                alert("Chấp nhận đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
+    }
+
+    handlePackageOrder = async (id) => {
+        const status = 'Đang đóng gói';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Chấp nhận đơn hàng: ", id);
+                alert("Chấp nhận đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
+    }
+
+    handleDiliveryOrder = async (id) => {
+        const status = 'Đang giao';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Chấp nhận đơn hàng: ", id);
+                alert("Chấp nhận đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
     }
 
     // Từ chối đơn hàng
-    handleRefuseOrder = (id) => {
-        console.log("Từ chối đơn hàng: ", id);
-        alert("Từ chối đơn hàng");
+    handleRefuseOrder = async (id) => {
+        const status = 'Huỷ';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Đã huỷ đơn hàng: ", id);
+                alert("Đã huỷ đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
     }
 
     componentDidMount() {
@@ -127,7 +194,7 @@ class Order_Manage extends Component {
                                         <td>
                                             <div className='order-action'>
                                                 <i className="fas fa-check-circle"
-                                                   onClick={() => this.handleAcceptOrder(order.OrderID)}></i>
+                                                   onClick={() => this.handlePackageOrder(order.OrderID)}></i>
                                                 <i className="fas fa-times-circle"
                                                    onClick={() => this.handleRefuseOrder(order.OrderID)}></i>
                                             </div>
@@ -170,9 +237,8 @@ class Order_Manage extends Component {
                                         <td>
                                             <div className='order-action'>
                                                 <i className="fas fa-check-circle"
-                                                   onClick={() => this.handleAcceptOrder(order.OrderID)}></i>
-                                                <i className="fas fa-times-circle"
-                                                   onClick={() => this.handleRefuseOrder(order.OrderID)}></i>
+                                                   onClick={() => this.handleDiliveryOrder(order.OrderID)}></i>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -212,9 +278,8 @@ class Order_Manage extends Component {
                                         <td>
                                             <div className='order-action'>
                                                 <i className="fas fa-check-circle"
-                                                   onClick={() => this.handleAcceptOrder(order.OrderID)}></i>
-                                                <i className="fas fa-times-circle"
-                                                   onClick={() => this.handleRefuseOrder(order.OrderID)}></i>
+                                                   onClick={() => this.handleCompleteOrder(order.OrderID)}></i>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -243,7 +308,7 @@ class Order_Manage extends Component {
                                     <tr key={order.OrderID}>
                                         <th scope="row">{order.OrderID}</th>
                                         <td>{order.OrderDate}</td>
-                                        <td>{order.OrderShippingDate}</td>
+                                        <td>{order.OrderFinishedDate}</td>
                                         <td className='form-payment'>{order.PaymentMethodName}</td>
                                         <td className='order-status-completed'>{order.OrderStatus}</td>
                                         <td>

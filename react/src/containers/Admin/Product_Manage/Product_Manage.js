@@ -136,8 +136,8 @@ class Product_Manage extends Component {
                                                 
                                                 <div className='product-name'>{image.ProductName}</div>
                                                 <div className='product-price'>
-                                                    <span>0</span>
-                                                    <del>{image.ProductPrice}</del>
+                                                    <span>{image.ProductPrice}</span>
+                                                    <del>199.000đ</del>
                                                 </div>
                                             </div>
                                         {/* </div> */}
