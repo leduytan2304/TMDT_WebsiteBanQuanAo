@@ -25,7 +25,7 @@ class Admin extends Component {
                             <Route path="/admin/customer-manage" component={Customer_Manage} />
                             <Route path="/admin/order-manage" component={Order_Manage} />
                             <Route path="/admin/sales-statistics" component={Sales_Statistics} />
-                            <Route path="/admin/user_info/id-user" component={CustomerDetail} />
+                            <Route path="/admin/user_info/:id" component={CustomerDetail} />
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

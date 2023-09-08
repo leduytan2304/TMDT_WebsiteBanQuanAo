@@ -10,7 +10,6 @@ import HomeFooter from '../../../HomePage/HomeFooter';
 
 import './Customer_Info.scss';
 import avatar from '../../../../assets/Users/Avatar.png'
-import { handleEditProfileApi } from '../../../../services/userService';
 
 const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
@@ -24,7 +23,6 @@ class Customer_Info extends Component {
         this.state = {
             persons: [],
             orders: [],
-            personsEdit: [],
             openDetail: false,
             id_order: '',
         }
@@ -63,31 +61,19 @@ class Customer_Info extends Component {
     }
 
     loadInfo () {
-        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        
-        axios.get(`http://localhost:8000/api/user/profile/${personsObject}`)
+        const lastSegment = window.location.pathname.split("/").pop();
+        axios.get(`http://localhost:8000/api/user/profile/${lastSegment}`)
         .then(res => {
         const persons = res.data[0];
         console.log(persons);
-        const personsEdit = res.data[0];
-        console.log(persons)
-        this.setState({ persons, personsEdit });
-        const button_payment = document.getElementById('refund');
-        
-        button_payment.addEventListener('click', event => {
-         //this.handleCreateOrder();   
-         console.log('ok');
-         this.refundMoney();
-        });
-        
+        this.setState({ persons});
         })
         .catch(error => console.log(error));
-        
     }
 
     loadOrder() {
-        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        axios.get(`http://localhost:8000/api/user/order/${personsObject}`)
+        const lastSegment = window.location.pathname.split("/").pop();
+        axios.get(`http://localhost:8000/api/user/order/${lastSegment}`)
         .then(res => {
         const orders = res.data;
         this.setState({ orders, load: true });
@@ -177,7 +163,7 @@ class Customer_Info extends Component {
                             
                                 <tbody class="table-group-divider overflow-auto">
                                     {this.state.orders.map((order, index) => (
-                                    <tr onClick={() => this.handleViewDetailOrder(order.id)}>
+                                    <tr onClick={() => this.handleViewDetailOrder(order.OrderID)}>
                                         <th key={index} scope="row">{index + 1}</th>
                                         <td>{order.OrderID}</td>
                                         <td>{order.Date}</td>

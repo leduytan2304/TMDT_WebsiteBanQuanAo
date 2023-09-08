@@ -6,17 +6,24 @@ import { NavLink } from 'react-router-dom';
 
 import HomeFooter from '../../HomePage/HomeFooter';
 import './Customer_Manage.scss'
+import axios from 'axios';
 
 class Customer_Manage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-
+            users: []
         }
     }
 
     componentDidMount() {
+        axios.get(`http://localhost:8000/api/admin/listuser`)
+        .then(res => {
+        const users = res.data;
+        this.setState({ users});
+        })
+        .catch(error => console.log(error));
     }
 
     handleViewDetailUser = (UserID) => {
@@ -24,7 +31,7 @@ class Customer_Manage extends Component {
         console.log(UserID);
         
         // this.props.history.push(`/admin/customer-manage/${UserID}`);
-        this.props.history.push(`/admin/user_info/id-user`);
+        this.props.history.push(`/admin/user_info/${UserID}`);
     };
     
 
@@ -49,33 +56,17 @@ class Customer_Manage extends Component {
                             </thead>
                             
                                 <tbody class="table-group-divider overflow-auto">
-                                    
-                                        <tr onClick={() => this.handleViewDetailUser(1)}>
-                                            <th scope="row"> 1 </th>
-                                            <td>Nguyễn Văn A</td>
-                                            <td>Nam</td>
-                                            <td>1/1/1970</td>
-                                            <td>nguyenvana@gmail.com</td>
-                                            <td>0123456789</td>
+                                {this.state.users.map((user, index) => (
+                                        <tr onClick={() => this.handleViewDetailUser(user.UserID)}>
+                                            <th scope="row"> {index + 1} </th>
+                                            <td>{user.LastName} {user.FirstName}</td>
+                                            <td>{user.Gender}</td>
+                                            <td>{user.Date}</td>
+                                            <td>{user.Email}</td>
+                                            <td>{user.Tel}</td>
                                         </tr>
                                     
-                                    <tr onClick={() => this.handleViewDetailUser(1)}>
-                                        <th scope="row"> 2 </th>
-                                        <td>Nguyễn Văn A</td>
-                                        <td>Nam</td>
-                                        <td>1/1/1970</td>
-                                        <td>nguyenvana@gmail.com</td>
-                                        <td>0123456789</td>
-                                    </tr>
-
-                                    <tr onClick={() => this.handleViewDetailUser(1)}>
-                                        <th scope="row"> 3 </th>
-                                        <td>Nguyễn Văn A</td>
-                                        <td>Nam</td>
-                                        <td>1/1/1970</td>
-                                        <td>nguyenvana@gmail.com</td>
-                                        <td>0123456789</td>
-                                    </tr>
+                                ))}
                                 </tbody>
 
                         </table>

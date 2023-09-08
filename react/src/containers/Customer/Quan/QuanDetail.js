@@ -8,6 +8,8 @@ import HomeFooter from '../../HomePage/HomeFooter';
 
 import '../DetailProduct.scss';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -51,8 +53,29 @@ class QuanDetail extends Component {
     }
 
     handleAddToCart = () => {
-        alert('Thêm vào giỏ');
-    }
+        const lastSegment = window.location.pathname.split("/").pop();
+        const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+
+        fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
+            method: 'POST',
+            body: JSON.stringify({
+                userID: UserID,
+                productID: lastSegment,
+                size: this.state.selectedSize,
+                number: this.state.quantityNum,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+
+            toast.success('Thêm hàng vào giỏ thành công', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 4000,
+            });
+        }
 
     handleBuyProduct = () => {
         alert('Mua hàng')

@@ -16,9 +16,10 @@ router.get('/', function(req, res, next){
 
 
 router.post('/create_payment_url', function (req, res, next) {
-    global.MainUser = req.body.userID;
-    global.totalCartMoney = req.body.totalCartMoney;
-    console.log('req.body, post',MainUser);
+    
+   global.User = req.body.userID;
+    global.totalCartMoney = req.body.totalCartMoney
+   console.log('req.body, post',User);
    
     process.env.TZ = 'Asia/Ho_Chi_Minh';
      let date = new Date();
@@ -71,12 +72,14 @@ router.post('/create_payment_url', function (req, res, next) {
      vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
      console.log(vnp_Params);
      res.redirect(vnpUrl)
-     console.log(vnp_Params);
+    //  console.log(vnp_Params);
 
  });
 
 
- router.get('/create_payment_url',async function  (req, res, next) {
+ router.get('/create_payment_url', function  (req, res, next) {
+    const UserID =  User;
+    global.MainUser = UserID;
     console.log('req.body, get: ',MainUser  );
     console.log('totalCartMoney: ',totalCartMoney);
         res.render('order', {title: 'Xác nhận đơn của bạn', amount: totalCartMoney})
@@ -159,8 +162,6 @@ router.get('/vnpay_return', function (req, res, next) {
               .then((json) => console.log(json));
 
             })
-           
-              
 
         res.render('success', {code: vnp_Params['vnp_ResponseCode'], vnp_Params_response: JSON.stringify(vnp_Params)})
         // console.log(vnp_ResponseCode);
