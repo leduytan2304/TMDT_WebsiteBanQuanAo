@@ -7,7 +7,10 @@ const addProductApi = (productName, productDes, productCate, productPrice, produ
         price: productPrice, material: productMaterial, discount: productDis, link: productLink, color: productColor, size: productSize});
 }
 
+const updateStatusApi = (orderid, orderstatus) => {
+    return axios.put('http://localhost:8000/api/admin/updatestatus', {orderid: orderid, orderstatus:orderstatus });
+}
 
 
 
-export {addProductApi}
+export {addProductApi, updateStatusApi}

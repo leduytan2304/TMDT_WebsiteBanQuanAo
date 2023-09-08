@@ -5,59 +5,38 @@ import { connect } from 'react-redux';
 import './Order_Manage.scss';
 
 import HomeFooter from '../../HomePage/HomeFooter';
+import axios from 'axios';
 
 import Detail_Order from './Detail_Order';
+import { updateStatusApi } from '../../../services/adminService';
 
 class Order_Manage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            orders1: [],
+            orders2: [],
+            orders3: [],
+            orders4: [],
             openDetail: false,
             id_order: '',
-            wait_confirm: new Array(5).fill(null).map((_, index) => ({
-                id: index,
-                name: 'Order is pending confirmation: ' + index,
-                date: '01-01-2023',
-                form_payment: 'COD',
-                status: 'Chờ xác nhận',
-                detail: "Xem chi tiết",
-            })),
-            packing: new Array(4).fill(null).map((_, index) => ({
-                id: index,
-                name: 'Order is being packed: ' + index,
-                date: '01-01-2023',
-                form_payment: 'COD',
-                status: 'Đang đóng gói',
-                detail: "Xem chi tiết",
-            })),
-            delivering: new Array(6).fill(null).map((_, index) => ({
-                id: index,
-                name: 'Order is being delivered: ' + index,
-                date: '01-01-2023',
-                form_payment: 'COD',
-                status: 'Đang giao',
-                detail: "Xem chi tiết",
-            })),
-            completed: new Array(10).fill(null).map((_, index) => ({
-                id: index,
-                name: 'Order completed: ' + index,
-                date: '01-01-2023',
-                delivery_date: '01-01-2023',
-                form_payment: 'COD',
-                status: 'Đã giao',
-                detail: "Xem chi tiết",
-            })),
-        }
+            status_order: '',
+            date_order: '',
+            method_order: '',
+            }
     }
 
 
     // Xem chi tiết đơn hàng
-    handleViewDetailOrder = (id) => {
+    handleViewDetailOrder = (id, status, date, method) => {
         console.log("Đơn hàng: ", id);
         this.setState({ 
             openDetail: true,
-            id_order: id
+            id_order: id,
+            status_order: status,
+            date_order: date,
+            method_order: method
         });
     }
 
@@ -72,15 +51,111 @@ class Order_Manage extends Component {
     }
 
     // Chấp nhận đơn hàng
-    handleAcceptOrder = (id) => {
-        console.log("Chấp nhận đơn hàng: ", id);
-        alert("Chấp nhận đơn hàng");
+    handleCompleteOrder = async (id) => {
+        const status = 'Hoàn thành';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Chấp nhận đơn hàng: ", id);
+                alert("Chấp nhận đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
+    }
+
+    handlePackageOrder = async (id) => {
+        const status = 'Đang đóng gói';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Chấp nhận đơn hàng: ", id);
+                alert("Chấp nhận đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
+    }
+
+    handleDiliveryOrder = async (id) => {
+        const status = 'Đang giao';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Chấp nhận đơn hàng: ", id);
+                alert("Chấp nhận đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
     }
 
     // Từ chối đơn hàng
-    handleRefuseOrder = (id) => {
-        console.log("Từ chối đơn hàng: ", id);
-        alert("Từ chối đơn hàng");
+    handleRefuseOrder = async (id) => {
+        const status = 'Huỷ';
+        try {
+            let dataApi = await updateStatusApi(id, status);
+            if (dataApi == 0){
+                console.log("Err code", dataApi)
+            }
+            if (dataApi !== 0) {
+                console.log("Đã huỷ đơn hàng: ", id);
+                alert("Đã huỷ đơn hàng");
+            }
+            return;
+        }
+        
+        catch(e){
+            console.log("Lỗi", e.response)
+        }
+    }
+
+    componentDidMount() {
+        axios.get(`http://localhost:8000/api/admin/orderconfirm`)
+        .then(res => {
+        const orders1 = res.data;
+        this.setState({ orders1 });
+        })
+        .catch(error => console.log(error));
+
+        axios.get(`http://localhost:8000/api/admin/orderdgoi`)
+        .then(res => {
+        const orders2 = res.data;
+        this.setState({ orders2 });
+        })
+        .catch(error => console.log(error));
+
+        axios.get(`http://localhost:8000/api/admin/orderdgiao`)
+        .then(res => {
+        const orders3 = res.data;
+        this.setState({ orders3 });
+        })
+        .catch(error => console.log(error));
+
+        axios.get(`http://localhost:8000/api/admin/orderht`)
+        .then(res => {
+        const orders4 = res.data;
+        this.setState({ orders4 });
+        })
+        .catch(error => console.log(error));
     }
 
     render() {
@@ -91,6 +166,7 @@ class Order_Manage extends Component {
                         <legend>
                             Chờ xác nhận
                         </legend>
+
                         <table class="table table-hover text-center table-bordered">
                             <thead class="table-light">
                                 <tr>
@@ -103,31 +179,33 @@ class Order_Manage extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.wait_confirm.map((order) => (
-                                    <tr key={order.id}>
-                                        <th scope="row">DH{order.id + 1}</th>
-                                        <td>{order.date}</td>
-                                        <td className='form-payment'>{order.form_payment}</td>
-                                        <td className='order-status-wait'>{order.status}</td>
+                                {this.state.orders1.map((order, index) => (
+                                    <tr key={order.OrderID}>
+                                        <th scope="row">{order.OrderID}</th>
+                                        <td>{order.OrderDate}</td>
+                                        <td className='form-payment'>{order.PaymentMethodName}</td>
+                                        <td className='order-status-wait'>{order.OrderStatus}</td>
                                         <td>
                                             <span className='view-detail-order' 
-                                                  onClick={() => this.handleViewDetailOrder(order.id)}>
-                                                {order.detail}
+                                                onClick={() => this.handleViewDetailOrder(order.OrderID, order.OrderStatus, order.OrderDate, order.PaymentMethodName)}>
+                                                Xem chi tiết
                                             </span>
                                         </td>
                                         <td>
                                             <div className='order-action'>
                                                 <i className="fas fa-check-circle"
-                                                   onClick={() => this.handleAcceptOrder(order.id)}></i>
+                                                   onClick={() => this.handlePackageOrder(order.OrderID)}></i>
                                                 <i className="fas fa-times-circle"
-                                                   onClick={() => this.handleRefuseOrder(order.id)}></i>
+                                                   onClick={() => this.handleRefuseOrder(order.OrderID)}></i>
                                             </div>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
+
                     </fieldset>
+
                     <fieldset>
                         <legend>
                             Đang đóng gói
@@ -144,24 +222,23 @@ class Order_Manage extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.packing.map((order) => (
+                                {this.state.orders2.map((order) => (
                                     <tr key={order.id}>
-                                        <th scope="row">DH{order.id + 1}</th>
-                                        <td>{order.date}</td>
-                                        <td className='form-payment'>{order.form_payment}</td>
-                                        <td className='order-status-packing'>{order.status}</td>
+                                        <th scope="row">{order.OrderID}</th>
+                                        <td>{order.OrderDate}</td>
+                                        <td className='form-payment'>{order.PaymentMethodName}</td>
+                                        <td className='order-status-packing'>{order.OrderStatus}</td>
                                         <td>
                                             <span className='view-detail-order' 
-                                                  onClick={() => this.handleViewDetailOrder(order.id)}>
-                                                {order.detail}
+                                                  onClick={() => this.handleViewDetailOrder(order.OrderID, order.OrderStatus, order.OrderDate, order.PaymentMethodName)}>
+                                                Xem chi tiết
                                             </span>
                                         </td>
                                         <td>
                                             <div className='order-action'>
                                                 <i className="fas fa-check-circle"
-                                                   onClick={() => this.handleAcceptOrder(order.id)}></i>
-                                                <i className="fas fa-times-circle"
-                                                   onClick={() => this.handleRefuseOrder(order.id)}></i>
+                                                   onClick={() => this.handleDiliveryOrder(order.OrderID)}></i>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -169,6 +246,7 @@ class Order_Manage extends Component {
                             </tbody>
                         </table>
                     </fieldset>
+
                     <fieldset>
                         <legend>
                             Đang giao
@@ -185,24 +263,23 @@ class Order_Manage extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.delivering.map((order) => (
-                                    <tr key={order.id}>
-                                        <th scope="row">DH{order.id + 1}</th>
-                                        <td>{order.date}</td>
-                                        <td className='form-payment'>{order.form_payment}</td>
-                                        <td className='order-status-delivery'>{order.status}</td>
+                                {this.state.orders3.map((order) => (
+                                    <tr key={order.OrderID}>
+                                        <th scope="row">{order.OrderID}</th>
+                                        <td>{order.OrderDate}</td>
+                                        <td className='form-payment'>{order.PaymentMethodName}</td>
+                                        <td className='order-status-delivery'>{order.OrderStatus}</td>
                                         <td>
                                             <span className='view-detail-order' 
-                                                  onClick={() => this.handleViewDetailOrder(order.id)}>
-                                                {order.detail}
+                                                  onClick={() => this.handleViewDetailOrder(order.OrderID, order.OrderStatus, order.OrderDate, order.PaymentMethodName)}>
+                                                Xem chi tiết
                                             </span>
                                         </td>
                                         <td>
                                             <div className='order-action'>
                                                 <i className="fas fa-check-circle"
-                                                   onClick={() => this.handleAcceptOrder(order.id)}></i>
-                                                <i className="fas fa-times-circle"
-                                                   onClick={() => this.handleRefuseOrder(order.id)}></i>
+                                                   onClick={() => this.handleCompleteOrder(order.OrderID)}></i>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -210,6 +287,7 @@ class Order_Manage extends Component {
                             </tbody>
                         </table>
                     </fieldset>
+
                     <fieldset>
                         <legend>
                             Hoàn thành
@@ -226,17 +304,17 @@ class Order_Manage extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.completed.map((order) => (
-                                    <tr key={order.id}>
-                                        <th scope="row">DH{order.id + 1}</th>
-                                        <td>{order.date}</td>
-                                        <td>{order.delivery_date}</td>
-                                        <td className='form-payment'>{order.form_payment}</td>
-                                        <td className='order-status-completed'>{order.status}</td>
+                                {this.state.orders4.map((order) => (
+                                    <tr key={order.OrderID}>
+                                        <th scope="row">{order.OrderID}</th>
+                                        <td>{order.OrderDate}</td>
+                                        <td>{order.OrderFinishedDate}</td>
+                                        <td className='form-payment'>{order.PaymentMethodName}</td>
+                                        <td className='order-status-completed'>{order.OrderStatus}</td>
                                         <td>
                                             <span className='view-detail-order' 
-                                                  onClick={() => this.handleViewDetailOrder(order.id)}>
-                                                {order.detail}
+                                                  onClick={() => this.handleViewDetailOrder(order.OrderID, order.OrderStatus, order.OrderDate, order.PaymentMethodName)}>
+                                                Xem chi tiết
                                             </span>
                                         </td>
                                     </tr>
@@ -244,12 +322,18 @@ class Order_Manage extends Component {
                             </tbody>
                         </table>
                     </fieldset>
+
                     {this.state.openDetail && (
                         <Detail_Order show = {this.state.openDetail} 
                                     id = {this.state.id_order}
+                                    status = {this.state.status_order}
+                                    date = {this.state.date_order}
+                                    method = {this.state.method_order}
                                     handleClose = {this.handleCloseDetailOrder} 
                                     handleConfirm = {this.handleConfirmDetailOrder}
-                                    handleShow = {this.handleViewDetailOrder}/>
+                                    handleShow = {this.handleViewDetailOrder}
+                                    
+                                    />
                     )} 
                 </div>
                 <HomeFooter />

@@ -23,8 +23,8 @@ class Address extends Component {
             delivery_addr: '',
             address: [],
             addressEdit: [],
-            edit_fill: '',
             selectedAddress: null,
+            editingIndex: null,
         };
     }   
 
@@ -43,11 +43,8 @@ class Address extends Component {
     };
 
     handleShowEdit = (arrayIndex) => {
-        this.setState({ show_e: true });
-        // this.setState({edit_fill: this.state.address.find(obj => {
-        //         return obj.AddressID == id;
-        //     })
-        // })
+        this.setState({ show_e: true,
+            editingIndex: arrayIndex });
        
         const selectedAddress = this.state.address[arrayIndex];
 
@@ -69,9 +66,10 @@ class Address extends Component {
 
     handleEdit = async () => {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+        const {idAddress, editAddress, editAddressName, editDefaultAddress, editReceiverName, editTel } = this.state;
         try {
-            let dataApi = await handleEditAddress(personsObject, this.state.addressEdit['Firstname']
-            );
+            let dataApi = await handleEditAddress(personsObject, idAddress, editAddressName, editAddress, editReceiverName ,editTel, editDefaultAddress);
+            console.log("Address", editAddress)
             if (dataApi == 0){
                 console.log("Err code ", dataApi)
             }
@@ -103,24 +101,54 @@ class Address extends Component {
         .catch(error => console.log(error));
     };
 
-    handleOnChangeAddress = (event, arrayIndex) => {
-        const updatedAddress = { ...this.state.address[arrayIndex] }; 
-
-        updatedAddress.Address = event.target.value;
-      
-        this.setState({ address: updatedAddress });
-    };
-
-    handleEditAddressChange = (newValue, index) => {
+    handleEditAddressChange = (newValue) => {
+        const { editingIndex } = this.state;
 
         const updatedEditingAddress = [...this.state.address];
 
-        updatedEditingAddress[index].Address = newValue;
+        updatedEditingAddress[editingIndex].Address = newValue;
 
-        this.setState({ editAddress: updatedEditingAddress[index].Address });
+        this.setState({ editAddress: updatedEditingAddress[editingIndex].Address});
+      };
 
-        console.log("Update",updatedEditingAddress);
-        console.log("Index", index)
+      handleEditReceiverName = (newValue) => {
+        const { editingIndex } = this.state;
+
+        const updatedEditingAddress = [...this.state.address];
+
+        updatedEditingAddress[editingIndex].ReceiverName = newValue;
+
+        this.setState({ editReceiverName: updatedEditingAddress[editingIndex].ReceiverName});
+      };
+
+      handleEditTel = (newValue) => {
+        const { editingIndex } = this.state;
+
+        const updatedEditingAddress = [...this.state.address];
+
+        updatedEditingAddress[editingIndex].ReceiverPhoneNumber = newValue;
+
+        this.setState({ editTel: updatedEditingAddress[editingIndex].ReceiverPhoneNumber});
+      };
+
+      handleEditIsDefault = (newValue) => {
+        const { editingIndex } = this.state;
+
+        const updatedEditingAddress = [...this.state.address];
+
+        updatedEditingAddress[editingIndex].DefaultAddress = newValue;
+
+        this.setState({ editDefaultAddress: updatedEditingAddress[editingIndex].DefaultAddress});
+      };
+
+      handleEditAddressName = (newValue) => {
+        const { editingIndex } = this.state;
+
+        const updatedEditingAddress = [...this.state.address];
+
+        updatedEditingAddress[editingIndex].AddressName = newValue;
+
+        this.setState({ editAddressName: updatedEditingAddress[editingIndex].AddressName});
       };
 
     render() {
@@ -192,7 +220,7 @@ class Address extends Component {
 
                                             <i class="far fa-edit" onClick={() => this.handleShowEdit(index)} ></i>
 
-                                            <Modal show={this.state.show_e} onHide={this.handleCloseEdit} aria-labelledby="contained-modal-title-vcenter" centered size="md">
+                                            <Modal key={index} show={this.state.show_e} onHide={this.handleCloseEdit} aria-labelledby="contained-modal-title-vcenter" centered size="md">
 
                                                 <Modal.Header  style={{margin: '10px'}}> 
                                                     <Modal.Title>
@@ -204,27 +232,35 @@ class Address extends Component {
                                                 <Form style={{padding: '10px'}}>
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>Họ tên</Form.Label>
-                                                        <Form.Control type="text" value={editReceiverName}/>
+                                                        <Form.Control type="text" value={editReceiverName}
+                                                        onChange={(e) => {this.handleEditReceiverName(e.target.value)}}
+                                                        />
                                                     </Form.Group>
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>Số điện thoại</Form.Label>
-                                                        <Form.Control type="number" value={editTel}/>
+                                                        <Form.Control type="number" value={editTel}
+                                                         onChange={(e) => {this.handleEditTel(e.target.value)}}
+                                                        />
                                                     </Form.Group>
 
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>Tên địa chỉ</Form.Label>
-                                                        <Form.Control type="text" value={editAddressName}/>
+                                                        <Form.Control type="text" value={editAddressName}
+                                                         onChange={(e) => {this.handleEditAddressName(e.target.value)}}
+                                                        />
                                                     </Form.Group>
 
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>Địa chỉ</Form.Label>
-                                                        <Form.Control type="text" value={editAddress}
-                                                         onChange={ (e) => this.handleEditAddressChange(e.target.value, index)}/>
+                                                        <Form.Control type="text" value={editAddress} 
+                                                         onChange={(e) => {this.handleEditAddressChange(e.target.value)}}/>
                                                     </Form.Group>
 
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>Là địa chỉ mặc định ?</Form.Label>
-                                                        <Form.Control type="text" value={editDefaultAddress}/>
+                                                        <Form.Control type="text" value={editDefaultAddress}
+                                                         onChange={(e) => {this.handleEditIsDefault(e.target.value)}}
+                                                        />
                                                     </Form.Group>
 
                                                 </Form>
@@ -234,7 +270,7 @@ class Address extends Component {
                                                     <Button variant="secondary" onClick={this.handleCloseEdit} className="btn-return">
                                                         Trở về
                                                     </Button>
-                                                    <Button variant="primary" onClick={this.handleCloseEdit} className="btn-payment">
+                                                    <Button variant="primary" onClick={this.handleEdit} className="btn-payment">
                                                         OK
                                                     </Button>
                                                 </Modal.Footer>

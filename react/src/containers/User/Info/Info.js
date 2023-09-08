@@ -345,34 +345,6 @@ class Info extends Component {
                                         <Form.Control type="number" value={this.state.personsEdit['Tel']}
                                         onChange={this.handleOnChangeTel}/>
                                     </Form.Group>
-
-                                    {/* <Form.Group className="mb-3">
-                                        <Form.Label>Số nhà</Form.Label>
-                                        <Form.Control type="text"/>
-                                    </Form.Group>
-
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Đường</Form.Label>
-                                        <Form.Control type="text"/>
-                                    </Form.Group>
-
-                                    <Form.Group className="mb-3">
-                                        <Row >
-                                            <Col>
-                                                <Form.Label>Phường</Form.Label>
-                                                <Form.Control type="text"/>
-                                            </Col>
-                                            <Col>
-                                                <Form.Label>Quận</Form.Label>
-                                                <Form.Control type="text"/>
-                                            </Col>
-                                            <Col>
-                                                <Form.Label>Thành phố</Form.Label>
-                                                <Form.Control type="text"/>
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                     */}
                                 </Form>
                             </Modal.Body>
 

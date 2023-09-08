@@ -19,7 +19,7 @@ import '../admin.scss';
 import HomeFooter from '../../HomePage/HomeFooter';
 
 import AddCatalog from './AddCatalog';
-import Delete from '../Delete';
+// import Delete from '../Delete';
 import EditCatalog from './EditCatalog';
 import AddProduct_Catalog from './AddProduct_Catalog';
 
@@ -60,26 +60,26 @@ class Catalog_Manage extends Component {
 
     //Những cửa sổ cho xóa danh mục
 
-    handleCloseDelete = () => {
-        this.setState({ 
-            showDelete: false,
-        });
-    }
+    // handleCloseDelete = () => {
+    //     this.setState({ 
+    //         showDelete: false,
+    //     });
+    // }
 
-    handleConfirmDelete = () => {
-        this.setState({ showDelete: false});
-        alert('Xóa danh mục')
-    }
+    // handleConfirmDelete = () => {
+    //     this.setState({ showDelete: false});
+    //     alert('Xóa danh mục')
+    // }
 
-    handleShowDelete = (categoryName) => {
-        this.setState({ 
-            showDelete: true,
-            // selectedCategoryID:categoryId,
-            selectedCategoryName:categoryName
-        }); 
-        // console.log(categoryId);
-        console.log(categoryName, "show delete" );
-    }
+    // handleShowDelete = (categoryName) => {
+    //     this.setState({ 
+    //         showDelete: true,
+    //         // selectedCategoryID:categoryId,
+    //         selectedCategoryName:categoryName
+    //     }); 
+    //     // console.log(categoryId);
+    //     console.log(categoryName, "show delete" );
+    // }
 
 
     //Những cửa sổ cho thêm danh mục
@@ -197,7 +197,7 @@ class Catalog_Manage extends Component {
         };
         return (
             <React.Fragment>
-                <div className='admin-container'>
+                <div className='admin-container catalog-frame'>
                     <div className='admin-content'>
                         <div className='admin-header'>
                             <span>Danh mục: </span>
@@ -211,8 +211,8 @@ class Catalog_Manage extends Component {
                                         <div className='catalog-content'>
                                             {category.name}
                                             <div className='icon-action'>
-                                                <i class="far fa-times-circle" 
-                                                   onClick={() => this.handleShowDelete(category.name)}></i>
+                                                {/* <i class="far fa-times-circle" 
+                                                   onClick={() => this.handleShowDelete(category.name)}></i> */}
                                                 <i class="fas fa-edit"
                                                    onClick={() => this.handleShowEdit(category.name)}></i>
                                                 <i class="fas fa-caret-down" 
@@ -258,12 +258,12 @@ class Catalog_Manage extends Component {
                                 ))}
                             </ul>
                         </div>
-                        {this.state.showDelete && (
+                        {/* {this.state.showDelete && (
                             <Delete show = {this.state.showDelete} 
                                     handleClose = {this.handleCloseDelete} 
                                     handleConfirm = {this.handleConfirmDelete}
                                     handleShow = {this.handleShowDelete}/>
-                        )} 
+                        )}  */}
                         {this.state.showAdd && (
                             <AddCatalog show = {this.state.showAdd} 
                                         handleClose = {this.handleCloseAdd} 
