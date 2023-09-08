@@ -59,16 +59,15 @@ class App extends Component {
                         <div className="content-container">
                             <CustomScrollbars style = {{height: '100vh', width: '100%'}}>
                                 <Switch>
-                                    {/* { isAdmin && <Route path={path.ADMIN} component={Admin} /> }
-                                    <Redirect from="/admin" to="/home" /> */}
+                                    { isAdmin && <Route path={path.ADMIN} component={Admin} /> }
+                                    <Redirect from="/admin" to="/home" />
+
     
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.LOGIN} component={userIsAuthenticated(Login)} />
                                     <Route path={path.REGISTER} component={userIsAuthenticated(Register)} />
 
-                                    {/* đang để dòng admin vầy cho dễ làm :v mốt làm xong xóa :v */}
-                                    <Route path={path.ADMIN} component={Admin} />
 
                                     <Route path={path.SIEUSALE} component={SieuSalePage} />
                                     <Route path={path.SANPHAMMOI} component={SanPhamMoiPage} />
@@ -76,8 +75,8 @@ class App extends Component {
                                     <Route path={path.QUAN} component={QuanPage} />
                                     <Route path={path.SEARCH} component={SearchResult} />
                                     <Route path={path.INFO} component={userIsNotAuthenticated(UserPage)} />
-                                    <Route path={path.ADDRESS} component={AddressPage} />
-                                    <Route path={path.CART} component={CartPage} />
+                                    <Route path={path.ADDRESS} component={userIsNotAuthenticated(AddressPage)} />
+                                    <Route path={path.CART} component={userIsNotAuthenticated(CartPage)} />
                                     <Route path={path.PAYMENT} component={PaymentPage} />
                                     <Route path={path.SUCCESS} component={SuccessPage} />
                                     {/* <Route path="/users/:id" component={SieuSalePage} /> */}
