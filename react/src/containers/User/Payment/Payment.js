@@ -288,7 +288,7 @@ class Payment extends Component {
                                     </div>
                                 </label>
 
-                                <label class="payment-method row" for="pm2">
+                                <label class="payment-method row" for="pm3">
                                     <div class="col-1">
                                         <img src={paypal}></img>
                                     </div>
@@ -296,7 +296,7 @@ class Payment extends Component {
                                         <h3>Thanh toán qua PAYPAL</h3>
                                     </div>
                                     <div class="col-1" align="right">
-                                        <input id="pm2" name="methud" type="radio" value="vnpay" checked={this.state.payment_method === 'vnpay'} onChange={this.paymentOptionChange}/> 
+                                        <input id="pm3" name="methud" type="radio" value="paypal" checked={this.state.payment_method === 'paypal'} onChange={this.paymentOptionChange}/> 
                                     </div>
                                 </label>
                             </form>
@@ -308,10 +308,10 @@ class Payment extends Component {
                                 </NavLink>
                                 <button type="button" id="Payment" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrder()}  > 
                                         THANH TOÁN
-                                    </button>
-                                    <button type="button" id="PaymentPAYPAL" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrderPaypal()}  > 
-                                        PAYPAL
-                                    </button>
+                                </button>
+                                <button type="button" id="PaymentPAYPAL" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrderPaypal()}  > 
+                                    PAYPAL
+                                </button>
                                     
                                   
                                     
