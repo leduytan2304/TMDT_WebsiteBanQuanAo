@@ -445,14 +445,14 @@ class Cart extends Component {
                                             <b>- {VND.format(this.state.discount)}</b>
                                         </div>
                                         
-                                        <div class="row discount-use">
+                                        {/* <div class="row discount-use">
                                             <div class="col-7" align="left">
                                                 - Khách hàng Đồng
                                             </div>
                                             <div class="col" align="right">
                                                 - {VND.format(12345)}
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                     <Modal show={this.state.show} onHide={this.handleClose} aria-labelledby="contained-modal-title-vcenter" centered size="md">
