@@ -59,7 +59,12 @@ class AoDetail extends Component {
         const lastSegment = window.location.pathname.split("/").pop();
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
-        fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
+        const { isLoggedIn } = this.props;
+
+        console.log("Loggin: ",isLoggedIn);
+
+        if (isLoggedIn === true) {
+            fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
             method: 'POST',
             body: JSON.stringify({
                 userID: UserID,
@@ -78,6 +83,14 @@ class AoDetail extends Component {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 4000,
             });
+        }
+
+        else {
+            toast.error('Thêm hàng vào giỏ không thành công', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 4000,
+            });
+        }
         }
 
     handleBuyProduct = () => {
@@ -201,7 +214,7 @@ class AoDetail extends Component {
 
 const mapStateToProps = state => {
     return {
-        
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 

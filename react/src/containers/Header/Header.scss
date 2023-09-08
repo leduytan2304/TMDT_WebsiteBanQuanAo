@@ -10,14 +10,18 @@
     position: relative;
     .btn-logout {
         color: $common-text-color;
-        line-height: 40px;
+        line-height: 30px !important;
         height: 40px;
         padding: 0 10px;
+        a {
+            text-decoration: none;
+        }
         &:hover {
             background-color: darken($colormain, 5);
         }
         i {
             font-size: $base-size + 1px;
+            color: white;
         }
     }
 }

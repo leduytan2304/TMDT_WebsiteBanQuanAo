@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
 import { adminMenu } from './menuApp';
+
+import { NavLink } from 'react-router-dom';
 import './Header.scss';
 
 class Header extends Component {
@@ -18,9 +20,11 @@ class Header extends Component {
                     <Navigator menus={adminMenu} />
                 </div>
 
-                {/* nút logout */}
-                <div className="btn btn-logout" onClick={processLogout} title='Log out'>
-                    <i className="fas fa-sign-out-alt"></i>
+                {/* nút back về trang chủ client*/}
+                <div className="btn btn-logout" title='Log out'>
+                    <NavLink to ='/home' className='center-content-link' href=''>
+                        <i className="fas fa-sign-out-alt"></i>
+                    </NavLink>
                 </div>
             </div>
         );
