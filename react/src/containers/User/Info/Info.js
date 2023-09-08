@@ -8,6 +8,8 @@ import * as actions from "../../../store/actions";
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
+import Detail_Order from '../../Admin/Order_Manage/Detail_Order';
+
 import './Info.scss';
 import avatar from '../../../assets/Users/Avatar.png'
 import { handleEditProfileApi } from '../../../services/userService';
@@ -26,6 +28,8 @@ class Info extends Component {
             orders: [],
             personsEdit: [],
             show: false,
+            openDetail: false,
+            id_order: '',
         }
     }
 
@@ -93,6 +97,20 @@ class Info extends Component {
     paymentOptionChange = (event) => {
         this.setState({
             delivery_addr: event.target.value,
+        });
+    }
+
+    handleViewDetailOrder = (id) => {
+        console.log("Đơn hàng: ", id);
+        this.setState({ 
+            openDetail: true,
+            id_order: id
+        });
+    }
+
+    handleCloseDetailOrder = () => {
+        this.setState({ 
+            openDetail: false,
         });
     }
 
@@ -365,7 +383,7 @@ class Info extends Component {
                         <div class="col-3"></div>
                         <div class="col">
                             <h2>Lịch sử mua hàng</h2>
-                            <table class="table">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -377,9 +395,10 @@ class Info extends Component {
                                     </tr>
                                 </thead>
                                 
-                                    <tbody class="table-group-divider overflow-auto">
+                                    <tbody class="table-group-divider  overflow-auto">
                                         {this.state.orders.map((order, index) => (
-                                        <tr>
+                                        
+                                        <tr onClick={() => this.handleViewDetailOrder(order.OrderID)}>
                                             <th key={index} scope="row">{index + 1}</th>
                                             <td>{order.OrderID}</td>
                                             <td>{order.Date}</td>
@@ -411,6 +430,13 @@ class Info extends Component {
 
                 </div>
                 <HomeFooter />
+                {this.state.openDetail && (
+                            <Detail_Order show = {this.state.openDetail} 
+                                id = {this.state.id_order}
+                                handleClose = {this.handleCloseDetailOrder} 
+                                handleConfirm = {this.handleConfirmDetailOrder}
+                                handleShow = {this.handleViewDetailOrder}/>
+                        )} 
             </div>
         );
     }
