@@ -258,24 +258,6 @@ export const refundMoney = (req ,res)=>{
     /// xóa món đồ khỏi giỏ hàng refund
     
   });
-  var q3 = 'SELECT * FROM Order OD where OD.CustomerPaymentDetails = "Thanh toán thông qua PayPal" and UserID = "' + req.body.userID + '" and OrderID = " '+ req.body.cartID + '";'
-  console.log(q3);
-  db.query(q3, (err, result3) => {
-    if (err) 
-
-    return res.status(500).json(err);
-
-    else {
-      if( result3 != '')
-      {
-        console.log(result3);
-        
-      }
-
-    }
-  
-  });
-
     //lấy địa chỉ của khách hàng
 }
 export const testing = (req ,res)=>{

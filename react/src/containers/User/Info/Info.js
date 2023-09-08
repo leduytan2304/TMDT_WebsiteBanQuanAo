@@ -120,6 +120,7 @@ class Info extends Component {
             console.log("Lỗi", e.response)
         }
     }
+
     refundMoney = (CartID) =>{
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         console.log('UserID: ',UserID);
@@ -384,7 +385,7 @@ class Info extends Component {
                                             <td>{order.Date}</td>
                                             <td>{VND.format(order.TotalCost)}</td>
                                             <td>{order.OrderStatus}</td>
-                                            {order.OrderStatus == 'Hoàn thành' || order.OrderStatus == 'Đã Hoàn Tiền' || order.OrderStatus == 'Đã hủy' ?(
+                                            {order.OrderStatus == 'Hoàn thành' || order.OrderStatus == 'Đã Hoàn Tiền' || order.OrderStatus == 'Đã hủy'  || order.OrderStatus == 'Đang giao' ?(
                                                 <td>
                                                     <button type="button" class="btn" id='refund' disabled >
                                                         Hoàn Tiền
