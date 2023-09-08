@@ -19,6 +19,8 @@ class Detail_Order extends Component {
                 id: index,
                 img: 'https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/425974/item/goods_09_425974.jpg?width=750',
                 name: 'SP' + index,
+                color: 'Màu',
+                size: 'size',
                 count: '2',
                 price: '300,000₫',
             })),
@@ -67,6 +69,8 @@ class Detail_Order extends Component {
                                                 <th scope="col">#</th>
                                                 <th scope="col"></th>
                                                 <th scope="col">Tên sản phẩm</th>
+                                                <th scope="col">Màu</th>
+                                                <th scope="col">Size</th>
                                                 <th scope="col">Số lượng</th>
                                                 <th scope="col">Giá tiền</th>
                                             </tr>
@@ -80,6 +84,8 @@ class Detail_Order extends Component {
                                                             style={{ width: 'auto', height: '70px' }} />
                                                     </td>
                                                     <td>{order.name}</td>
+                                                    <td>{order.color}</td>
+                                                    <td>{order.size}</td>
                                                     <td>{order.count}</td>
                                                     <td>{order.price}</td>
                                                 </tr>
