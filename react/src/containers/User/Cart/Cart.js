@@ -293,6 +293,7 @@ class Cart extends Component {
     // ))}
     render() {
         const { processLogout } = this.props;
+        const isAdmin = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.isAdmin;
         return (
             <div>
             <HomeHeader />
@@ -325,15 +326,15 @@ class Cart extends Component {
                             </div>
                             </NavLink>
 
-                            {/* {persons.isAdmin == 1 ?(
-                            <NavLink to="./admin">
+                            {isAdmin == 1 ?(
+                            <NavLink to="/admin">
                             <div class="option">
                                 Admin
                             </div>
                             </NavLink>
                             ) : (
                                 <></>
-                            )} */}
+                            )}
 
                           
 

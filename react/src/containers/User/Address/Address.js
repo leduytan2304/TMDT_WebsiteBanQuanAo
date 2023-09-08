@@ -154,6 +154,7 @@ class Address extends Component {
     render() {
         const { processLogout } = this.props;
         const { editAddress, editAddressName, editDefaultAddress, editReceiverName, editTel } = this.state;
+        const isAdmin = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.isAdmin;
         // console.log("index 1", editAddress)
         return (
             <div>
@@ -187,15 +188,15 @@ class Address extends Component {
                             </div>
                             </NavLink>
 
-                            {/* {persons.isAdmin == 1 ?(
-                            <NavLink to="./admin">
+                            {isAdmin == 1 ?(
+                            <NavLink to="/admin">
                             <div class="option">
                                 Admin
                             </div>
                             </NavLink>
                             ) : (
                                 <></>
-                            )} */}
+                            )}
 
 
                             <button type="button" class="btn btn-secondary signout" onClick={processLogout} align="center">

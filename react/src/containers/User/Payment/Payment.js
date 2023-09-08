@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, Modal,Form } from 'react-bootstrap';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
@@ -26,7 +27,6 @@ class Payment extends Component {
         super(props);
         this.state = {
             payment_method: 'cod', // Giá trị mặc định được chọn
-            page: 'payment_method', // biến kiểm tra hiển thị trang
             productName:[],
             quantityNum: [],
             unit_sum: [],
@@ -42,6 +42,24 @@ class Payment extends Component {
         };
     }
     
+    successOrder = () =>{
+        toast.success('Đặt hàng thành công', {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+        });
+        this.props.history.push(`/home`);
+    }
+
+    vnpayOption = () =>{
+        this.fetchUserID();
+        window.open("http://localhost:8888/order/create_payment_url");
+    }
+
+    paypalOption = () =>{
+        this.fetchUserIDToPaypal()
+        window.open("http://localhost:9999");
+    }
+
     handleClose = () => {
         this.setState({ show: false });
         console.log(this.state.show);
@@ -56,6 +74,7 @@ class Payment extends Component {
         this.setState({
             payment_method: event.target.value,
         });
+        console.log(event.target.value);
     }
     handleCreateOrder = () => {
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
@@ -87,7 +106,9 @@ class Payment extends Component {
           .then((json) => console.log(json));
 
     }
-          
+    
+
+
     fetchUserID = () => {
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
             // gửi thông tin khách hàng đi
@@ -217,13 +238,7 @@ class Payment extends Component {
                 const discount = this.state.discount;
 
                 this.setState({price: this.state.sum+35000-discount});
-                const button_payment = document.getElementById('Payment');
-                button_payment.addEventListener('click', event => {
-                 //this.handleCreateOrder();   
-                 console.log('ok');
-                 this.fetchUserID();
-                 window.open("http://localhost:8888/order/create_payment_url");
-                });
+
 
 
                 const button_payment_paypal = document.getElementById('PaymentPAYPAL');
@@ -306,12 +321,34 @@ class Payment extends Component {
                                         TRỞ VỀ
                                     </button>
                                 </NavLink>
-                                <button type="button" id="Payment" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrder()}  > 
+
+                                {this.state.payment_method === 'cod' ?(
+                                    <button type="button" class="btn btn-danger btn-payment" onClick={this.successOrder}  > 
                                         THANH TOÁN
-                                </button>
-                                <button type="button" id="PaymentPAYPAL" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrderPaypal()}  > 
+                                    </button>
+                                    ) : (
+                                        <></>
+                                    )
+                                }
+                                {this.state.payment_method === 'vnpay' ?(
+                                    <button type="button" class="btn btn-danger btn-payment" onClick={this.vnpayOption}  > 
+                                        THANH TOÁN
+                                    </button>
+                                    ) : (
+                                        <></>
+                                    )
+                                }
+                                {this.state.payment_method === 'paypal' ?(
+                                    <button type="button" class="btn btn-danger btn-payment" onClick={this.paypalOption} >
+                                        THANH TOÁN
+                                    </button>
+                                    ) : (
+                                        <></>
+                                    )
+                                }
+                                {/* <button type="button" id="PaymentPAYPAL" class="btn btn-danger btn-payment" onclick = {()=>this.handleCreateOrderPaypal()}  > 
                                     PAYPAL
-                                </button>
+                                </button> */}
                                     
                                   
                                     

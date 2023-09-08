@@ -208,6 +208,9 @@ class Info extends Component {
     render() {
         const { persons } = this.state;
         const { processLogout } = this.props;
+        const isAdmin = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.isAdmin;
+        console.log(isAdmin);
+
         console.log(persons);
         if (persons.length === 0) {
             return <div className="loading">Loading...</div>;
@@ -246,8 +249,8 @@ class Info extends Component {
                             </div>
                             </NavLink>
 
-                            {persons.isAdmin == 1 ?(
-                            <NavLink to="./admin">
+                            {isAdmin == 1 ?(
+                            <NavLink to="/admin">
                             <div class="option">
                                 Admin
                             </div>
