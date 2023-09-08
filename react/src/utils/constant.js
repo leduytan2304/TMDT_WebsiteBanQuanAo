@@ -12,15 +12,13 @@ export const path = {
     AO_DETAIL: '/chi-tiet-ao/:id',
     QUAN_DETAIL: '/chi-tiet-quan/:id',
     SEARCH: '/search',
-    AO_DETAIL: '/chi-tiet-do/:id',
     INFO: '/user/info',
     ADDRESS: '/user/address',
     CART: '/user/cart',
     PAYMENT: '/user/payment',
     SUCCESS: '/success',
     DETAIL_PRODUCT: '/products/:id',
-   
-    // QUAN_DETAIL: '/chi-tiet-do/:id'
+    
 };
 
 export const languages = {

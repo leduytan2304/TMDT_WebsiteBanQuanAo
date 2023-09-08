@@ -9,6 +9,9 @@ import HomeFooter from '../../HomePage/HomeFooter';
 import '../DetailProduct.scss';
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 class AoDetail extends Component { 
@@ -70,10 +73,18 @@ class AoDetail extends Component {
             })
             .then((response) => response.json())
             .then((json) => console.log(json));
+
+            toast.success('Thêm hàng vào giỏ thành công', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 4000,
+            });
         }
 
     handleBuyProduct = () => {
-        alert('Mua hàng')
+        toast.success('Chưa nhập đủ thông tin', {
+            position: toast.POSITION.BOTTOM_RIGHT,
+            autoClose: 4000,
+        })
     }
     
     render() {
