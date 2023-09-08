@@ -112,17 +112,18 @@ class Detail_Order extends Component {
                                                         <img src= {order.Imagelink} 
                                                             style={{ width: 'auto', height: '70px' }} />
                                                     </td>
+                                                    <td>{order.ProductName}</td>
                                                     <td>{order.colorname}</td>
                                                     <td>{order.ProductSizeID}</td>
-                                                    <td>{order.ProductName}</td>
                                                     <td>{order.OrderQuantity}</td>
                                                     <td>{order.ProductCost}</td>
                                                 </tr>
                                         ))}
                                             <tr className='sum-product'>
                                                 <th scope="row">Tổng</th>
-                                                <td>
-                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td className='sum-count'>{totalOrderQuantity}</td>
                                                 <td className='sum-price'>{totalPrice}</td>
@@ -133,11 +134,11 @@ class Detail_Order extends Component {
                             </div>
                             <div className='order-detail-title'>
                                 <Form.Label className='left-title'>Địa chỉ giao hàng:</Form.Label>
-                                <Form.Label className='right-content'>227 Đường Nguyễn Văn Cừ, P.4, Q.5, Hồ Chí Minh</Form.Label>
+                                <Form.Label className='right-content'>{orderDetail[0].Address}</Form.Label>
                             </div>
                             <div className='order-detail-title'>
                                 <Form.Label className='left-title'>Điện thoại liên lạc:</Form.Label>
-                                <Form.Label className='right-content'>0819599999</Form.Label>
+                                <Form.Label className='right-content'>{orderDetail[0].PhoneNumber}</Form.Label>
                             </div>
                         </Form.Group>
                         
