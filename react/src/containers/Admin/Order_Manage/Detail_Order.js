@@ -98,6 +98,8 @@ class Detail_Order extends Component {
                                                 <th scope="col">#</th>
                                                 <th scope="col"></th>
                                                 <th scope="col">Tên sản phẩm</th>
+                                                <th scope="col">Màu</th>
+                                                <th scope="col">Size</th>
                                                 <th scope="col">Số lượng</th>
                                                 <th scope="col">Giá tiền</th>
                                             </tr>
@@ -110,6 +112,8 @@ class Detail_Order extends Component {
                                                         <img src= {order.Imagelink} 
                                                             style={{ width: 'auto', height: '70px' }} />
                                                     </td>
+                                                    <td>{order.colorname}</td>
+                                                    <td>{order.ProductSizeID}</td>
                                                     <td>{order.ProductName}</td>
                                                     <td>{order.OrderQuantity}</td>
                                                     <td>{order.ProductCost}</td>
