@@ -107,7 +107,7 @@ class Detail_Order extends Component {
                                         <tbody class = 'table-bordered'> 
                                         {this.state.orderDetail.map((order, index) => (
                                                 <tr key={index}>
-                                                    <th scope="row">{order.OrderID}</th>
+                                                    <th scope="row">{index + 1}</th>
                                                     <td>
                                                         <img src= {order.Imagelink} 
                                                             style={{ width: 'auto', height: '70px' }} />
