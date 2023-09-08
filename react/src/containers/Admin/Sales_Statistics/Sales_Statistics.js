@@ -126,7 +126,7 @@ class Sales_Statistics extends Component {
                 </div>
 
                 <div className='Chart col'>
-                    <h2>Top 10 sản phẩm bán chạy nhất Tháng 8/2023</h2>
+                    <h2>Số lượng đơn hàng trong năm 2022</h2>
                     <Chart type='line' data={this.state.chartData2}  />
                 </div>
             </div>
