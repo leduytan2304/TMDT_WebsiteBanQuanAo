@@ -8,7 +8,7 @@ import * as actions from "../../../store/actions";
 
 import HomeHeader from '../../HomePage/HomeHeader';
 import HomeFooter from '../../HomePage/HomeFooter';
-import { handleEditAddress } from '../../../services/userService';
+import { handleEditAddress, handleAddAddress } from '../../../services/userService';
 
 import './Address.scss';
 
@@ -25,8 +25,48 @@ class Address extends Component {
             addressEdit: [],
             selectedAddress: null,
             editingIndex: null,
+
+            newAddress: [{
+                newaddress: '',
+                addressname: '',
+                receivename: '',
+                receivephone: '',
+                isdefault: ''
+            }
+            ]
         };
     }   
+
+    handleOnChangeAddress = (event) => {
+        this.setState({
+            newaddress: event.target.value
+        })
+    }
+
+    handleOnChangePhone = (event) => {
+        this.setState({
+            receivephone: event.target.value
+        })
+    }
+
+    handleOnChangeUserName = (event) => {
+        this.setState({
+            receivename: event.target.value
+        })
+    }
+
+    handleOnChangeAddrName = (event) => {
+        this.setState({
+            addressname: event.target.value
+        })
+    }
+
+    handleOnChangeDefault = (event) => {
+        this.setState({
+            isdefault: event.target.value
+        })
+    }
+    
 
     // mở hộp thoại thêm địa chỉ
     handleClose = () => {
@@ -75,6 +115,32 @@ class Address extends Component {
             }
             else if (dataApi !== 0) {
                 this.setState({show_e: false});
+                console.log("Message: ", dataApi);
+            }
+        }
+        catch(e){
+            if(e.response){
+                if(e.response.data){
+                    this.setState({
+                        errMessage: e.response.data
+                    })
+                }
+            }
+            console.log("Lỗi", e.response)
+        }
+    }
+
+    handleAdd = async () => {
+        const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
+      
+        try {
+            let dataApi = await handleAddAddress(personsObject, this.state.addressname, this.state.newaddress, this.state.receivename, this.state.receivephone, this.state.isdefault);
+            
+            if (dataApi == 0){
+                console.log("Err code ", dataApi)
+            }
+            else if (dataApi !== 0) {
+                this.setState({show: false});
                 console.log("Message: ", dataApi);
             }
         }
@@ -155,7 +221,8 @@ class Address extends Component {
         const { processLogout } = this.props;
         const { editAddress, editAddressName, editDefaultAddress, editReceiverName, editTel } = this.state;
         const isAdmin = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.isAdmin;
-        // console.log("index 1", editAddress)
+
+        
         return (
             <div>
             <HomeHeader />
@@ -319,39 +386,34 @@ class Address extends Component {
                                 <Form style={{padding: '10px'}}>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Họ và tên</Form.Label>
-                                        <Form.Control type="text" />
+                                        <Form.Control type="text" 
+                                        onChange={(event) => this.handleOnChangeUserName(event)}/>
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Số điện thoại</Form.Label>
-                                        <Form.Control type="number" />
+                                        <Form.Control type="number" 
+                                        onChange={(event) => this.handleOnChangePhone(event)}/>
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Số nhà</Form.Label>
-                                        <Form.Control type="text"/>
+                                        <Form.Label>Tên địa chỉ(Cơ quan, nhà riêng,...)</Form.Label>
+                                        <Form.Control type="text" 
+                                        onChange={(event) => this.handleOnChangeAddrName(event)}/>
                                     </Form.Group>
 
                                     <Form.Group className="mb-3">
-                                        <Form.Label>Đường</Form.Label>
-                                        <Form.Control type="text"/>
+                                        <Form.Label>Địa chỉ</Form.Label>
+                                        <Form.Control type="text"
+                                        onChange={(event) => this.handleOnChangeAddress(event)}/>
                                     </Form.Group>
 
-                                    <Form.Group className="mb-3 addr">
-                                        <Row >
-                                            <Col>
-                                                <Form.Label>Phường</Form.Label>
-                                                <Form.Control type="text"/>
-                                            </Col>
-                                            <Col>
-                                                <Form.Label>Quận</Form.Label>
-                                                <Form.Control type="text"/>
-                                            </Col>
-                                            <Col>
-                                                <Form.Label>Thành phố</Form.Label>
-                                                <Form.Control type="text"/>
-                                            </Col>
-                                        </Row>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Là chỉ địa chỉ mặc định ?</Form.Label>
+                                        <Form.Control type="text"
+                                        onChange={(event) => this.handleOnChangeDefault(event)}/>
                                     </Form.Group>
+
+                                    
                                 </Form>
                                 </Modal.Body>
 
@@ -359,7 +421,7 @@ class Address extends Component {
                                     <Button variant="secondary" onClick={this.handleClose} className="btn-return">
                                         Trở về
                                     </Button>
-                                    <Button variant="primary" onClick={this.handleClose} className="btn-payment">
+                                    <Button variant="primary" onClick={this.handleAdd} className="btn-payment">
                                         OK
                                     </Button>
                                 </Modal.Footer>

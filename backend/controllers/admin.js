@@ -23,6 +23,8 @@ export const addNewProduct = (req,res)=>{
         else {
           id = data[0][0].product_id;
         }
+
+        console.log("Id product:", id);
         
         console.log("Id product:", id);
 

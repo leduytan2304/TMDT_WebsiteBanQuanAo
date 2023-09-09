@@ -18,5 +18,10 @@ const handleEditAddress = (userID, addrID, addrName, address, name, tel, isDefau
     {userID: userID, addrID: addrID , addrName: addrName, address: address, name: name, tel: tel, isDefault: isDefault});
 }
 
+const handleAddAddress = (userID, addrName, address, name, tel, isDefault) => {
+    return axios.post('http://localhost:8000/api/user/address/add', 
+    {userid: userID, addressname: addrName, address: address, receivename: name, receivephone: tel, isdefault: isDefault});
+}
 
-export {handleLoginApi, handleRegisterApi, handleEditProfileApi, handleEditAddress}
+
+export {handleLoginApi, handleRegisterApi, handleEditProfileApi, handleEditAddress, handleAddAddress}

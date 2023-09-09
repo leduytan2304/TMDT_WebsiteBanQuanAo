@@ -43,6 +43,25 @@ export const getUserAddress = (req ,res)=>{
   });
 }
 
+export const addUserAddress = (req ,res)=>{
+  const q = "Call sp_AddNewAddress(?)";
+
+  const values = [
+      req.body.userid,
+      req.body.addressname,
+      req.body.address,
+      req.body.receivename,
+      req.body.receivephone,
+      req.body.isdefault
+  ]
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.status(500).json(err);
+    
+    return res.status(200).json(data[0]);
+  });
+}
+
 export const getOrderHistory = (req ,res)=>{
   const q = "Call sp_ViewOrderHistory(?)"
 
