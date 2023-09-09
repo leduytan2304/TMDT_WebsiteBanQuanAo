@@ -24,6 +24,7 @@ import EditCatalog from './EditCatalog';
 import AddProduct_Catalog from './AddProduct_Catalog';
 
 import DetailProductAdmin from '../Product_Manage/DetailProductAdmin';
+import axios from 'axios';
 
 
 class Catalog_Manage extends Component {
@@ -41,45 +42,24 @@ class Catalog_Manage extends Component {
             selectedProduct: null,
             showDeleteProduct: false,
             selectedDeleteProduct: null,
-            products: new Array(4).fill(null).map((_, index) => ({
-                id: index,
-                name: 'Product ' + index,
-                price: '190,000₫',
-                discountedPrice: '179,000₫',
-                discount: '-6%',
-            })),
+            products: [],
         }
     }
 
-    handleCategoryClick = (categoryId, categoryName) => {
+    handleCategoryClick = (categoryId, categoryName, categoryName2) => {
         this.setState((prevState) => ({
             selectedCategoryID: prevState.selectedCategoryID === categoryId ? null : categoryId,
         }));
-        console.log(categoryName);
+
+        axios.get(`http://localhost:8000/api/image/${categoryName2}`)
+          .then(res => {
+            const products = res.data;
+            this.setState({ products });
+          })
+          .catch(error => console.log(error));
+
+        console.log("Loại",categoryName);
     };
-
-    //Những cửa sổ cho xóa danh mục
-
-    // handleCloseDelete = () => {
-    //     this.setState({ 
-    //         showDelete: false,
-    //     });
-    // }
-
-    // handleConfirmDelete = () => {
-    //     this.setState({ showDelete: false});
-    //     alert('Xóa danh mục')
-    // }
-
-    // handleShowDelete = (categoryName) => {
-    //     this.setState({ 
-    //         showDelete: true,
-    //         // selectedCategoryID:categoryId,
-    //         selectedCategoryName:categoryName
-    //     }); 
-    //     // console.log(categoryId);
-    //     console.log(categoryName, "show delete" );
-    // }
 
 
     //Những cửa sổ cho thêm danh mục
@@ -176,18 +156,26 @@ class Catalog_Manage extends Component {
         });
     }
 
+    componentDidMount(){
+        
+
+          
+    };
+ 
+
     
     render() {
         const categories = [
-            { id: 1, name: 'Sản phẩm mới' },
-            { id: 2, name: 'Siêu Sale' },
-            { id: 3, name: 'Áo' },
-            { id: 4, name: 'Quần' },
+            { id: 1, name: 'Sản phẩm mới', name2: 'spm' },
+            { id: 2, name: 'Siêu Sale' , name2: 'ss'},
+            { id: 3, name: 'Áo' , name2: 'ao'},
+            { id: 4, name: 'Quần' , name2: 'quan'},
             // ... Add more categories
         ];
 
 
         const { selectedCategoryID } = this.state;
+
 
         let settings = {
             dots: false,
@@ -216,7 +204,7 @@ class Catalog_Manage extends Component {
                                                 <i class="fas fa-edit"
                                                    onClick={() => this.handleShowEdit(category.name)}></i>
                                                 <i class="fas fa-caret-down" 
-                                                   onClick={() => this.handleCategoryClick(category.id, category.name)}>
+                                                   onClick={() => this.handleCategoryClick(category.id, category.name, category.name2)}>
                                                 </i>
                                             </div>
                                         </div>
@@ -231,16 +219,18 @@ class Catalog_Manage extends Component {
                                                     <div className='slider-customize' 
                                                          key={product.id}
                                                          onClick={() => this.handleShowDetailProduct(product.id)}>
+                                                        <img src= {product.ImageLink}  />
                                                         <div className='bg-image'>
+                                                            
                                                             <div className='product-discount'>
-                                                                <span>{product.discount}</span>
+                                                                <span></span>
                                                             </div>
                                                         </div>
                                                         <div className='product-detail text-center'>
-                                                            <div className='product-name'>{product.name}</div>
+                                                            <div className='product-name'>{product.ProductName}</div>
                                                             <div className='product-price'>
-                                                                <span>{product.discountedPrice}</span>
-                                                                <del>{product.price}</del>
+                                                                <span>{product.ProductPrice}</span>
+                                                                <del>199.000vnđ</del>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -258,12 +248,7 @@ class Catalog_Manage extends Component {
                                 ))}
                             </ul>
                         </div>
-                        {/* {this.state.showDelete && (
-                            <Delete show = {this.state.showDelete} 
-                                    handleClose = {this.handleCloseDelete} 
-                                    handleConfirm = {this.handleConfirmDelete}
-                                    handleShow = {this.handleShowDelete}/>
-                        )}  */}
+ 
                         {this.state.showAdd && (
                             <AddCatalog show = {this.state.showAdd} 
                                         handleClose = {this.handleCloseAdd} 
