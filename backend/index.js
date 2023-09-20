@@ -5,6 +5,8 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import cartRoutes from "./routes/cart.js";
 import adminRoutes from "./routes/admin.js";
+import test from "./routes/test.js"
+
 
 // import payment from "./routes/payment.js"
 import cors from "cors";
@@ -35,6 +37,12 @@ app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/cart_payment", cartRoutes); // API thanh toán giỏ hàng 
 app.use("/api", authRoutes); // API để login/register
+
+app.use("/api", test )
+
+
+
+
 
 
 

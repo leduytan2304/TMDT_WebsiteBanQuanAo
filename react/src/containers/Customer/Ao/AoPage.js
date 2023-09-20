@@ -114,7 +114,8 @@ class AoPage extends Component {
                                         <div className='col-3 product' onClick={() => this.handleViewDetailCloth(dataa.ProductID)}>
                                             <a href=''>
                                                 <div className='ao-product img-setting'>
-                                                    <img key={dataa.ImageID} src={dataa.ImageLink}  alt={`Image ${dataa.ImageID}`} style={{ width: '100%', height: 'auto' }} />
+                                                    <img key={dataa.ImageID} src={dataa.ImageLink}  style={{ width: '100%', height: 'auto' }} />
+                                                    <img src={`data:image/jpeg;base64,${dataa.ImageLink}`} style={{ width: '100%', height: 'auto' }}  />
                                                     <div className='product-discount'>
                                                         <span>-6%</span>
                                                     </div>

@@ -30,6 +30,7 @@ class Info extends Component {
             show: false,
             openDetail: false,
             id_order: '',
+            selectedImage: null,
         }
     }
 
@@ -206,6 +207,33 @@ class Info extends Component {
         .catch(error => console.log(error));
     };
 
+
+    handleImageChange = (e) => {
+        const file = e.target.files[0];
+        this.setState({ selectedImage: file });
+    }
+
+    handleImageUpload = () => {
+        if (this.state.selectedImage) {
+            const formData = new FormData();
+            formData.append('image', this.state.selectedImage);
+
+            axios.post('http://localhost:8000/api/upload', formData)
+                .then((response) => {
+                    console.log(response.data);
+                    // Handle success (e.g., show a success message)
+                })
+                .catch((error) => {
+                    console.error(error);
+                    // Handle error (e.g., show an error message)
+                });
+        } else {
+            // Handle case where no image is selected
+        }
+    }
+
+
+
     render() {
         const { persons } = this.state;
         const { processLogout } = this.props;
@@ -380,7 +408,15 @@ class Info extends Component {
                                 
                             </Modal.Footer>
                         </Modal>
+                        <div>
+                    <input type="file" onChange={this.handleImageChange} />
+                    <button onClick={this.handleImageUpload}>Upload Image</button>
                     </div>
+
+                    </div>
+
+                   
+
 
                     <div class="row purchase-history">
                         <div class="col-3"></div>
