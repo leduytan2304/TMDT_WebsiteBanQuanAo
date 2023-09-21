@@ -21,7 +21,7 @@ class AoPage extends Component {
       }
 
     fetchData() {
-        axios.get('http://localhost:8000/api/image/ao')
+        axios.get('https://react-crud-kc0l.onrender.com/api/image/ao')
           .then(res => {
             const images = res.data;
             this.setState({ images }, () => {
