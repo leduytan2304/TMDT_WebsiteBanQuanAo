@@ -35,7 +35,7 @@ class Detail_Order extends Component {
 
     loadOrder() {
         const { id } = this.props;
-        axios.get(`http://localhost:8000/api/admin/orderdetail/${id}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/admin/orderdetail/${id}`)
         .then(res => {
         const orderDetailInfo = res.data;
         

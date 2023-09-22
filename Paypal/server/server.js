@@ -129,12 +129,12 @@ const captureOrder = async (orderID) => {
     },
   });
   const address =[];
-  axios.get(`http://localhost:8000/api/cart_payment/userAdress/${UserID}`)
+  axios.get(`https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
   .then(res => {
     address.push(res.data)
     console.log('address: ', address[0][0].ReceiverName);
     
-    fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+    fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
             method: 'POST',
             body: JSON.stringify({
               userID: UserID ,

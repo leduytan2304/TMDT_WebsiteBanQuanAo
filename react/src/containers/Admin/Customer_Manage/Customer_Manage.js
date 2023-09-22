@@ -18,7 +18,7 @@ class Customer_Manage extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8000/api/admin/listuser`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/admin/listuser`)
         .then(res => {
         const users = res.data;
         this.setState({ users});

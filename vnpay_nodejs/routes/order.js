@@ -130,12 +130,12 @@ router.get('/vnpay_return', function (req, res, next) {
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
             // lấy thông tin khách hàng 
             console.log('UserName receive: ', MainUser);
-            axios.get(`http://localhost:8000/api/cart_payment/userAdress/${MainUser}`)
+            axios.get(`https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${MainUser}`)
             .then(res => {
               const data = res.data 
               console.log('Name data: ', data[0].ReceiverName);
 
-              fetch(`http://localhost:8000/api/cart_payment/createOrder/${MainUser}` , { // thay đổi user sau
+              fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/createOrder/${MainUser}` , { // thay đổi user sau
               method: 'POST',
               body: JSON.stringify({
                 userID: MainUser ,

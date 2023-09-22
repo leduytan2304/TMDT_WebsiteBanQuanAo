@@ -158,7 +158,7 @@ class Address extends Component {
 
     componentDidMount(){
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        axios.get(`http://localhost:8000/api/user/address/${personsObject}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/user/address/${personsObject}`)
         .then(res => {
         const address = res.data;
         this.setState({ address, delivery_addr: address[0].AddressID});

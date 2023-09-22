@@ -49,7 +49,7 @@ class Discount extends Component {
 
     loadRewardPoint() {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        axios.get(`http://localhost:8000/api/user/rewardpoint/${personsObject}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/user/rewardpoint/${personsObject}`)
         .then(res => {
         const point = res.data[0];
         this.setState({ point });

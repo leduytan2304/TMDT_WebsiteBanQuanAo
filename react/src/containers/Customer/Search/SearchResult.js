@@ -18,7 +18,7 @@ class SearchResult extends Component {
       };
 
       fetchData = (keyword) => {
-        axios.get(`http://localhost:8000/api/image/search?query=${keyword}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/image/search?query=${keyword}`)
           .then(res => {
             const images = res.data;
             console.log(images)

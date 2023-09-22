@@ -26,7 +26,7 @@ class QuanDetail extends Component {
       componentDidMount(req,res,url){
         // const parts = url.split('/');
         // let lastLink = parts.at(-1);
-        axios.get(`http://localhost:8000/api${window.location.pathname}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api${window.location.pathname}`)
           .then(res => {
             const images = res.data;
             this.setState({ images });
@@ -56,7 +56,7 @@ class QuanDetail extends Component {
         const lastSegment = window.location.pathname.split("/").pop();
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
-        fetch(`http://localhost:8000/api/testing/${UserID}` , { // thay đổi user sau
+        fetch(`https://react-crud-kc0l.onrender.com/api/testing/${UserID}` , { // thay đổi user sau
             method: 'POST',
             body: JSON.stringify({
                 userID: UserID,

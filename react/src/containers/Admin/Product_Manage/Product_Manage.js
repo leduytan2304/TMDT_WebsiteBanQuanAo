@@ -39,7 +39,7 @@ class Product_Manage extends Component {
 
     componentDidMount(req,res,url){
         
-        axios.get(`http://localhost:8000/api/image/do`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/image/do`)
           .then(res => {
             const images = res.data;
             this.setState({ images });
