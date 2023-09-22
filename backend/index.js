@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://650d1fbf4e5b92047be25614--preeminent-heliotrope-b4a689.netlify.app",
   })
 );
 
