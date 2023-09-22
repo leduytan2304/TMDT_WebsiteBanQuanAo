@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://650d4026993b9619ed6a26cb--symphonious-belekoy-a9d207.netlify.app",
+    origin: "https://650d5c3739ea382b83da0a70--chic-crepe-025b6f.netlify.app",
   })
 );
 
