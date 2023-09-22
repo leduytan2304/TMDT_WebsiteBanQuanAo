@@ -1,6 +1,6 @@
 export default {
     api: {
-        API_BASE_URL: "http://localhost:8000/",
+        API_BASE_URL: "https://react-crud-kc0l.onrender.com",
         ROUTER_BASE_NAME: null,
     },
     app: {

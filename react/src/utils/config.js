@@ -1,1 +1,1 @@
-export const DOMAIN = "http://localhost:8000";
+export const DOMAIN = "https://react-crud-kc0l.onrender.com";
