@@ -23,12 +23,13 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://genzclothing-hcmus.netlify.app",
+    origin: "https://genzclothing-hcmus.netlify.app", 
   })
 );
 
 app.use(cookieParser());
-app.use("/api/image", productRoutes);
+app.use("/api/image", productRoutes); 
+
 app.use("/api/chi-tiet-do",detailProduct);
 // app.use("/api/testing",testaa)
 // app.use("/api/payment",payment)
