@@ -21,6 +21,12 @@ class SieuSalePage extends Component {
     state = {
         images: []
       }
+      handleViewDetailCloth = (ProductID) => {
+        // console.log("ID sản phẩm",params.slug);
+        console.log(ProductID);
+        
+        this.props.history.push(`/chi-tiet-do/${ProductID}`);
+    };
     render() {
 
 
@@ -49,7 +55,7 @@ class SieuSalePage extends Component {
                             </div>
                             <div className='section-body'>
                                 {this.state.images.map(image => (
-                                    <div className='col-3 product'>
+                                    <div className='col-3 product' onClick={() => this.handleViewDetailCloth(image.ProductID)}>
                                         <a href=''>
                                             <div className='sieusale-product img-setting'>
                                             <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '100%', height: 'auto' }} />

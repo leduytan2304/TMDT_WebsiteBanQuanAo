@@ -20,11 +20,11 @@ class SPMoi extends Component {
           images: []
         };
     }
-    handleViewDetailProduct = () => {
+    handleViewDetailProduct = (ProductID) => {
         console.log("ID sản phẩm");
-        this.props.history.push(`/products/:1`);
+        this.props.history.push(`/chi-tiet-do/` + ProductID);
     };
-
+    
     // listProduct = useSelector(
     //     (state) => state.product.products?.allProduct
     //   );
@@ -74,7 +74,7 @@ class SPMoi extends Component {
                             <div className='section-body'>
                                 {/* onClick={() => this.handleViewDetailProduct(item)} */}
                                 {this.state.images.map(image => (
-                                <div className='col-3 product' onClick={() => this.handleViewDetailProduct()}>
+                                <div className='col-3 product' onClick={() => this.handleViewDetailProduct(image.ProductID)}>
                                     <div className='product-img' >
                                     <img key={image.ImageID} src={image.ImageLink}  alt={`Image ${image.ImageID}`} style={{ width: '70%', height: 'auto' }} /> 
                                         <div className='product-discount'>

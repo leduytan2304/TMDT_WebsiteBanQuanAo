@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://genzclothing-hcmus.netlify.app", 
+    origin: "https://65290378ac9a5a05c990d7a1--famous-torrone-038349.netlify.app", 
   })
 );
 
