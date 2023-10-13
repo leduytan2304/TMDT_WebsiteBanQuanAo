@@ -52,7 +52,7 @@ class Payment extends Component {
 
     vnpayOption = () =>{
         this.fetchUserID();
-        window.open("http://localhost:8888/order/create_payment_url");
+        window.open("https://vn-pay.onrender.com/order/create_payment_url");
     }
 
     paypalOption = () =>{
@@ -113,7 +113,7 @@ class Payment extends Component {
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
             // gửi thông tin khách hàng đi
             console.log("user: ",UserID );
-            fetch(`http://localhost:8888/order/create_payment_url` , { // thay đổi user sau
+            fetch(`https://vn-pay.onrender.com/order/create_payment_url` , { // thay đổi user sau
             method: 'POST',
             body: JSON.stringify({
               userID: UserID,
