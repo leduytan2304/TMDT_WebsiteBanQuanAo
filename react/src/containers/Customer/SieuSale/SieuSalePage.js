@@ -11,7 +11,7 @@ import '../Page.scss';
 class SieuSalePage extends Component {
     componentDidMount(req,res,url){
         
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/image/do`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/image/do`)
           .then(res => {
             const images = res.data;
             this.setState({ images });

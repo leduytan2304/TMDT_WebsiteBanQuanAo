@@ -62,7 +62,7 @@ class Customer_Info extends Component {
 
     loadInfo () {
         const lastSegment = window.location.pathname.split("/").pop();
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/user/profile/${lastSegment}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/user/profile/${lastSegment}`)
         .then(res => {
         const persons = res.data[0];
         console.log(persons);
@@ -73,7 +73,7 @@ class Customer_Info extends Component {
 
     loadOrder() {
         const lastSegment = window.location.pathname.split("/").pop();
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/user/order/${lastSegment}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/user/order/${lastSegment}`)
         .then(res => {
         const orders = res.data;
         this.setState({ orders, load: true });

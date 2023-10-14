@@ -43,7 +43,7 @@ class SPMoi extends Component {
     // }
 
     // async componentDidMount() {
-    //     let response = await axios.get(`http://http://https://react-crud-kc0l.onrender.com/api/v1/products`);
+    //     let response = await axios.get(`http://https://react-crud-kc0l.onrender.com/api/v1/products`);
     //     if (response && response.errCode === 0){
     //         this.setState({
     //             arrProducts: response.data
@@ -54,7 +54,7 @@ class SPMoi extends Component {
     componentDidMount(req,res,url){
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         console.log('UserID: ',UserID);
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/image/do`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/image/do`)
           .then(res => {
             const images = res.data;
             this.setState({ images });

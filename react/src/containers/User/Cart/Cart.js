@@ -57,7 +57,7 @@ class Cart extends Component {
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
         console.log('UserID: ',UserID);
-            fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
+            fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
                 method: 'POST',
                 body: JSON.stringify({
                   userID: UserID, // thay đổi user sau
@@ -78,7 +78,7 @@ class Cart extends Component {
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
             console.log('UserID: ',UserID);
-                fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
+                fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
                     method: 'POST',
                     body: JSON.stringify({
                       userID: UserID, // thay đổi user sau
@@ -102,7 +102,7 @@ class Cart extends Component {
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
 
         console.log('UserID: ',UserID);
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/cart/${UserID}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/cart/${UserID}`)
         .then(res => {
             const images = res.data;
             this.setState({ images });
@@ -220,7 +220,7 @@ class Cart extends Component {
             if (change === '-' && currentValue > 0) {
                 currentValue --;
 
-                fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/removeProduct/${UserID}` , { // thay đổi user sau
+                fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/removeProduct/${UserID}` , { // thay đổi user sau
                 method: 'PUT',
                 body: JSON.stringify({
                   userID: UserID,
@@ -237,7 +237,7 @@ class Cart extends Component {
             } else if (change === '+' && currentValue < 100) {
                 currentValue ++;
                 
-                fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
+                fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/addProduct/${UserID}` , { // thay đổi user sau
                 method: 'POST',
                 body: JSON.stringify({
                     userID: UserID,
@@ -264,7 +264,7 @@ class Cart extends Component {
     removeItem = (index,componentDidMount) =>{
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         console.log('UserID: ',UserID);
-        fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/deleteProduct/${UserID}`  , { // thay đổi user sau
+        fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/deleteProduct/${UserID}`  , { // thay đổi user sau
                 method: 'PUT',
                 body: JSON.stringify({
                   userID: UserID,

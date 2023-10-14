@@ -80,7 +80,7 @@ const createOrder = async (cart) => {
   });
 
             
-  // await fetch(`http://http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { // thay đổi user sau
+  // await fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { // thay đổi user sau
   //         method: 'POST',
   //         body: JSON.stringify({
   //           userID: UserID ,
@@ -129,12 +129,12 @@ const captureOrder = async (orderID) => {
     },
   });
   const address =[];
-  axios.get(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
+  axios.get(`https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
   .then(res => {
     address.push(res.data)
     console.log('address: ', address[0][0].ReceiverName);
     
-    fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+    fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
             method: 'POST',
             body: JSON.stringify({
               userID: UserID ,
@@ -161,7 +161,7 @@ const captureOrder = async (orderID) => {
   })
 
 
-  // await fetch(`http://http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+  // await fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
   //           method: 'POST',
   //           body: JSON.stringify({
   //             userID: UserID ,

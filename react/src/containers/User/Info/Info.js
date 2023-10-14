@@ -143,7 +143,7 @@ class Info extends Component {
     refundMoney = (CartID) =>{
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         console.log('UserID: ',UserID);
-        fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/refund/${UserID}`  , { 
+        fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/refund/${UserID}`  , { 
                 method: 'POST',
                 body: JSON.stringify({
                   userID: UserID,
@@ -177,7 +177,7 @@ class Info extends Component {
     loadInfo () {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/user/profile/${personsObject}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/user/profile/${personsObject}`)
         .then(res => {
         const persons = res.data[0];
         console.log(persons);
@@ -199,7 +199,7 @@ class Info extends Component {
 
     loadOrder() {
         const personsObject = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/user/order/${personsObject}`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/user/order/${personsObject}`)
         .then(res => {
         const orders = res.data;
         this.setState({ orders, load: true });
@@ -218,7 +218,7 @@ class Info extends Component {
             const formData = new FormData();
             formData.append('image', this.state.selectedImage);
 
-            axios.post('http://https://react-crud-kc0l.onrender.com/api/upload', formData)
+            axios.post('https://react-crud-kc0l.onrender.com/api/upload', formData)
                 .then((response) => {
                     console.log(response.data);
                     // Handle success (e.g., show a success message)

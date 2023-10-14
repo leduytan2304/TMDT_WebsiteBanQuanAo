@@ -13,7 +13,7 @@ import axios from 'axios';
 class QuanPage extends Component {
 
     componentDidMount(){
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/image/quan`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/image/quan`)
           .then(res => {
             const images = res.data;
             this.setState({ images });

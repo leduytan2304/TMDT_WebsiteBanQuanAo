@@ -129,28 +129,28 @@ class Order_Manage extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/admin/orderconfirm`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/admin/orderconfirm`)
         .then(res => {
         const orders1 = res.data;
         this.setState({ orders1 });
         })
         .catch(error => console.log(error));
 
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/admin/orderdgoi`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/admin/orderdgoi`)
         .then(res => {
         const orders2 = res.data;
         this.setState({ orders2 });
         })
         .catch(error => console.log(error));
 
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/admin/orderdgiao`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/admin/orderdgiao`)
         .then(res => {
         const orders3 = res.data;
         this.setState({ orders3 });
         })
         .catch(error => console.log(error));
 
-        axios.get(`http://https://react-crud-kc0l.onrender.com/api/admin/orderht`)
+        axios.get(`https://react-crud-kc0l.onrender.com/api/admin/orderht`)
         .then(res => {
         const orders4 = res.data;
         this.setState({ orders4 });
