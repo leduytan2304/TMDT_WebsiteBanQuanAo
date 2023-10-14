@@ -22,7 +22,7 @@ class SieuSale extends Component {
       componentDidMount(req,res,url){
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         console.log('UserID: ',UserID);
-        axios.get(`https://react-crud-kc0l.onrender.com/api/image/do`)
+        axios.get(`http://https://react-crud-kc0l.onrender.com/api/image/do`)
           .then(res => {
             const images = res.data;
             this.setState({ images });

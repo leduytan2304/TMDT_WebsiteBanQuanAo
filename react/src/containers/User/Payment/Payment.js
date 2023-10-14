@@ -80,7 +80,7 @@ class Payment extends Component {
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         // lấy thông tin khách hàng 
             console.log('reall: ',UserID);
-          fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/createOrder/${UserID}` , { // thay đổi user sau
+          fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrder/${UserID}` , { // thay đổi user sau
           method: 'POST',
           body: JSON.stringify({
             userID: UserID ,
@@ -161,14 +161,14 @@ class Payment extends Component {
             const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
             console.log('UserID: ',UserID);
 
-            axios.get(`https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
+            axios.get(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
             .then(res => {
               const data = res.data 
               this.setState({address : data});
               console.log('Name: ',this.state.address[0] );
             })
 
-            axios.get(`https://react-crud-kc0l.onrender.com/api/cart/${UserID}`)
+            axios.get(`http://https://react-crud-kc0l.onrender.com/api/cart/${UserID}`)
             .then(res => {
                 const images = res.data;
                 this.setState({ images });

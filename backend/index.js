@@ -23,13 +23,12 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://6529054f11e72405e5c4aa92--storied-zabaione-86fcea.netlify.app", 
+    origin: "https://genzclothing-hcmus.netlify.app", 
   })
 );
 
 app.use(cookieParser());
 app.use("/api/image", productRoutes); 
-
 app.use("/api/chi-tiet-do",detailProduct);
 // app.use("/api/testing",testaa)
 // app.use("/api/payment",payment)
@@ -40,13 +39,6 @@ app.use("/api/cart_payment", cartRoutes); // API thanh toán giỏ hàng
 app.use("/api", authRoutes); // API để login/register
 
 app.use("/api", test )
-
-
-
-
-
-
-
 
 // app.use("api/payment",payment);
 

@@ -80,7 +80,7 @@ const createOrder = async (cart) => {
   });
 
             
-  // await fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { // thay đổi user sau
+  // await fetch(`http://http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { // thay đổi user sau
   //         method: 'POST',
   //         body: JSON.stringify({
   //           userID: UserID ,
@@ -129,12 +129,12 @@ const captureOrder = async (orderID) => {
     },
   });
   const address =[];
-  axios.get(`https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
+  axios.get(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
   .then(res => {
     address.push(res.data)
     console.log('address: ', address[0][0].ReceiverName);
     
-    fetch(`https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+    fetch(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
             method: 'POST',
             body: JSON.stringify({
               userID: UserID ,
@@ -161,7 +161,7 @@ const captureOrder = async (orderID) => {
   })
 
 
-  // await fetch(`http://localhost:8000/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
+  // await fetch(`http://http://https://react-crud-kc0l.onrender.com/api/cart_payment/createOrderPayPal/${UserID}` , { ///hoàn thành đơn đặt hàng
   //           method: 'POST',
   //           body: JSON.stringify({
   //             userID: UserID ,
@@ -245,7 +245,7 @@ app.post("/api/orders/:orderID/capture", async (req, res) => {
 
 // serve index.html
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"

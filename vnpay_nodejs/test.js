@@ -8,7 +8,7 @@ const data = [
     }
   ]
   const address =[];
-  await axios.get(`https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
+  await axios.get(`http://https://react-crud-kc0l.onrender.com/api/cart_payment/userAdress/${UserID}`)
   .then(res => {
     address.push(res.data)
     console.log('address: ', address[0].ReceiverName);

@@ -51,7 +51,7 @@ class Catalog_Manage extends Component {
             selectedCategoryID: prevState.selectedCategoryID === categoryId ? null : categoryId,
         }));
 
-        axios.get(`https://react-crud-kc0l.onrender.com/api/image/${categoryName2}`)
+        axios.get(`http://https://react-crud-kc0l.onrender.com/api/image/${categoryName2}`)
           .then(res => {
             const products = res.data;
             this.setState({ products });

@@ -28,7 +28,7 @@ class AoDetail extends Component {
       componentDidMount(req,res,url){
         const UserID = JSON.parse(JSON.parse(localStorage.getItem('persist:user')).userInfo)?.userID;
         console.log('UserID: ',UserID);
-        axios.get(`https://react-crud-kc0l.onrender.com/api${window.location.pathname}`)
+        axios.get(`http://https://react-crud-kc0l.onrender.com/api${window.location.pathname}`)
           .then(res => {
             const images = res.data;
             this.setState({ images });
@@ -64,7 +64,7 @@ class AoDetail extends Component {
         console.log("Loggin: ",isLoggedIn);
 
         if (isLoggedIn === true) {
-            fetch(`https://react-crud-kc0l.onrender.com/api/testing/${UserID}` , { // thay đổi user sau
+            fetch(`http://https://react-crud-kc0l.onrender.com/api/testing/${UserID}` , { // thay đổi user sau
             method: 'POST',
             body: JSON.stringify({
                 userID: UserID,
